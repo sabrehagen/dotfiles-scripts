@@ -1,7 +1,14 @@
-# env config
+#!/bin/bash
+
+# map caps lock to escape
 setxkbmap -option caps:swapescape
 
-# add ssh keys
+# map print screen to menu
+xmodmap -e "keycode 107 = Menu"
+
+# disable touchscreen
+xinput disable 10
+
+# load ssh keys
 export SSH_ASKPASS=/usr/bin/ksshaskpass
-eval `ssh-agent -s`
 ssh-add </dev/null
