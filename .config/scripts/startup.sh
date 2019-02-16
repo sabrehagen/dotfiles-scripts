@@ -6,3 +6,9 @@ xmodmap -e "keycode 107 = Menu"
 
 # Disable touchscreen
 xinput disable 10
+
+# Enable numlock
+numlockx on
+
+# Set keyboard repeat delay and rate
+xset r rate 155 80
