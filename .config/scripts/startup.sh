@@ -11,4 +11,4 @@ xinput disable 10
 numlockx on
 
 # Set keyboard repeat delay and rate
-xset r rate 155 80
+xset r rate 175 80
