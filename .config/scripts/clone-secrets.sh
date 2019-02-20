@@ -5,6 +5,7 @@ vcsh clone https://sabrehagen@github.com/sabrehagen/dotfiles-ssh-private && \
 # Unlock ssh private key so remaining repositories can be cloned
 keychain --eval id_rsa
 
-# Clone secrets using private key over ssh
-vcsh clone git@github.com:sabrehagen/dotfiles-env-private.git
+# Clone remaining private repositories using private key over ssh
+vcsh clone git@github.com:sabrehagen/dotfiles-env-secrets.git
+vcsh clone git@github.com:sabrehagen/dotfiles-ssh-private.git
 vcsh clone git@github.com:sabrehagen/dotfiles-stemn.git
