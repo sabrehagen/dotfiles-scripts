@@ -1,9 +1,13 @@
-# Remove vcsh repository contents
-vcsh dotfiles-env-secrets ls-files | xargs rm -f
-vcsh dotfiles-ssh-private ls-files | xargs rm -f
-vcsh dotfiles-stemn ls-files | xargs rm -f
+remove_vcsh_repo() {
+  $REPO=$1
 
-# Remove vcsh repositories
-rm -rf ~/.config/vcsh/repo.d/dotfiles-env-secrets
-rm -rf ~/.config/vcsh/repo.d/dotfiles-ssh-private
-rm -rf ~/.config/vcsh/repo.d/dotfiles-stemn
+  # Remove vcsh repository tracked files
+  vcsh $REPO ls-files | xargs rm -f
+
+  # Remove vcsh repository git folder
+  rm -rf ~/.config/vcsh/repo.d/$REPO
+}
+
+remove_vcsh_repo dotfiles-notes
+remove_vcsh_repo dotfiles-secrets
+remove_vcsh_repo dotfiles-ssh-private
