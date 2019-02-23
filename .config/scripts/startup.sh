@@ -1,4 +1,4 @@
-# Map caps lock to escape
+# Swap caps lock and escape
 setxkbmap -option caps:swapescape
 
 # Map print screen to menu
@@ -16,5 +16,7 @@ xset r rate 200 80
 # Manually start services whilst s6 issue persists
 tmux new-session -d -s desktop-environment
 tmux new-session -d -s gotty-clients
-tmux new-session -d -s gotty-server gotty --permit-write --port 8022 zsh -c 'tmux new-session -s gotty-clients-$(date +%s) -t gotty-clients'
-tmux new-session -d -s webrelay relay connect --name $HOSTNAME localhost:8022
+tmux new-session -d -s gotty-server \
+  gotty --permit-write --port 8022 zsh -c 'tmux new-session -s gotty-clients-$(date +%s) -t gotty-clients'
+tmux new-session -d -s webrelay \
+  relay connect -s $HOSTNAME --crypto full http://localhost:8022

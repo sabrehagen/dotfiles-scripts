@@ -8,4 +8,5 @@ fi
 keychain --eval id_rsa
 
 # Clone private repositories using ssh key
+vcsh clone git@github.com:sabrehagen/dotfiles-notes.git
 vcsh clone git@github.com:sabrehagen/dotfiles-secrets.git
