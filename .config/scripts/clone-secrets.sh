@@ -25,4 +25,4 @@ for REPOSITORY in $(ls -d $PUBLIC_VCSH_REPOS/* $PRIVATE_VCSH_REPOS/*); do
 done
 
 # Restart system services now that secrets are available
-~/.config/scripts/startup.sh
+$HOME/.config/scripts/startup.sh
