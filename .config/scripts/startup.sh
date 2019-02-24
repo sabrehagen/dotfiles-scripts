@@ -20,6 +20,7 @@ tmux new-session -d -s gotty-server \
   gotty --permit-write --port 8022 zsh -c 'tmux new-session -s gotty-clients-$(date +%s) -t gotty-clients' 2>/dev/null
 
 # Always restart webrelay to pick up new environment variables
+tmux set-environment -g RELAY_KEY $RELAY_KEY
+tmux set-environment -g RELAY_SECRET $RELAY_SECRET
 tmux kill-session -t webrelay
-tmux new-session -d -s webrelay \
-  relay connect -s $HOSTNAME --crypto full http://localhost:8022 2>/dev/null
+tmux new-session -d -s webrelay tmux relay connect -s $HOSTNAME --crypto full http://localhost:8022 2>/dev/null
