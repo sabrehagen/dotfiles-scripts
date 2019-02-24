@@ -13,10 +13,16 @@ fi
 keychain --eval id_rsa
 
 # Clone private repositories using ssh key
-vcsh clone git@github.com:sabrehagen/dotfiles-notes.git
-vcsh clone git@github.com:sabrehagen/dotfiles-secrets.git
+vcsh clone git@github.com:sabrehagen/dotfiles-notes.git &
+vcsh clone git@github.com:sabrehagen/dotfiles-secrets.git &
+
+# Wait for repositories to clone in parallel
+wait
 
 # Convert all https cloned repositories to use ssh
 for REPOSITORY in $(ls -d $PUBLIC_VCSH_REPOS/* $PRIVATE_VCSH_REPOS/*); do
   https-to-git $REPOSITORY/config
 done
+
+# Restart system services now that secrets are available
+~/.config/scripts/startup.sh
