@@ -3,8 +3,8 @@ PUBLIC_VCSH_REPOS=$HOME/.config/vcsh/repo.d
 PRIVATE_VCSH_REPOS=$HOME/.config/vcsh/repo-private.d
 export VCSH_REPO_D=$PRIVATE_VCSH_REPOS
 
-# Permissions hack. TODO figure out private folders are created as root.
-sudo chown -R jackson:jackson ~
+# Permissions hack. TODO figure out secrets folders are created as root
+sudo chown -R jackson:jackson $HOME
 
 # Clone private ssh keys using password over https if an ssh key is not already present
 if [ ! -f $HOME/.ssh/id_rsa ]; then
@@ -27,6 +27,9 @@ https_to_git () { sed -i 's;https://.*github.com/\(.*\);git@github.com:\1;' "$1"
 for REPOSITORY in $(ls -d $PUBLIC_VCSH_REPOS/* $PRIVATE_VCSH_REPOS/*); do
   https_to_git $REPOSITORY/config
 done
+
+# Load the secrets into the environment
+source $HOME/.zshenv
 
 # Restart system services now that secrets are available
 $HOME/.config/scripts/startup.sh
