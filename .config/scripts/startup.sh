@@ -22,5 +22,5 @@ tmux new-session -d -s gotty-server \
 # Always restart webrelay to pick up new environment variables
 tmux set-environment -g RELAY_KEY $RELAY_KEY
 tmux set-environment -g RELAY_SECRET $RELAY_SECRET
-tmux kill-session -t webrelay
+tmux kill-session -t webrelay 2>/dev/null
 tmux new-session -d -s webrelay relay connect -s $HOSTNAME --crypto full http://localhost:8022 2>/dev/null
