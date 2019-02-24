@@ -14,10 +14,12 @@ numlockx on
 xset r rate 200 80
 
 # Manually start services whilst s6 issue persists
-tmux kill-session -t webrelay
-tmux new-session -d -s desktop-environment
-tmux new-session -d -s gotty-clients
+tmux new-session -d -s desktop-environment 2>/dev/null
+tmux new-session -d -s gotty-clients 2>/dev/null
 tmux new-session -d -s gotty-server \
-  gotty --permit-write --port 8022 zsh -c 'tmux new-session -s gotty-clients-$(date +%s) -t gotty-clients'
+  gotty --permit-write --port 8022 zsh -c 'tmux new-session -s gotty-clients-$(date +%s) -t gotty-clients' 2>/dev/null
+
+# Always restart webrelay to pick up new environment variables
+tmux kill-session -t webrelay
 tmux new-session -d -s webrelay \
-  relay connect -s $HOSTNAME --crypto full http://localhost:8022
+  relay connect -s $HOSTNAME --crypto full http://localhost:8022 2>/dev/null
