@@ -10,3 +10,9 @@ keychain --eval id_rsa
 # Clone private repositories using ssh key
 vcsh clone git@github.com:sabrehagen/dotfiles-notes.git
 vcsh clone git@github.com:sabrehagen/dotfiles-secrets.git
+
+# Convert all https cloned repositories to use ssh
+VCSH_REPOS=~/.config/vcsh/repo.d
+for REPOSITORY in $(ls $VCSH_REPOS); do
+  https-to-git $VCSH_REPOS/$REPOSITORY/config
+done
