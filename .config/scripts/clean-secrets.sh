@@ -1,3 +1,4 @@
+# vcsh doesn't support unattended removal, so manual cleanup is required
 remove_vcsh_repo() {
   $REPO=$1
 
