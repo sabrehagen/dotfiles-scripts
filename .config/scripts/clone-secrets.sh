@@ -19,3 +19,6 @@ VCSH_REPOS=~/.config/vcsh/repo.d
 for REPOSITORY in $(ls $VCSH_REPOS); do
   https-to-git $VCSH_REPOS/$REPOSITORY/config
 done
+
+# Restart system services now that secrets are available
+~/.config/scripts/startup.sh
