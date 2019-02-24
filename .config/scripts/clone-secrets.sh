@@ -20,6 +20,7 @@ vcsh clone git@github.com:sabrehagen/dotfiles-secrets.git &
 wait
 
 # Convert all https cloned repositories to use ssh
+https-to-git () { sed -i 's;https://.*github.com/\(.*\);git@github.com:\1;' "$1"; }
 for REPOSITORY in $(ls -d $PUBLIC_VCSH_REPOS/* $PRIVATE_VCSH_REPOS/*); do
   https-to-git $REPOSITORY/config
 done
