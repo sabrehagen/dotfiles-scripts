@@ -6,9 +6,11 @@ remove_vcsh_repo() {
   vcsh $REPO ls-files | xargs rm -f
 
   # Remove vcsh repository git folder
-  rm -rf ~/.config/vcsh/repo.d/$REPO
+  rm -rf ~/.config/vcsh/repo-private.d/$REPO
 }
 
+remove_vcsh_repo dotfiles-cloudflare
+remove_vcsh_repo dotfiles-gcloud
 remove_vcsh_repo dotfiles-notes
 remove_vcsh_repo dotfiles-secrets
 remove_vcsh_repo dotfiles-ssh-private
