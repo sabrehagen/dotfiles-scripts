@@ -14,6 +14,7 @@ numlockx on
 xset r rate 200 80
 
 # Manually start services whilst s6 issue persists
+tmux start-server
 tmux new-session -d -s desktop-environment 2>/dev/null
 tmux new-session -d -s gotty-clients 2>/dev/null
 tmux new-session -d -s gotty-server \
