@@ -15,11 +15,11 @@ xset r rate 200 80
 
 # Manually start services whilst s6 issue persists
 tmux start-server
-tmux new-session -d -s desktop-environment 2>/dev/null
+tmux new-session -d -s desktop-environment-dashboard 2>/dev/null
+tmux new-session -d -s desktop-environment-shell 2>/dev/null
 tmux new-session -d -s gotty-clients 2>/dev/null
 tmux new-session -d -s gotty-server \
   gotty --permit-write --port 8022 zsh -c 'tmux new-session -s gotty-clients-$(date +%s) -t gotty-clients' 2>/dev/null
-
 tmux new-session -d -s transmission \
   transmission-daemon \
   --bind-address-ipv4 localhost \
@@ -28,7 +28,7 @@ tmux new-session -d -s transmission \
   --foreground \
   --no-auth \
   --rpc-bind-address localhost \
-  --watch-dir $HOME/torrents/.watch
+  --watch-dir $HOME/torrents/.watch 2>/dev/null
 
 # Always restart webrelay to pick up new environment variables
 tmux set-environment -g RELAY_KEY $RELAY_KEY
