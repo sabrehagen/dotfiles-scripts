@@ -1,3 +1,8 @@
+# Only clone secrets as the jackson user, i.e. not root
+if [ $USER != "jackson" ]; then
+  exit 0
+fi
+
 # Store private dotfiles separately from public ones
 PUBLIC_VCSH_REPOS=$HOME/.config/vcsh/repo.d
 PRIVATE_VCSH_REPOS=$HOME/.config/vcsh/repo-private.d
