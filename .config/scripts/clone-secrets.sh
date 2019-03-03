@@ -3,7 +3,7 @@ chown jackson:jackson /home/jackson/user.log
 echo $USER >> /home/jackson/user.log
 
 # Early exit if we are not running in an interactive session
-if [ "${-#*i}" = "$-" ]; then
+if [ "${-#*i}" != "$-" ]; then
   echo "is not interactive!" >> /home/jackson/user.log
   exit 0
 fi
