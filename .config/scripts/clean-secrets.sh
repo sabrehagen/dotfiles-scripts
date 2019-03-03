@@ -4,7 +4,7 @@ remove_vcsh_repo() {
   echo Cleaning $REPO...
 
   # Remove vcsh repository tracked files
-  vcsh $REPO ls-files --full-name $HOME 2>/dev/null | \
+  vcshp $REPO ls-files --full-name $HOME 2>/dev/null | \
     xargs -n 1 -I file rm -f $HOME/file
 
   # Remove vcsh repository git folder
