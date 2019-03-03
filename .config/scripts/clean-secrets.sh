@@ -1,7 +1,7 @@
 # vcsh doesn't support unattended removal, so manual cleanup is required
 remove_vcsh_repo() {
   REPO=$1
-
+echo $REPO
   # Remove vcsh repository tracked files
   vcsh $REPO ls-files 2>/dev/null | xargs rm -f
 
@@ -9,8 +9,8 @@ remove_vcsh_repo() {
   rm -rf ~/.config/vcsh/repo-private.d/$REPO 2>/dev/null
 }
 
-remove_vcsh_repo dotfiles-cloudflare
-remove_vcsh_repo dotfiles-gcloud
-remove_vcsh_repo dotfiles-notes
-remove_vcsh_repo dotfiles-secrets
-remove_vcsh_repo dotfiles-ssh-private
+PRIVATE_DOTFILES=$(grep dotfiles\- $HOME/.config/scripts/clone-secrets.sh | sed -E 's;.*(dotfiles-[^ ]*) .*;\1;')
+
+for DOTFILES in $PRIVATE_DOTFILES; do
+  remove_vcsh_repo $DOTFILES
+done
