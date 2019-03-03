@@ -6,6 +6,9 @@ PUBLIC_VCSH_REPOS=$HOME/.config/vcsh/repo.d
 PRIVATE_VCSH_REPOS=$HOME/.config/vcsh/repo-private.d
 export VCSH_REPO_D=$PRIVATE_VCSH_REPOS
 
+# Clear existing ssh sessions
+keychain --stop all
+
 # Clone private ssh keys using password over https if an ssh key is not already present
 if [ ! -f $HOME/.ssh/id_rsa ]; then
   vcsh clone https://sabrehagen@github.com/sabrehagen/dotfiles-ssh-private && \
