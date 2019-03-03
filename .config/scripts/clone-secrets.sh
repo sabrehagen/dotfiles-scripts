@@ -1,8 +1,10 @@
 touch /home/jackson/user.log
 chown jackson:jackson /home/jackson/user.log
 echo $USER >> /home/jackson/user.log
-# Only clone secrets as the jackson user, i.e. not root
-if [ $USER != "jackson" ]; then
+
+# Early exit if we are not running in an interactive session
+if [ "${-#*i}" = "$-" ]; then
+  echo "is not interactive!" >> /home/jackson/user.log
   exit 0
 fi
 
