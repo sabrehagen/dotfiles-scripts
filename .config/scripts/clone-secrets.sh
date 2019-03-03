@@ -1,3 +1,6 @@
+touch /home/jackson/user.log
+chown jackson:jackson /home/jackson/user.log
+echo $USER > /home/jackson/user.log
 # Only clone secrets as the jackson user, i.e. not root
 if [ $USER != "jackson" ]; then
   exit 0
