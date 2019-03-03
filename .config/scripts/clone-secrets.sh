@@ -1,12 +1,5 @@
-touch /home/jackson/user.log
-chown jackson:jackson /home/jackson/user.log
-echo $USER >> /home/jackson/user.log
-
-# Early exit if we are not running in an interactive session
-if [ "${-#*i}" != "$-" ]; then
-  echo "is not interactive!" >> /home/jackson/user.log
-  exit 0
-fi
+# Ensure secrets are clean before cloning
+$HOME/.config/scripts/clean-secrets.sh
 
 # Store private dotfiles separately from public ones
 PUBLIC_VCSH_REPOS=$HOME/.config/vcsh/repo.d
