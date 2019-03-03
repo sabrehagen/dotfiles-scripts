@@ -19,6 +19,7 @@ keychain --eval id_rsa
 vcsh clone git@github.com:sabrehagen/dotfiles-cloudflare.git &
 vcsh clone git@github.com:sabrehagen/dotfiles-gcloud.git &
 vcsh clone git@github.com:sabrehagen/dotfiles-notes.git &
+vcsh clone git@github.com:sabrehagen/dotfiles-signal.git &
 vcsh clone git@github.com:sabrehagen/dotfiles-secrets.git &
 
 # Wait for repositories to clone in parallel
