@@ -3,9 +3,6 @@ PUBLIC_VCSH_REPOS=$HOME/.config/vcsh/repo.d
 PRIVATE_VCSH_REPOS=$HOME/.config/vcsh/repo-private.d
 export VCSH_REPO_D=$PRIVATE_VCSH_REPOS
 
-# Permissions hack. TODO figure out secrets folders are created as root
-sudo chown -R jackson:jackson $HOME
-
 # Clone private ssh keys using password over https if an ssh key is not already present
 if [ ! -f $HOME/.ssh/id_rsa ]; then
   vcsh clone https://sabrehagen@github.com/sabrehagen/dotfiles-ssh-private && \
