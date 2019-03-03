@@ -1,6 +1,7 @@
 # vcsh doesn't support unattended removal, so manual cleanup is required
 remove_vcsh_repo() {
   REPO=$1
+  echo Cleaning $REPO...
 
   # Remove vcsh repository tracked files
   vcsh $REPO ls-files 2>/dev/null | xargs rm -f
