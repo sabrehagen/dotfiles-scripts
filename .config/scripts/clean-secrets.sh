@@ -10,7 +10,6 @@ remove_vcsh_repo() {
     xargs -n 1 -I file rm -rf $HOME/file 2>/dev/null
 
   # Remove vcsh repository tracked directories
-  vcsh $REPO ls-files --full-name $HOME 2>/dev/null
   vcsh $REPO ls-files --full-name $HOME 2>/dev/null | \
     xargs dirname 2>/dev/null | \
     xargs -n 1 -I directory rm -rf $HOME/directory 2>/dev/null

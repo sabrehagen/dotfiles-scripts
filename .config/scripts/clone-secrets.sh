@@ -11,7 +11,7 @@ keychain --stop all
 
 # Clone private ssh keys using password over https if an ssh key is not already present
 if [ ! -f $HOME/.ssh/id_rsa ]; then
-  vcsh clone https://sabrehagen@github.com/sabrehagen/dotfiles-ssh-private && \
+  vcsh clone https://sabrehagen@github.com/sabrehagen/dotfiles-ssh-private 2>/dev/null && \
     chmod 600 $HOME/.ssh-private/id_rsa && \
     ln -sf $HOME/.ssh/id_rsa.pub $HOME/.ssh-private/id_rsa.pub && \
     ln -sf $HOME/.ssh-private/id_rsa $HOME/.ssh/id_rsa
@@ -21,11 +21,11 @@ fi
 eval `keychain --eval id_rsa`
 
 # Clone private repositories using ssh key
-vcsh clone git@github.com:sabrehagen/dotfiles-cloudflare &
-vcsh clone git@github.com:sabrehagen/dotfiles-gcloud &
-vcsh clone git@github.com:sabrehagen/dotfiles-notes &
-vcsh clone git@github.com:sabrehagen/dotfiles-secrets &
-vcsh clone git@github.com:sabrehagen/dotfiles-signal &
+vcsh clone git@github.com:sabrehagen/dotfiles-cloudflare 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-gcloud 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-notes 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-secrets 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-signal 2>/dev/null &
 
 # Wait for repositories to clone in parallel
 wait
