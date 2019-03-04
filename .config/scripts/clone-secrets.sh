@@ -12,7 +12,9 @@ keychain --stop all
 # Clone private ssh keys using password over https if an ssh key is not already present
 if [ ! -f $HOME/.ssh/id_rsa ]; then
   vcsh clone https://sabrehagen@github.com/sabrehagen/dotfiles-ssh-private && \
-    chmod 600 $HOME/.ssh-private/id_rsa
+    chmod 600 $HOME/.ssh-private/id_rsa && \
+    ln -s $HOME/.ssh-private/config ../.ssh/config && \
+    ln -s $HOME/.ssh-private/id_rsa ../.ssh/id_rsa
 fi
 
 # Unlock ssh private key so remaining repositories can be cloned
