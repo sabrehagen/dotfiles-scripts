@@ -4,14 +4,13 @@ $HOME/.config/scripts/clean-secrets.sh
 # Store private dotfiles separately from public ones
 PUBLIC_VCSH_REPOS=$HOME/.config/vcsh/repo.d
 PRIVATE_VCSH_REPOS=$HOME/.config/vcsh/repo-private.d
-export VCSH_REPO_D=$PRIVATE_VCSH_REPOS
 
 # Clear existing ssh sessions
 keychain --stop all
 
 # Clone private ssh keys using password over https if an ssh key is not already present
 if [ ! -f $HOME/.ssh/id_rsa ]; then
-  vcsh clone https://sabrehagen@github.com/sabrehagen/dotfiles-ssh-private 2>/dev/null && \
+  vcshp clone https://sabrehagen@github.com/sabrehagen/dotfiles-ssh-private 2>/dev/null && \
     chmod 600 $HOME/.ssh-private/id_rsa && \
     ln -sf $HOME/.ssh/id_rsa.pub $HOME/.ssh-private/id_rsa.pub && \
     ln -sf $HOME/.ssh-private/id_rsa $HOME/.ssh/id_rsa
@@ -21,11 +20,13 @@ fi
 eval `keychain --eval id_rsa`
 
 # Clone private repositories using ssh key
-vcsh clone git@github.com:sabrehagen/dotfiles-cloudflare 2>/dev/null &
-vcsh clone git@github.com:sabrehagen/dotfiles-gcloud 2>/dev/null &
-vcsh clone git@github.com:sabrehagen/dotfiles-notes 2>/dev/null &
-vcsh clone git@github.com:sabrehagen/dotfiles-secrets 2>/dev/null &
-vcsh clone git@github.com:sabrehagen/dotfiles-signal 2>/dev/null &
+vcshp clone git@github.com:sabrehagen/dotfiles-cloudflare 2>/dev/null &
+vcshp clone git@github.com:sabrehagen/dotfiles-gcloud 2>/dev/null &
+vcshp clone git@github.com:sabrehagen/dotfiles-gdrive 2>/dev/null &
+vcshp clone git@github.com:sabrehagen/dotfiles-notes 2>/dev/null &
+vcshp clone git@github.com:sabrehagen/dotfiles-onedrive 2>/dev/null &
+vcshp clone git@github.com:sabrehagen/dotfiles-secrets 2>/dev/null &
+vcshp clone git@github.com:sabrehagen/dotfiles-signal 2>/dev/null &
 
 # Wait for repositories to clone in parallel
 wait
