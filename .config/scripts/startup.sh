@@ -34,4 +34,9 @@ tmux new-session -d -s transmission \
 tmux set-environment -g RELAY_KEY $RELAY_KEY
 tmux set-environment -g RELAY_SECRET $RELAY_SECRET
 tmux kill-session -t webrelay 2>/dev/null
-tmux new-session -d -s webrelay relay connect -s $HOSTNAME --crypto full http://localhost:8022 2>/dev/null
+tmux new-session -d -s webrelay \
+  relay connect \
+  --crypto full \
+  --region au \
+  --subdomain $HOSTNAME \
+  http://localhost:8022 2>/dev/null
