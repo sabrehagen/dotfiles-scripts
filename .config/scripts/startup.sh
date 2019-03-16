@@ -1,6 +1,11 @@
 # Swap caps lock and escape
 setxkbmap -option caps:swapescape
 
+# Map right alt to control
+xmodmap -e "remove Mod1 = Alt_R"
+xmodmap -e "keycode 108 = Control_R"
+xmodmap -e "add Control = Control_R"
+
 # Map print screen to menu
 xmodmap -e "keycode 107 = Menu"
 
