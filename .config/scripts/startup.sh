@@ -24,7 +24,10 @@ tmux new-session -d -s desktop-environment-dashboard zsh 2>/dev/null
 tmux new-session -d -s desktop-environment-shell zsh --login 2>/dev/null
 tmux new-session -d -s gotty-clients zsh 2>/dev/null
 tmux new-session -d -s gotty-server \
-  gotty --permit-write --port 8022 zsh -c "tmux new-session -s gotty-clients-$(date +%s) -t gotty-clients" 2>/dev/null
+  gotty \
+  --permit-write \
+  --port 8022 \
+  zsh -c "tmux new-session -s gotty-clients-$(date +%s) -t gotty-clients" 2>/dev/null
 tmux new-session -d -s transmission \
   transmission-daemon \
   --bind-address-ipv4 localhost \
