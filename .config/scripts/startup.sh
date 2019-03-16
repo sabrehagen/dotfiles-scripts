@@ -16,7 +16,7 @@ xinput disable 10
 numlockx on
 
 # Set keyboard repeat delay and rate
-xset r rate 200 80
+xset r rate 180 140
 
 # Manually start services whilst s6 issue persists
 tmux start-server
