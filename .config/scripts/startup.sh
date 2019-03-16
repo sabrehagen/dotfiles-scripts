@@ -1,6 +1,10 @@
 # Swap caps lock and escape
 setxkbmap -option caps:swapescape
 
+# Swap right alt and right control
+setxkbmap -option ctrl:ralt_rctrl
+setxkbmap -option ctrl:rctrl_ralt
+
 # Map right alt to control
 xmodmap -e "remove Mod1 = Alt_R"
 xmodmap -e "keycode 108 = Control_R"
