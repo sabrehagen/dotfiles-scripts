@@ -52,3 +52,6 @@ tmux new-session -d -s webrelay \
   --region au \
   --subdomain $HOSTNAME \
   http://localhost:8022 2>/dev/null
+
+# Insert the stemn docker host into the hosts file
+yarn --cwd $HOME/repositories/stemn/stemn-backend/infrastructure/terraform hosts:insert &
