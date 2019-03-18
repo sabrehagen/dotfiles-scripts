@@ -41,5 +41,8 @@ for REPOSITORY in $(ls -d $PUBLIC_VCSH_REPOS/* $PRIVATE_VCSH_REPOS/*); do
   https_to_git $REPOSITORY/config
 done
 
-# Restart system services in a new shell with the cloned secrets
-zsh -c $HOME/.config/scripts/startup.sh
+# Load secrets into the environment
+. $HOME/.zshenv
+
+# Restart system services with secrets in the environment
+$HOME/.config/scripts/startup.sh
