@@ -17,7 +17,7 @@ if [ ! -f $HOME/.ssh/id_rsa ]; then
 fi
 
 # Unlock ssh private key so remaining repositories can be cloned
-eval `keychain --eval id_rsa`
+eval $(keychain --eval id_rsa)
 
 # Make unlocked key available to tmux clients
 tmux set-environment SSH_AGENT_PID $SSH_AGENT_PID
@@ -28,6 +28,7 @@ vcshp clone git@github.com:sabrehagen/dotfiles-cloudflare 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-gcloud 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-gdrive 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-notes 2>/dev/null &
+vcshp clone git@github.com:sabrehagen/dotfiles-npm 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-onedrive 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-secrets 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-signal 2>/dev/null &
