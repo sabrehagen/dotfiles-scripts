@@ -13,9 +13,6 @@ xmodmap -e "add Control = Control_R"
 # Map print screen to menu
 xmodmap -e "keycode 107 = Menu"
 
-# Disable touchscreen
-xinput disable 10
-
 # Enable numlock
 numlockx on
 
