@@ -26,4 +26,4 @@ tmux new-session -d -s transmission \
   --no-auth \
   --rpc-bind-address localhost \
   --watch-dir $HOME/torrents/.watch 2>/dev/null
-tmux new-session -d -s sxhkd sxhkd
+tmux new-session -d -s sxhkd sxhkd 2>/dev/null
