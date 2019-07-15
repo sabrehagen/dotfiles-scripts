@@ -24,14 +24,10 @@ tmux set-environment SSH_AGENT_PID $SSH_AGENT_PID
 tmux set-environment SSH_AUTH_SOCK $SSH_AUTH_SOCK
 
 # Clone private repositories using ssh key
-vcshp clone git@github.com:sabrehagen/dotfiles-cloudflare 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-gcloud 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-gdrive 2>/dev/null &
-vcshp clone git@github.com:sabrehagen/dotfiles-github 2>/dev/null &
-vcshp clone git@github.com:sabrehagen/dotfiles-notes 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-npm 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-onedrive 2>/dev/null &
-vcshp clone git@github.com:sabrehagen/dotfiles-secrets 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-signal 2>/dev/null &
 
 # Wait for repositories to clone in parallel
