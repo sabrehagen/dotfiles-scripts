@@ -16,7 +16,15 @@ xset r rate 180 140
 
 # Start the tmux server and long lived services
 tmux start-server
-tmux new-session -d -s desktop-environment-shell zsh --login 2>/dev/null
+
+# Start desktop environment shell
+tmux new-session \
+  -d \
+  -s desktop-environment-shell \
+  zsh --login \
+  2>/dev/null
+
+# Start transmission
 tmux new-session -d -s transmission \
   transmission-daemon \
   --bind-address-ipv4 localhost \
@@ -25,5 +33,19 @@ tmux new-session -d -s transmission \
   --foreground \
   --no-auth \
   --rpc-bind-address localhost \
-  --watch-dir $HOME/torrents/.watch 2>/dev/null
-tmux new-session -d -s sxhkd sxhkd 2>/dev/null
+  --watch-dir $HOME/torrents/.watch \
+  2>/dev/null
+
+# Start slack
+tmux new-session \
+  -d \
+  -s slack \
+  /usr/bin/slack \
+  2>/dev/null
+
+# Start hotkeys
+tmux new-session \
+  -d \
+  -s sxhkd \
+  sxhkd \
+  2>/dev/null
