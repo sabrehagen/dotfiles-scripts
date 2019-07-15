@@ -36,13 +36,6 @@ tmux new-session -d -s transmission \
   --watch-dir $HOME/torrents/.watch \
   2>/dev/null
 
-# Start slack
-tmux new-session \
-  -d \
-  -s slack \
-  /usr/bin/slack \
-  2>/dev/null
-
 # Start hotkeys
 tmux new-session \
   -d \
