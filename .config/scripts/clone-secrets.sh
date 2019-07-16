@@ -5,9 +5,6 @@ $HOME/.config/scripts/clean-secrets.sh
 PUBLIC_VCSH_REPOS=$HOME/.config/vcsh/repo.d
 PRIVATE_VCSH_REPOS=$HOME/.config/vcsh/repo-private.d
 
-# Clear existing ssh sessions
-keychain --stop all
-
 # Clone private ssh keys using password over https if an ssh key is not already present
 if [ ! -f $HOME/.ssh/id_rsa ]; then
   vcshp clone https://sabrehagen@github.com/sabrehagen/dotfiles-ssh-private 2>/dev/null && \
