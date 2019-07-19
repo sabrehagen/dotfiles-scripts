@@ -14,7 +14,7 @@ numlockx on
 # Set keyboard repeat delay and rate
 xset r rate 180 140
 
-# Start the tmux server and long lived services
+# Start the tmux server for long lived services
 tmux start-server
 
 # Start desktop environment shell
@@ -22,6 +22,20 @@ tmux new-session \
   -d \
   -s desktop-environment-shell \
   zsh --login \
+  2>/dev/null
+
+# Start hotkeys
+tmux new-session \
+  -d \
+  -s sxhkd \
+  sxhkd \
+  2>/dev/null
+
+# Start the ssh-agent
+tmux new-session \
+  -d \
+  -s ssh-agent \
+  ssh-agent -a $SSH_AUTH_SOCK \
   2>/dev/null
 
 # Start transmission
@@ -34,11 +48,4 @@ tmux new-session -d -s transmission \
   --no-auth \
   --rpc-bind-address localhost \
   --watch-dir $HOME/torrents/.watch \
-  2>/dev/null
-
-# Start hotkeys
-tmux new-session \
-  -d \
-  -s sxhkd \
-  sxhkd \
   2>/dev/null
