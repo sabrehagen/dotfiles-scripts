@@ -35,7 +35,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s ssh-agent \
-  ssh-agent -a $SSH_AUTH_SOCK \
+  ssh-agent -D -a $SSH_AUTH_SOCK \
   2>/dev/null
 
 # Start transmission
