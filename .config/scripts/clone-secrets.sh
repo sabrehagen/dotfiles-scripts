@@ -14,7 +14,7 @@ if [ ! -f $HOME/.ssh/id_rsa ]; then
 fi
 
 # Unlock ssh private key so remaining repositories can be cloned
-eval $(keychain --eval id_rsa)
+eval $(keychain --eval id_rsa --inherit any)
 
 # Make unlocked key available to tmux clients
 tmux set-environment SSH_AGENT_PID $SSH_AGENT_PID
