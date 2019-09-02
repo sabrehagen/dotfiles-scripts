@@ -13,6 +13,9 @@ if [ ! -f $HOME/.ssh/id_rsa ]; then
     ln -sf $HOME/.ssh-private/id_rsa $HOME/.ssh/id_rsa
 fi
 
+# Ensure ssh-agent is started so keys can be loaded
+$HOME/.config/scripts/startup.sh
+
 # Unlock ssh private key so remaining repositories can be cloned
 eval $(keychain --eval id_rsa --inherit any)
 
@@ -38,9 +41,3 @@ https_to_git () { sed -i 's;https://.*github.com/\(.*\);git@github.com:\1;' "$1"
 for REPOSITORY in $(ls -d $PUBLIC_VCSH_REPOS/* $PRIVATE_VCSH_REPOS/*); do
   https_to_git $REPOSITORY/config
 done
-
-# Load secrets into the environment
-. $HOME/.zshenv
-
-# Restart system services with secrets in the environment
-$HOME/.config/scripts/startup.sh
