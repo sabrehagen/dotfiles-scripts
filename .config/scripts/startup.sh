@@ -43,7 +43,7 @@ tmux new-session -d -s transmission \
   --watch-dir $HOME/torrents/.watch \
   2>/dev/null
 
-# Remove ssh socket if no ssh-agent is using it, otherwise the ssh-agent below will fail to start
+# Remove existing ssh-agent socket if no ssh-agent is using it, otherwise ssh-agent below will fail to start
 SSH_AGENT_EXISTS=$(ps aux | grep $SSH_AUTH_SOCK | grep -v grep | cut -f 3 -d\ )
 SSH_SOCKET_EXISTS=$(test -f $SSH_AUTH_SOCK || echo $?)
 if [ -z "$SSH_AGENT_EXISTS" ] && [ "$SSH_SOCKET_EXISTS" -eq 1 ]; then
