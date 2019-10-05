@@ -31,8 +31,26 @@ tmux new-session \
   sxhkd \
   2>/dev/null
 
+# Start openvpn
+tmux new-session \
+  -d \
+  -s openvpn \
+  openvpn \
+  --config /etc/openvpn/nordvpn.ovpn \
+  --auth-user-pass ~/.config/openvpn/credentials \
+  2>/dev/null
+
+# Start rescuetime
+tmux new-session \
+  -d \
+  -s rescuetime \
+  rescuetime \
+  2>/dev/null
+
 # Start transmission
-tmux new-session -d -s transmission \
+tmux new-session \
+  -d \
+  -s transmission \
   transmission-daemon \
   --bind-address-ipv4 localhost \
   --config-dir $HOME/.config/transmission \
@@ -41,11 +59,6 @@ tmux new-session -d -s transmission \
   --no-auth \
   --rpc-bind-address localhost \
   --watch-dir $HOME/torrents/.watch \
-  2>/dev/null
-
-# Start rescuetime
-tmux new-session -d -s rescuetime \
-  rescuetime \
   2>/dev/null
 
 # Remove existing ssh-agent socket if no ssh-agent is using it, otherwise ssh-agent below will fail to start
