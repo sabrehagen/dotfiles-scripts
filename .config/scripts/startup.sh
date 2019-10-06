@@ -1,21 +1,12 @@
-# Swap caps lock and escape
-setxkbmap -option caps:swapescape
-
-# Swap right alt and right control
-setxkbmap -option ctrl:ralt_rctrl
-setxkbmap -option ctrl:rctrl_ralt
-
-# Map print screen to menu
-xmodmap -e "keycode 107 = Menu"
-
-# Enable numlock
-numlockx on
-
-# Set keyboard repeat delay and rate
-xset r rate 180 140
-
 # Start the tmux server for long lived services
 tmux start-server
+
+# Start X server
+tmux new-session \
+  -d \
+  -s xorg \
+  xinit /usr/bin/i3 -- :0 vt1 \
+  2>/dev/null
 
 # Start desktop environment shell
 tmux new-session \
@@ -75,3 +66,19 @@ tmux new-session \
   -s ssh-agent \
   ssh-agent -D -a $SSH_AUTH_SOCK \
   2>/dev/null
+
+# Swap caps lock and escape
+setxkbmap -option caps:swapescape
+
+# Swap right alt and right control
+setxkbmap -option ctrl:ralt_rctrl
+setxkbmap -option ctrl:rctrl_ralt
+
+# Map print screen to menu
+xmodmap -e "keycode 107 = Menu"
+
+# Enable numlock
+numlockx on
+
+# Set keyboard repeat delay and rate
+xset r rate 180 140
