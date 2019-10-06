@@ -26,8 +26,8 @@ tmux new-session \
 tmux new-session \
   -d \
   -s openvpn \
-  openvpn \
-  --config /etc/openvpn/nordvpn.ovpn \
+  sudo openvpn \
+  --config /etc/openvpn/sydney.ovpn \
   --auth-user-pass ~/.config/openvpn/credentials \
   2>/dev/null
 
