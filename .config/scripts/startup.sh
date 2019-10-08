@@ -29,6 +29,7 @@ tmux new-session \
   sudo openvpn \
   --config /etc/openvpn/sydney.ovpn \
   --auth-user-pass ~/.config/openvpn/credentials \
+  --dev-node /dev/tun \
   2>/dev/null
 
 # Start rescuetime
