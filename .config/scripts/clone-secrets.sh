@@ -42,3 +42,6 @@ https_to_git () { sed -i 's;https://.*github.com/\(.*\);git@github.com:\1;' "$1"
 for REPOSITORY in $(ls -d $PUBLIC_VCSH_REPOS/* $PRIVATE_VCSH_REPOS/*); do
   https_to_git $REPOSITORY/config
 done
+
+# Start services that depend on private secrets
+$HOME/.config/scripts/startup.sh
