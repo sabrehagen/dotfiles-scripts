@@ -8,6 +8,13 @@ tmux new-session \
   xinit /usr/bin/i3 -- :0 vt1 \
   2>/dev/null
 
+# Start autorandr
+tmux new-session \
+  -d \
+  -s autorandr \
+  'udevadm monitor --subsystem-match=drm --property --udev | grep -E --line-buffered "UDEV .*card0" | xargs -L 1 autorandr --change' \
+  2>/dev/null
+
 # Start desktop environment shell
 tmux new-session \
   -d \
