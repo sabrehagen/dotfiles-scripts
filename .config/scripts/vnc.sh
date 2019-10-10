@@ -2,14 +2,8 @@
 tmux new-session \
   -d \
   -s vnc-server \
-  x11vnc -forever \
+  x11vnc -forever -noxdamage \
   2>/dev/null
-
-# Retain vnc server logs after exit
-tmux set-hook \
-  -t vnc-server \
-  window-linked \
-  'set remain-on-exit on'
 
 # Start vnc client
 tmux new-session \
