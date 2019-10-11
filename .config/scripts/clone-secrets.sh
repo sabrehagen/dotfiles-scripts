@@ -28,6 +28,7 @@ vcshp clone git@github.com:sabrehagen/dotfiles-aws 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-docker 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-gcloud 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-gdrive 2>/dev/null &
+vcshp clone git@github.com:sabrehagen/dotfiles-irssi 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-npm 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-onedrive 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-openvpn 2>/dev/null &
