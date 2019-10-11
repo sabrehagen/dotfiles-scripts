@@ -29,6 +29,13 @@ tmux new-session \
   sxhkd \
   2>/dev/null
 
+# Start irc
+tmux new-session \
+  -d \
+  -s irc \
+  irssi \
+  2>/dev/null
+
 # Start openvpn
 tmux new-session \
   -d \
