@@ -30,28 +30,34 @@ tmux new-session \
   2>/dev/null
 
 # Start irc
-tmux new-session \
-  -d \
-  -s irc \
-  irssi \
-  2>/dev/null
+if [ -d ~/.irssi ]; then
+  tmux new-session \
+    -d \
+    -s irc \
+    irssi \
+    2>/dev/null
+fi
 
 # Start openvpn
-tmux new-session \
-  -d \
-  -s openvpn \
-  sudo openvpn \
-  --config ~/.config/openvpn/sydney.ovpn \
-  --auth-user-pass ~/.config/openvpn/credentials \
-  --dev-node ~/.config/openvpn/tun \
-  2>/dev/null
+if [ -d ~/.config/openvpn ]; then
+  tmux new-session \
+    -d \
+    -s openvpn \
+    sudo openvpn \
+    --config ~/.config/openvpn/sydney.ovpn \
+    --auth-user-pass ~/.config/openvpn/credentials \
+    --dev-node ~/.config/openvpn/tun \
+    2>/dev/null
+fi
 
 # Start rescuetime
-tmux new-session \
-  -d \
-  -s rescuetime \
-  rescuetime \
-  2>/dev/null
+if [ -d ~/.config/RescueTime.com ]; then
+  tmux new-session \
+    -d \
+    -s rescuetime \
+    rescuetime \
+    2>/dev/null
+fi
 
 # Start transmission
 tmux new-session \
