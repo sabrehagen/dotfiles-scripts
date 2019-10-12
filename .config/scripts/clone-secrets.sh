@@ -7,7 +7,7 @@ PRIVATE_VCSH_REPOS=$HOME/.config/vcsh/repo-private.d
 
 # Clone private ssh keys using password over https if an ssh key is not already present
 if [ ! -f $HOME/.ssh/id_rsa ]; then
-  read -s "PASSWORD?Password for 'https://sabrehagen@github.com': "
+  echo; read -s "PASSWORD?Password for 'https://sabrehagen@github.com': "
   vcshp clone https://sabrehagen:$PASSWORD@github.com/sabrehagen/dotfiles-ssh-private && \
     chmod 600 $HOME/.ssh-private/id_rsa && \
     ln -sf $HOME/.ssh/id_rsa.pub $HOME/.ssh-private/id_rsa.pub && \
