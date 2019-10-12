@@ -30,7 +30,7 @@ tmux new-session \
   2>/dev/null
 
 # Start irc
-if [ -d ~/.irssi ]; then
+if [ -d ~/.ssh-private ]; then
   tmux new-session \
     -d \
     -s irc \
@@ -39,7 +39,7 @@ if [ -d ~/.irssi ]; then
 fi
 
 # Start openvpn
-if [ -d ~/.config/openvpn ]; then
+if [ -d ~/.ssh-private ]; then
   tmux new-session \
     -d \
     -s openvpn \
@@ -51,7 +51,7 @@ if [ -d ~/.config/openvpn ]; then
 fi
 
 # Start rescuetime
-if [ -d ~/.config/RescueTime.com ]; then
+if [ -d ~/.ssh-private ]; then
   tmux new-session \
     -d \
     -s rescuetime \
