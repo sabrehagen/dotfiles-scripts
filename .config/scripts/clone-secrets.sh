@@ -13,7 +13,6 @@ if [ ! -f $HOME/.ssh/id_rsa ]; then
     chmod 600 $HOME/.ssh-private/id_rsa && \
     ln -sf $HOME/.ssh/id_rsa.pub $HOME/.ssh-private/id_rsa.pub && \
     ln -sf $HOME/.ssh-private/id_rsa $HOME/.ssh/id_rsa
-  echo
 fi
 
 # Ensure ssh-agent is started so keys can be loaded
