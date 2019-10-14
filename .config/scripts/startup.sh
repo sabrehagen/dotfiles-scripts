@@ -1,5 +1,17 @@
+# Remove existing ssh-agent socket if no ssh-agent is using it, otherwise tmux ssh-agent will fail to start
+SSH_AGENT_EXISTS=$(ps aux | grep $SSH_AUTH_SOCK | grep -v grep | cut -f 3 -d\ )
+SSH_SOCKET_EXISTS=$(test -f $SSH_AUTH_SOCK || echo $?)
+if [ -z "$SSH_AGENT_EXISTS" ] && [ "$SSH_SOCKET_EXISTS" -eq 1 ]; then
+  pkill -f ssh-agent
+  rm $SSH_AUTH_SOCK 2>/dev/null
+fi
+
 # Start the tmux server for long lived services
 tmux start-server
+
+# Make ssh-agent available to tmux clients
+tmux set-environment SSH_AGENT_PID $SSH_AGENT_PID
+tmux set-environment SSH_AUTH_SOCK $SSH_AUTH_SOCK
 
 # Start X server
 tmux new-session \
@@ -14,6 +26,17 @@ tmux new-session \
   -s autorandr \
   ~/.config/scripts/monitor-hotplug.sh \
   2>/dev/null
+
+# Start cloudstorage
+if [ -d ~/.ssh-private ]; then
+  tmux new-session \
+    -d \
+    -s cloudstorage \
+    'CLOUD_COMPUTER_HOST_ID=jackson \
+    CLOUD_COMPUTER_REDIRECT_URI=https://localhost:12345 \
+    cloudstorage-fuse -f -d -o allow_other,auto_unmount ~/cloudstorage' \
+    2>/dev/null
+fi
 
 # Start desktop environment shell
 tmux new-session \
@@ -72,14 +95,6 @@ tmux new-session \
   --rpc-bind-address localhost \
   --watch-dir $HOME/torrents/.watch \
   2>/dev/null
-
-# Remove existing ssh-agent socket if no ssh-agent is using it, otherwise ssh-agent below will fail to start
-SSH_AGENT_EXISTS=$(ps aux | grep $SSH_AUTH_SOCK | grep -v grep | cut -f 3 -d\ )
-SSH_SOCKET_EXISTS=$(test -f $SSH_AUTH_SOCK || echo $?)
-if [ -z "$SSH_AGENT_EXISTS" ] && [ "$SSH_SOCKET_EXISTS" -eq 1 ]; then
-  pkill -f ssh-agent
-  rm $SSH_AUTH_SOCK 2>/dev/null
-fi
 
 # Start the ssh-agent
 tmux new-session \
