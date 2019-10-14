@@ -21,12 +21,9 @@ $HOME/.config/scripts/startup.sh
 # Unlock ssh private key so remaining repositories can be cloned
 eval $(keychain --eval id_rsa --inherit any)
 
-# Make unlocked key available to tmux clients
-tmux set-environment SSH_AGENT_PID $SSH_AGENT_PID
-tmux set-environment SSH_AUTH_SOCK $SSH_AUTH_SOCK
-
 # Clone private repositories using ssh key
 vcshp clone git@github.com:sabrehagen/dotfiles-aws 2>/dev/null &
+vcshp clone git@github.com:sabrehagen/dotfiles-cloudstorage 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-docker 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-gcloud 2>/dev/null &
 vcshp clone git@github.com:sabrehagen/dotfiles-gdrive 2>/dev/null &
