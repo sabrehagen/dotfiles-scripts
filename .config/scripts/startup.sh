@@ -13,7 +13,7 @@ tmux start-server
 tmux new-session \
   -d \
   -s xorg \
-  xinit /usr/bin/i3 -- $DISPLAY vt2 \
+  xinit /usr/bin/i3 -- $DISPLAY vt02 \
   2>/dev/null
 
 # Start autorandr
