@@ -9,10 +9,6 @@ fi
 # Start the tmux server for long lived services
 tmux start-server
 
-# Make ssh-agent available to tmux clients
-tmux set-environment SSH_AGENT_PID $SSH_AGENT_PID
-tmux set-environment SSH_AUTH_SOCK $SSH_AUTH_SOCK
-
 # Start X server
 tmux new-session \
   -d \
