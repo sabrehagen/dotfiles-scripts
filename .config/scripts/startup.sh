@@ -6,6 +6,9 @@ if [ "$SSH_AGENT_EXISTS" -eq 0 ] && [ "$SSH_SOCKET_EXISTS" -eq 1 ]; then
   rm $SSH_AUTH_SOCK 2>/dev/null
 fi
 
+# Check if secrets required for private services have been cloned
+SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d || echo $?)
+
 # Start the tmux server for long lived services
 tmux start-server
 
@@ -24,7 +27,7 @@ tmux new-session \
   2>/dev/null
 
 # Start cloudstorage
-if [ -d ~/.ssh-private ]; then
+if [ "$SECRETS_EXIST" -eq 0 ]; then
   tmux new-session \
     -d \
     -s cloudstorage \
@@ -49,7 +52,7 @@ tmux new-session \
   2>/dev/null
 
 # Start irc
-if [ -d ~/.ssh-private ]; then
+if [ "$SECRETS_EXIST" -eq 0 ]; then
   tmux new-session \
     -d \
     -s irc \
@@ -58,7 +61,7 @@ if [ -d ~/.ssh-private ]; then
 fi
 
 # Start openvpn
-if [ -d ~/.ssh-private ]; then
+if [ "$SECRETS_EXIST" -eq 0 ]; then
   tmux new-session \
     -d \
     -s openvpn \
@@ -70,7 +73,7 @@ if [ -d ~/.ssh-private ]; then
 fi
 
 # Start rescuetime
-if [ -d ~/.ssh-private ]; then
+if [ "$SECRETS_EXIST" -eq 0 ]; then
   tmux new-session \
     -d \
     -s rescuetime \
