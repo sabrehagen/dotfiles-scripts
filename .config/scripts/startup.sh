@@ -1,8 +1,8 @@
-# Check if secrets required for private services have been cloned
-SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d; echo $?)
-
 # Start the tmux server for long lived services
 tmux start-server
+
+# Check if secrets required for private services have been cloned
+SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo $?)
 
 # Start X server
 tmux new-session \
