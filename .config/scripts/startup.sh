@@ -1,13 +1,13 @@
 # Remove existing ssh-agent socket if no ssh-agent is using it, otherwise tmux ssh-agent will fail to start
-SSH_AGENT_EXISTS=$(ps aux | grep $SSH_AUTH_SOCK | grep -vc grep || echo $?)
-SSH_SOCKET_EXISTS=$(test -f $SSH_AUTH_SOCK || echo $?)
+SSH_AGENT_EXISTS=$(ps aux | grep $SSH_AUTH_SOCK | grep -vq grep; echo $?)
+SSH_SOCKET_EXISTS=$(test -f $SSH_AUTH_SOCK; echo $?)
 if [ "$SSH_AGENT_EXISTS" -eq 0 ] && [ "$SSH_SOCKET_EXISTS" -eq 1 ]; then
   pkill -f ssh-agent
   rm $SSH_AUTH_SOCK 2>/dev/null
 fi
 
 # Check if secrets required for private services have been cloned
-SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d || echo $?)
+SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d; echo $?)
 
 # Start the tmux server for long lived services
 tmux start-server
