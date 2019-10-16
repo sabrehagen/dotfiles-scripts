@@ -1,11 +1,3 @@
-# Remove existing ssh-agent socket if no ssh-agent is using it, otherwise tmux ssh-agent will fail to start
-SSH_AGENT_EXISTS=$(ps aux | grep $SSH_AUTH_SOCK | grep -vq grep; echo $?)
-SSH_SOCKET_EXISTS=$(test -f $SSH_AUTH_SOCK; echo $?)
-if [ "$SSH_AGENT_EXISTS" -eq 0 ] && [ "$SSH_SOCKET_EXISTS" -eq 1 ]; then
-  pkill -f ssh-agent
-  rm $SSH_AUTH_SOCK 2>/dev/null
-fi
-
 # Check if secrets required for private services have been cloned
 SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d; echo $?)
 
@@ -94,6 +86,13 @@ tmux new-session \
   --rpc-bind-address localhost \
   --watch-dir $HOME/torrents/.watch \
   2>/dev/null
+
+# If ssh-agent isn't running but the ssh socket exists, remove it otherwise ssh-agent will fail to start
+SSH_AGENT_EXISTS=$(ps aux | grep $SSH_AUTH_SOCK | grep -vq grep; echo $?)
+SSH_SOCKET_EXISTS=$(test -S $SSH_AUTH_SOCK; echo $?)
+if [ "$SSH_AGENT_EXISTS" -eq 1 ] && [ "$SSH_SOCKET_EXISTS" -eq 0 ]; then
+  rm $SSH_AUTH_SOCK 2>/dev/null
+fi
 
 # Start the ssh-agent
 tmux new-session \
