@@ -1,4 +1,4 @@
-# Kill all desktop-environment-shell sessions
+# kill all desktop-environment-shell sessions
 tmux ls | \
   grep shell- | \
   cut -f1 -d: | \
