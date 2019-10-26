@@ -80,6 +80,13 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
     2>/dev/null
 fi
 
+# Start touchpad limiter
+tmux new-session \
+  -d \
+  -s limit-touchpad \
+  ~/.config/scripts/limit-touchpad.sh \
+  2>/dev/null
+
 # Start transmission
 tmux new-session \
   -d \
@@ -110,10 +117,6 @@ tmux new-session \
 
 # Swap caps lock and escape
 setxkbmap -option caps:swapescape
-
-# Swap right alt and right control
-setxkbmap -option ctrl:ralt_rctrl
-setxkbmap -option ctrl:rctrl_ralt
 
 # Map print screen to menu
 xmodmap -e "keycode 107 = Menu"

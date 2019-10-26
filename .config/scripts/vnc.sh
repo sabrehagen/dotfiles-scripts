@@ -9,5 +9,5 @@ tmux new-session \
 tmux new-session \
   -d \
   -s vnc-client \
-  sudo /opt/noVNC/utils/launch.sh --listen 80 --vnc localhost:5901 \
+  sudo /opt/noVNC/utils/launch.sh --listen 80 --vnc localhost:5900 \
   2>/dev/null
