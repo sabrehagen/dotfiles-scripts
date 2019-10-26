@@ -52,6 +52,13 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
     2>/dev/null
 fi
 
+# Start netdata
+tmux new-session \
+  -d \
+  -s netdata \
+  sudo netdata \
+  2>/dev/null
+
 # Start openvpn
 if [ "$SECRETS_EXIST" -eq 0 ]; then
   tmux new-session \
