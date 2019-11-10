@@ -2,10 +2,9 @@ EXCLUDED_WINDOWS="google-chrome|pcmanfm|slack"
 TOUCHPAD_ID=$(xinput --list | grep Touchpad | sed -E 's;.*=([^\t]*).*;\1;')
 
 while true; do
-
   FOCUSED_WINDOW=$(xprop -id $(xdotool getwindowfocus) | grep WM_CLASS | sed -E 's;.*"([^"]*)";\1;' | tr A-Z a-z)
 
-  if [[ "$FOCUSED_WINDOW" =~ $EXCLUDED_WINDOWS ]]; then
+  if [ $(expr match "$EXCLUDED_WINDOWS" "$FOCUSED_WINDOW") -gt 0 ]; then
     # enable touchpad for applications that require mouse
     xinput --enable $TOUCHPAD_ID
   else
