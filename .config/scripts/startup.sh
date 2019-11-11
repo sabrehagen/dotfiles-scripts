@@ -1,8 +1,11 @@
+# Check if secrets required for private services have been cloned
+SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo $?)
+
 # Start the tmux server for long lived services
 tmux start-server
 
-# Check if secrets required for private services have been cloned
-SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo $?)
+# Force chrome to restore session on startup
+sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences
 
 # Start X server
 tmux new-session \
@@ -36,11 +39,11 @@ tmux new-session \
   zsh --login \
   2>/dev/null
 
-# Start hotkeys
+# Start dnsmasq
 tmux new-session \
   -d \
-  -s sxhkd \
-  sxhkd \
+  -s dnsmasq \
+  sudo dnsmasq -C ~/.config/dnsmasq/config --no-daemon \
   2>/dev/null
 
 # Start irc
@@ -57,6 +60,13 @@ tmux new-session \
   -d \
   -s jobber \
   sudo /usr/libexec/jobbermaster \
+  2>/dev/null
+
+# Start keynav
+tmux new-session \
+  -d \
+  -s keynav \
+  keynav \
   2>/dev/null
 
 # Start netdata
@@ -78,6 +88,13 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
     2>/dev/null
 fi
 
+# Start pulseaudio
+tmux new-session \
+  -d \
+  -s pulseaudio \
+  pulseaudio \
+  2>/dev/null
+
 # Start rescuetime
 if [ "$SECRETS_EXIST" -eq 0 ]; then
   tmux new-session \
@@ -87,11 +104,11 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
     2>/dev/null
 fi
 
-# Start touchpad limiter
+# Start mouse disabler
 tmux new-session \
   -d \
-  -s limit-touchpad \
-  ~/.config/scripts/limit-touchpad.sh \
+  -s disable-mouse \
+  ~/.config/scripts/disable-mouse.sh \
   2>/dev/null
 
 # Start transmission
