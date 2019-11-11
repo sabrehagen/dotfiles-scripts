@@ -1,2 +1,2 @@
 # Restart desktop environment on the host
-h nohup /home/jackson/repositories/sabrehagen/desktop-environment/docker/scripts/restart.sh
+~/.config/scripts/ssh-host.sh tmux new-session -d /home/jackson/repositories/sabrehagen/desktop-environment/docker/scripts/restart.sh
