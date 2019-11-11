@@ -52,6 +52,13 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
     2>/dev/null
 fi
 
+# Start jobber
+tmux new-session \
+  -d \
+  -s jobber \
+  sudo /usr/libexec/jobbermaster \
+  2>/dev/null
+
 # Start netdata
 tmux new-session \
   -d \
