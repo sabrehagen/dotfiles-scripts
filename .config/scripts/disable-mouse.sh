@@ -33,5 +33,4 @@ while true; do
     xinput --disable $MOUSE_DEVICE_ID
   fi
 
-  sleep 0.2
 done
