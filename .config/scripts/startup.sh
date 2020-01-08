@@ -26,9 +26,9 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
   tmux new-session \
     -d \
     -s cloudstorage \
-    'CLOUD_COMPUTER_HOST_ID=jackson \
+    "CLOUD_COMPUTER_HOST_ID=$USER \
     CLOUD_COMPUTER_REDIRECT_URI=https://localhost:12345 \
-    cloudstorage-fuse -f -d -o allow_other,auto_unmount ~/cloudstorage' \
+    cloudstorage-fuse -f -d -o allow_other,auto_unmount ~/cloudstorage" \
     2>/dev/null
 fi
 
