@@ -43,7 +43,14 @@ tmux new-session \
 tmux new-session \
   -d \
   -s dnsmasq \
-  sudo dnsmasq -C ~/.config/dnsmasq/config --no-daemon \
+  sudo dnsmasq \
+  --addn-hosts=/home/$USER/.config/dnsmasq/hostnames.txt \
+  --log-queries \
+  --no-daemon \
+  --no-resolv \
+  --strict-order \
+  --server 1.0.0.1 \
+  --server 1.1.1.1 \
   2>/dev/null
 
 # Start irc
