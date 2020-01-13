@@ -1,5 +1,5 @@
 # Set wallpaper
-wal -R -i ~/.local/share/wallpapers
+wal -i ~/.local/share/wallpapers
 
 # Generate gtk theme
 /opt/warnai/warnai --wal --gtk fantome --norender
