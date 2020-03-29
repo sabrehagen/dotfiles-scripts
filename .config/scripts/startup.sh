@@ -76,6 +76,13 @@ tmux new-session \
   keynav \
   2>/dev/null
 
+# Start maza
+tmux new-session \
+  -d \
+  -s maza \
+  sudo maza start \
+  2>/dev/null
+
 # Start netdata
 tmux new-session \
   -d \
