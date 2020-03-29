@@ -45,6 +45,7 @@ tmux new-session \
   -s dnsmasq \
   sudo dnsmasq \
   --addn-hosts=/home/$USER/.config/dnsmasq/hostnames.txt \
+  --conf-file=$HOME/.maza/dnsmasq.conf \
   --log-queries \
   --no-daemon \
   --no-resolv \
@@ -74,6 +75,13 @@ tmux new-session \
   -d \
   -s keynav \
   keynav \
+  2>/dev/null
+
+# Start maza
+tmux new-session \
+  -d \
+  -s maza \
+  sudo maza start \
   2>/dev/null
 
 # Start netdata
