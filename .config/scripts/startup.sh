@@ -77,11 +77,11 @@ tmux new-session \
   keynav \
   2>/dev/null
 
-# Start maza
+# Start musikcube
 tmux new-session \
   -d \
-  -s maza \
-  sudo maza start \
+  -s musikcube \
+  musikcube \
   2>/dev/null
 
 # Start netdata
