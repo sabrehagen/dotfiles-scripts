@@ -45,13 +45,19 @@ tmux new-session \
   -s dnsmasq \
   sudo dnsmasq \
   --addn-hosts=/home/$USER/.config/dnsmasq/hostnames.txt \
-  --conf-file=$HOME/.maza/dnsmasq.conf \
   --log-queries \
   --no-daemon \
   --no-resolv \
   --strict-order \
   --server 1.0.0.1 \
   --server 1.1.1.1 \
+  2>/dev/null
+
+# Start dotfiles sync
+tmux new-session \
+  -d \
+  -s dotfiles-sync \
+  zsh -c "vcsh foreach pull; ~/.config/scripts/startup.sh" \
   2>/dev/null
 
 # Start irc
@@ -62,6 +68,13 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
     irssi \
     2>/dev/null
 fi
+
+# Start jack
+tmux new-session \
+  -d \
+  -s jack \
+  jackd -r -d alsa -r 44100 \
+  2>/dev/null
 
 # Start jobber
 tmux new-session \
@@ -75,6 +88,13 @@ tmux new-session \
   -d \
   -s keynav \
   keynav \
+  2>/dev/null
+
+# Start mouse disabler
+tmux new-session \
+  -d \
+  -s disable-mouse \
+  ~/.config/scripts/disable-mouse.sh \
   2>/dev/null
 
 # Start musikcube
@@ -118,13 +138,6 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
     rescuetime \
     2>/dev/null
 fi
-
-# Start mouse disabler
-tmux new-session \
-  -d \
-  -s disable-mouse \
-  ~/.config/scripts/disable-mouse.sh \
-  2>/dev/null
 
 # Start transmission
 tmux new-session \
