@@ -178,6 +178,3 @@ numlockx on
 
 # Set keyboard repeat delay and rate
 xset r rate 180 140
-
-# Set resolution
-xrandr --output eDP-1 --primary --mode 1920x1080
