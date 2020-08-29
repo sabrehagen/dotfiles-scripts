@@ -178,6 +178,3 @@ numlockx on
 
 # Set keyboard repeat delay and rate
 xset r rate 180 140
-
-# Apply default screen layout
-~/.screenlayout/default.sh
