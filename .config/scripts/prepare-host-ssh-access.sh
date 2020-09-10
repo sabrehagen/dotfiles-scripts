@@ -13,5 +13,5 @@ ssh-keygen \
   -q \
   -t rsa
 
-# Copy public key to server's authorized_hosts
+# Copy public key to server's authorized_keys
 ssh-copy-id -i $PRIVATE_KEY_PATH $USER@localhost 2>/dev/null
