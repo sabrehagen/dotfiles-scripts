@@ -170,6 +170,9 @@ tmux new-session \
 # Swap caps lock and escape
 setxkbmap -option caps:swapescape
 
+# Swap right alt and right control
+setxkbmap -option ctrl:ralt_rctrl
+
 # Map print screen to menu
 xmodmap -e "keycode 107 = Menu"
 

@@ -1,5 +1,5 @@
 # Set wallpaper
-wal -i ~/.local/share/wallpapers
+~/.local/bin/wal -i ~/.local/share/wallpapers
 
 # Reload xava
 kill -USR1 $(pgrep xava)
