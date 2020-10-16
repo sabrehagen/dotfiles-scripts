@@ -4,15 +4,28 @@ SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo
 # Start the tmux server for long lived services
 tmux start-server
 
-# Force chrome to restore session on startup
-sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences
+# Start hardware X server
+if [ -w /dev/tty3 ]; then
+  tmux new-session \
+    -d \
+    -s x11 \
+    xinit /usr/bin/i3 -- :1 vt03 \
+    2>/dev/null
+else
+  # Start vnc X server
+  tmux new-session \
+    -d \
+    -s x11 \
+    vncserver :1 \
+    -autokill \
+    -fg \
+    -geometry 1920x1080 \
+    -localhost true \
+    -SecurityTypes none \
+    -xstartup /usr/bin/i3 \
+    2>/dev/null
 
-# Start X server
-tmux new-session \
-  -d \
-  -s xorg \
-  xinit /usr/bin/i3 -- $DISPLAY vt02 \
-  2>/dev/null
+fi
 
 # Start autorandr
 tmux new-session \
@@ -167,6 +180,13 @@ tmux new-session \
   ssh-agent -D -a $SSH_AUTH_SOCK \
   2>/dev/null
 
+# Start vnc client
+tmux new-session \
+  -d \
+  -s vnc-client \
+  sudo /opt/noVNC/utils/launch.sh --listen 80 --vnc localhost:5900 \
+  2>/dev/null
+
 # Swap caps lock and escape
 setxkbmap -option caps:swapescape
 
@@ -181,3 +201,6 @@ numlockx on
 
 # Set keyboard repeat delay and rate
 xset r rate 180 140
+
+# Force chrome to restore session on startup
+sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences
