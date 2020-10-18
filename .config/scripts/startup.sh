@@ -1,22 +1,26 @@
+# Use the first x server
+export DISPLAY=:1
+
 # Check if secrets required for private services have been cloned
 SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo $?)
 
 # Start the tmux server for long lived services
 tmux start-server
 
-# Start hardware X server
+# If a physical display is attached to the container
 if [ -w /dev/tty3 ]; then
+  # Start hardware X server
   tmux new-session \
     -d \
     -s x11 \
-    xinit /usr/bin/i3 -- :1 vt03 \
+    xinit /usr/bin/i3 -- $DISPLAY vt03 \
     2>/dev/null
 else
   # Start vnc X server
   tmux new-session \
     -d \
     -s x11 \
-    vncserver :1 \
+    vncserver $DISPLAY \
     -autokill \
     -fg \
     -geometry 1920x1080 \
@@ -24,8 +28,10 @@ else
     -SecurityTypes none \
     -xstartup /usr/bin/i3 \
     2>/dev/null
-
 fi
+
+# Wait until x server is running before proceeding
+until xset -q >/dev/null; do sleep 1; done
 
 # Start autorandr
 tmux new-session \
@@ -204,3 +210,6 @@ xset r rate 180 140
 
 # Force chrome to restore session on startup
 sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences
+
+# Ensure dotfiles are up to date
+vcsh list | xargs -I@ -n1 -P0 vcsh @ pull >/dev/null 2>&1 &
