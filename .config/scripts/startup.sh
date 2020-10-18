@@ -9,12 +9,15 @@ tmux start-server
 
 # Start hardware X server
 if [ -w /dev/tty3 ]; then
+
   tmux new-session \
     -d \
     -s x11 \
     xinit /usr/bin/i3 -- $DISPLAY vt03 \
     2>/dev/null
+
 else
+
   # Start vnc X server
   tmux new-session \
     -d \
@@ -27,6 +30,9 @@ else
     -SecurityTypes none \
     -xstartup /usr/bin/i3 \
     2>/dev/null
+
+  # Wait until x server is running before proceeding
+  until xset -q >/dev/null; do sleep 1; done
 
 fi
 
