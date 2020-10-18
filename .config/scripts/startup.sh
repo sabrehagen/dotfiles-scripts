@@ -207,3 +207,6 @@ xset r rate 180 140
 
 # Force chrome to restore session on startup
 sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences
+
+# Ensure dotfiles are up to date
+vcsh list | xargs -I@ -n1 -P0 vcsh @ pull
