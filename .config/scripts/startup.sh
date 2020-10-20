@@ -6,7 +6,8 @@ SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo
 
 # Start the tmux server for long lived services
 tmux start-server
-
+echo 1111111111111
+tmux ls
 # If a physical display is attached to the container
 if [ -w /dev/tty3 ]; then
   # Start hardware X server
@@ -16,6 +17,7 @@ if [ -w /dev/tty3 ]; then
     xinit /usr/bin/i3 -- $DISPLAY vt03 \
     2>/dev/null
 else
+echo 2222222222222222222
   # Start vnc X server
   tmux new-session \
     -d \
@@ -26,8 +28,7 @@ else
     -geometry 1920x1080 \
     -localhost true \
     -SecurityTypes none \
-    -xstartup /usr/bin/i3 \
-    2>/dev/null
+    -xstartup /usr/bin/i3
 fi
 
 # Wait until x server is running before proceeding
