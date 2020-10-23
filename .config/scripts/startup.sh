@@ -13,7 +13,7 @@ if [ -w /dev/tty3 ]; then
   # Start hardware X server
   tmux new-session \
     -d \
-    -s x11 \
+    -s xserver \
     xinit /usr/bin/i3 -- $DISPLAY vt03 \
     2>/dev/null
 else
@@ -21,7 +21,7 @@ echo 2222222222222222222
   # Start vnc X server
   tmux new-session \
     -d \
-    -s x11 \
+    -s xserver \
     vncserver $DISPLAY \
     -autokill \
     -fg \
