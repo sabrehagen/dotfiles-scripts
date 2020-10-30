@@ -15,9 +15,6 @@ if [ ! -f $HOME/.ssh/id_rsa ]; then
     ln -sf $HOME/.ssh-private/id_rsa $HOME/.ssh/id_rsa
 fi
 
-# Ensure ssh-agent is started so keys can be loaded
-$HOME/.config/scripts/startup.sh
-
 # Unlock ssh private key so remaining repositories can be cloned
 eval $(keychain --eval id_rsa --inherit any)
 
