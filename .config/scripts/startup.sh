@@ -19,10 +19,7 @@ if [ -w /dev/tty3 ]; then
 else
 echo 2222222222222222222
   # Start vnc X server
-  tmux new-session \
-    -d \
-    -s xserver \
-    vncserver $DISPLAY \
+  vncserver $DISPLAY \
     -autokill \
     -fg \
     -geometry 1920x1080 \
