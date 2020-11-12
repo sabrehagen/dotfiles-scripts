@@ -1,5 +1,5 @@
 # Install i3
-RUN add-apt-repository ppa:kgilmer/speed-ricer && \
+add-apt-repository ppa:kgilmer/speed-ricer && \
   apt-get update -qq && \
   apt-get install -qq i3blocks i3-gaps i3lock-fancy && \
   sed -i 's/TEXT=".*"/TEXT=""/' /usr/bin/i3lock-fancy && \

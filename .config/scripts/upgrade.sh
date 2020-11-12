@@ -1,30 +1,38 @@
 #!/bin/zsh
 installerDir="$(dirname $(readlink -f $0))/install/"
 
-program_name=$(basename $0 | sed -r 's/(.+?).sh/\1/')
+# Init State Arrays
+installed=()
+notinstalled=()
 
-(which $1 >/dev/null 2>&1)
+# Get Install State
+for f in $installerDir*.sh; do
+  name=$(basename $f | sed -r 's/(.+?).sh/\1/')
+  which $name >/dev/null 2>&1;
+  if [ "$?" = 0 ]; then
+    installed+=("$name")
+  else
+    notinstalled+=("$name")
+  fi
+done
 
-if [ "$?" = 0 ]
-then
-  echo ${1}" already installed"
-  exit
-fi
-exit
-
-# check if upgrade arg provided
-if [ -z $1 ]
-then
-  echo "no upgrade specified"
-  exit
-elif [ $1 = "-o" ]
-then
-  for f in $installerDir*; do echo $(basename $f | sed -r 's/(.+?).sh/\1/');
+# Show Install Status if no arg provided
+if [ -z $1 ]; then
+  echo "Installed Programs:\n"
+  for p in "${installed[@]}"; do
+    echo "${p}"
+  done | column
+  echo "\nNot Installed Programs:\n"
+  for p in "${notinstalled[@]}"; do
+    echo "${p}"
   done | column
   exit
 fi
 
+# Check Program already installed
+if [[ ${installed[(ie)$1]} -le ${#installed} ]]; then
+  echo ${1}" already installed"
+  exit
+fi
 
-toInstall=$(${installerDir}$1)
-
-echo $toInstall
+${installerDir}${1}.sh

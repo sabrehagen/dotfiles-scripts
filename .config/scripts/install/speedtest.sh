@@ -1,2 +1,2 @@
 # Install speedtest
-RUN pip install --user speedtest-cli
+pip install --user speedtest-cli

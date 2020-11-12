@@ -1,5 +1,5 @@
 # Install yarn based utilities
-RUN yarn global add \
+yarn global add \
   clipboard-cli \
   github-email \
   http-server \

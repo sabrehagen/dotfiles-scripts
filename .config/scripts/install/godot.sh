@@ -5,5 +5,3 @@ sudo wget -O /usr/local/bin/godot -q https://downloads.tuxfamily.org/godotengine
 unzip /usr/local/bin/godot/Godot_v3.2.3-stable_x11.64.zip
 
 rm -rf Godot_v3.2.3-stable_x11.64.zip
-
-/usr/local/bin/godot/Godot_v3.2.3-stable_x11.64.zip

@@ -1,2 +1,2 @@
 # Install pywal
-RUN pip3 install --user pywal
+pip3 install --user pywal

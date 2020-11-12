@@ -1,5 +1,5 @@
 # Install chrome
-RUN apt-get update -qq && \
+apt-get update -qq && \
   apt-get install -qq \
   apt-transport-https \
   ca-certificates \

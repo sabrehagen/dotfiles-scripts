@@ -1,5 +1,5 @@
 # Install xava
-RUN apt-get update -qq && \
+apt-get update -qq && \
   apt-get install -qq \
   libfftw3-dev \
   libasound2-dev \
