@@ -1,7 +1,16 @@
+#!/bin/zsh
 installerDir="$(dirname $(readlink -f $0))/install/"
 
-#array=(*)
-#echo "${array[2]}"
+program_name=$(basename $0 | sed -r 's/(.+?).sh/\1/')
+
+(which $1 >/dev/null 2>&1)
+
+if [ "$?" = 0 ]
+then
+  echo ${1}" already installed"
+  exit
+fi
+exit
 
 # check if upgrade arg provided
 if [ -z $1 ]
