@@ -23,3 +23,8 @@ PRIVATE_DOTFILES=$(grep dotfiles\- $HOME/.config/scripts/clone-secrets.sh | sed 
 for DOTFILES in $PRIVATE_DOTFILES; do
   remove_vcsh_repo $DOTFILES
 done
+
+# remove dangling id_rsa file to be replaced later
+if [ -f $HOME/.ssh/id_rsa ]; then
+  rm -rf $HOME/.ssh/id_rsa
+fi
