@@ -1,18 +1,15 @@
-# Use the first x server
-export DISPLAY=:1
-
 # Check if secrets required for private services have been cloned
 SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo $?)
 
 # Start the tmux server for daemonised services
 tmux start-server
 
-if [ -w /dev/tty3 ]; then
+if [ -w /dev/tty4 ]; then
   # If a physical display is attached to the container, start a hardware x server
   tmux new-session \
     -d \
     -s xserver \
-    xinit /usr/bin/i3 -- $DISPLAY vt03 \
+    docker_run x11 \
     2>/dev/null
 else
   # If operating in a server environment, start a vnc x server
