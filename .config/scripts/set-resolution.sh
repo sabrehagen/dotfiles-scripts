@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/bash
 
 # to add new mode run:
 # cvt width height refreshrate
@@ -10,9 +10,10 @@ function set_res(){
 
 echo "setting resolution for Width: ${1}, Height ${2}, RefreshRate ${3}"
 MODE="${1}x${2}_${3}"
-MODELINE=$(cvt $1 $2 $3)
+MODELINE=$(cvt $1 $2 $3 | grep Modeline | sed -E 's|Modeline (.+?+vsync)|\1|' | sed -E 's|  | |')
+
 # create mode
-xrandr --newmode $MODELINE
+xrandr --newmode "$MODELINE"
 
 # Add mode
 xrandr --addmode Virtual1 $MODE
