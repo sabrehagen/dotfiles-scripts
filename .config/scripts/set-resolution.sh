@@ -8,18 +8,14 @@
 
 function set_res(){
 
-echo "setting resolution for Width: ${1}, Height ${2}, RefreshRate ${3}"
-MODE="${1}x${2}_${3}"
-MODELINE=$(cvt $1 $2 $3 | grep Modeline | sed -E 's|Modeline (.+?+vsync)|\1|' | sed -E 's|  | |')
-
 # create mode
-xrandr --newmode "$MODELINE"
+xrandr --newmode "1920x1080_60.00" 173.00 1920 2048 2248 2576  1080 1083 1088 1120 -hsync +vsync
 
 # Add mode
-xrandr --addmode Virtual1 $MODE
+xrandr --addmode Virtual1 1920x1080_60.00
 
 # Apply mode
-xrandr --output Virtual1 --primary --mode 1920x1080_60.02
+xrandr --output Virtual1 --primary --mode 1920x1080_60.00
 
 }
 
@@ -29,7 +25,7 @@ if [ -c /dev/vsock ]; then
 
 elif [ -c /dev/vhost-vsock ]; then
     echo "you are using a virtualbox machine u little cunt"
-    set_res 1920 1080 60.02
+    set_res
 else
     echo "you are using a host machine u braggart"
 fi
