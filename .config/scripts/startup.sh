@@ -207,7 +207,7 @@ numlockx on
 xset r rate 180 140
 
 # Force chrome to restore session on startup
-sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences
+sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences 2>&1 >/dev/null
 
 # Ensure dotfiles are up to date
-vcsh list | xargs -I@ -n1 -P0 vcsh @ pull >/dev/null 2>&1 &
+vcsh list | xargs -I@ -n1 -P0 vcsh @ pull 2>&1 >/dev/null &
