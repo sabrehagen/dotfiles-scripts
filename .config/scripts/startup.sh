@@ -1,24 +1,25 @@
-# Use the first x server
-export DISPLAY=:1
-
 # Check if secrets required for private services have been cloned
 SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo $?)
 
-# Start the tmux server for long lived services
+# Start the tmux server for daemonised services
 tmux start-server
-echo 1111111111111
-tmux ls
-# If a physical display is attached to the container
-if [ -w /dev/tty3 ]; then
-  # Start hardware X server
+
+if [ -w /dev/tty$DESKTOP_ENVIRONMENT_HOST_TTY ]; then
+  # If a physical display is attached to the container, start a hardware x server
   tmux new-session \
     -d \
     -s xserver \
-    xinit /usr/bin/i3 -- $DISPLAY vt03 \
+    docker_run x11 \
+    2>/dev/null
+
+  # Start the x server window manager
+  tmux new-session \
+    -d \
+    -s i3 \
+    docker_run i3 \
     2>/dev/null
 else
-echo 2222222222222222222
-  # Start vnc X server
+  # If operating in a server environment, start a vnc x server
   vncserver $DISPLAY \
     -autokill \
     -fg \
@@ -70,11 +71,11 @@ tmux new-session \
   --server 1.1.1.1 \
   2>/dev/null
 
-# Start dotfiles sync
+# Start dotfiles startup update
 tmux new-session \
   -d \
-  -s dotfiles-sync \
-  zsh -c "vcsh foreach pull; ~/.config/scripts/startup.sh" \
+  -s dotfiles-startup-update \
+  zsh -c "vcsh list | xargs -I@ -n1 -P0 vcsh @ pull; ~/.config/scripts/startup.sh" \
   2>/dev/null
 
 # Start irc
@@ -97,14 +98,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s jobber \
-  sudo /usr/libexec/jobbermaster \
-  2>/dev/null
-
-# Start keynav
-tmux new-session \
-  -d \
-  -s keynav \
-  keynav \
+  sudo /usr/lib/x86_64-linux-gnu/jobbermaster \
   2>/dev/null
 
 # Start mouse disabler
@@ -121,20 +115,13 @@ tmux new-session \
   musikcube \
   2>/dev/null
 
-# Start netdata
-tmux new-session \
-  -d \
-  -s netdata \
-  sudo netdata \
-  2>/dev/null
-
 # Start openvpn
 if [ "$SECRETS_EXIST" -eq 0 ]; then
   tmux new-session \
     -d \
     -s openvpn \
     sudo openvpn \
-    --config ~/.config/openvpn/sydney.ovpn \
+    --config ~/.config/openvpn/default.ovpn \
     --auth-user-pass ~/.config/openvpn/credentials \
     --dev-node ~/.config/openvpn/tun \
     2>/dev/null
@@ -194,11 +181,8 @@ tmux new-session \
 # Swap caps lock and escape
 setxkbmap -option caps:swapescape
 
-# Swap right alt and right control
-setxkbmap -option ctrl:ralt_rctrl
-
 # Map print screen to menu
-xmodmap -e "keycode 107 = Menu"
+xmodmap -e "keycode 105 = Menu"
 
 # Enable numlock
 numlockx on
@@ -207,7 +191,4 @@ numlockx on
 xset r rate 180 140
 
 # Force chrome to restore session on startup
-sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences >/dev/null 2>&1 
-
-# Ensure dotfiles are up to date
-vcsh list | xargs -I@ -n1 -P0 vcsh @ pull >/dev/null 2>&1 &
+sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences >/dev/null 2>&1
