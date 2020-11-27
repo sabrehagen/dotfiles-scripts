@@ -13,7 +13,18 @@ if [ -w /dev/tty$DESKTOP_ENVIRONMENT_HOST_TTY ]; then
     2>/dev/null
 else
   # If operating in a server environment, start a vnc x server
-  docker_run vncserver
+  tmux new-session \
+    -d \
+    -s xserver \
+    docker_run vncserver \
+    $DISPLAY \
+    -fg \
+    -geometry 1920x1080 \
+    --I-KNOW-THIS-IS-INSECURE \
+    -localhost no \
+    -SecurityTypes none \
+    -- \
+    -noxstartup
 fi
 
 # Wait until x server is running before proceeding

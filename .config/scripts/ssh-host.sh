@@ -6,4 +6,4 @@ if [ ! -f $PRIVATE_KEY_PATH ]; then
 fi
 
 # Connect to host using authorized ssh key
-ssh -i $PRIVATE_KEY_PATH $USER@localhost "$@"
+ssh -i $PRIVATE_KEY_PATH $USER@$DESKTOP_ENVIRONMENT_HOST_HOSTNAME "$@"
