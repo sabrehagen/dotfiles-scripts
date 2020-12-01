@@ -10,21 +10,15 @@ if [ -w /dev/tty$DESKTOP_ENVIRONMENT_HOST_TTY ]; then
     -d \
     -s xserver \
     docker_run x11 \
+    xinit -- $DISPLAY vt0$DESKTOP_ENVIRONMENT_HOST_TTY \
     2>/dev/null
 else
   # If operating in a server environment, start a vnc x server
   tmux new-session \
     -d \
     -s xserver \
-    docker_run vncserver \
-    $DISPLAY \
-    -fg \
-    -geometry 1920x1080 \
-    --I-KNOW-THIS-IS-INSECURE \
-    -localhost no \
-    -SecurityTypes none \
-    -- \
-    -noxstartup
+    docker_run tigervncserver \
+    $DISPLAY -cleanstale -fg -geometry 1920x1080 --I-KNOW-THIS-IS-INSECURE -localhost no -SecurityTypes none -verbose -- -noxstartup
 fi
 
 # Wait until x server is running before proceeding
