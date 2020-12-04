@@ -11,26 +11,31 @@ if [ -w /dev/tty$DESKTOP_ENVIRONMENT_HOST_TTY ]; then
     -s xserver \
     docker_run x11 \
     2>/dev/null
-
-  # Start the x server window manager
-  tmux new-session \
-    -d \
-    -s i3 \
-    docker_run i3 \
-    2>/dev/null
 else
   # If operating in a server environment, start a vnc x server
-  vncserver $DISPLAY \
-    -autokill \
+  tmux new-session \
+    -d \
+    -s xserver \
+    docker_run vncserver \
+    $DISPLAY \
     -fg \
     -geometry 1920x1080 \
-    -localhost true \
+    --I-KNOW-THIS-IS-INSECURE \
+    -localhost no \
     -SecurityTypes none \
-    -xstartup /usr/bin/i3
+    -- \
+    -noxstartup
 fi
 
 # Wait until x server is running before proceeding
 until xset -q >/dev/null; do sleep 1; done
+
+# Start the x server window manager
+tmux new-session \
+  -d \
+  -s i3 \
+  docker_run i3 \
+  2>/dev/null
 
 # Start autorandr
 tmux new-session \
@@ -46,7 +51,7 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
     -s cloudstorage \
     "CLOUD_COMPUTER_HOST_ID=$USER \
     CLOUD_COMPUTER_REDIRECT_URI=https://localhost:12345 \
-    cloudstorage-fuse -f -d -o allow_other,auto_unmount ~/cloudstorage" \
+    docker_run cloudstorage -f -d -o allow_other,auto_unmount ~/cloudstorage" \
     2>/dev/null
 fi
 
@@ -175,7 +180,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s vnc-client \
-  /opt/noVNC/utils/launch.sh --listen 8080 --vnc localhost:5900 \
+  docker_run novnc \
   2>/dev/null
 
 # Swap caps lock and escape
