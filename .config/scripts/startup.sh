@@ -4,12 +4,12 @@ SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo
 # Start the tmux server for daemonised services
 tmux start-server
 
-if [ -w /dev/tty$DESKTOP_ENVIRONMENT_HOST_TTY ]; then
+if [ -w /dev/tty3 ]; then
   # If a physical display is attached to the container, start a hardware x server
   tmux new-session \
     -d \
     -s xserver \
-    xinit $DISPLAY vt0$DESKTOP_ENVIRONMENT_HOST_TTY \
+    xinit $DISPLAY vt03 \
     2>/dev/null
 else
   # If operating in a server environment, start a vnc x server
