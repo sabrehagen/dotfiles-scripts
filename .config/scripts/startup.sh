@@ -1,33 +1,32 @@
+# Use the first x server
+export DISPLAY=:1
+
 # Check if secrets required for private services have been cloned
 SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo $?)
 
 # Start the tmux server for daemonised services
 tmux start-server
 
-if [ -w /dev/tty$DESKTOP_ENVIRONMENT_HOST_TTY ]; then
+if [ -w /dev/tty3 ]; then
   # If a physical display is attached to the container, start a hardware x server
   tmux new-session \
     -d \
     -s xserver \
-    xinit $DISPLAY vt0$DESKTOP_ENVIRONMENT_HOST_TTY \
+    xinit /usr/bin/i3 -- $DISPLAY vt03 \
     2>/dev/null
 else
   # If operating in a server environment, start a vnc x server
-  tmux new-session \
-    -d \
-    -s xserver \
-    tigervncserver $DISPLAY -cleanstale -fg -geometry 1920x1080 --I-KNOW-THIS-IS-INSECURE -localhost no -SecurityTypes none -verbose -- -noxstartup
+  vncserver $DISPLAY \
+    -autokill \
+    -fg \
+    -geometry 1920x1080 \
+    -localhost true \
+    -SecurityTypes none \
+    -xstartup /usr/bin/i3
 fi
 
 # Wait until x server is running before proceeding
 until xset -q >/dev/null; do sleep 1; done
-
-# Start the x server window manager
-tmux new-session \
-  -d \
-  -s i3 \
-  i3 \
-  2>/dev/null
 
 # Start autorandr
 tmux new-session \
@@ -43,7 +42,7 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
     -s cloudstorage \
     "CLOUD_COMPUTER_HOST_ID=$USER \
     CLOUD_COMPUTER_REDIRECT_URI=https://localhost:12345 \
-    cloudstorage -f -d -o allow_other,auto_unmount ~/cloudstorage" \
+    cloudstorage-fuse -f -d -o allow_other,auto_unmount ~/cloudstorage" \
     2>/dev/null
 fi
 
@@ -172,7 +171,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s vnc-client \
-  novnc \
+  /opt/noVNC/utils/launch.sh --listen 8080 --vnc localhost:5900 \
   2>/dev/null
 
 # Swap caps lock and escape
@@ -188,4 +187,4 @@ numlockx on
 xset r rate 180 140
 
 # Force chrome to restore session on startup
-sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences >/dev/null 2>&1
+sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences 2>&1 >/dev/null
