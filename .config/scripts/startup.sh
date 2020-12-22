@@ -187,5 +187,5 @@ numlockx on
 # Set keyboard repeat delay and rate
 xset r rate 180 140
 
-# Force chrome to restore session on startup
+# Force chrome to restore session on startup 
 sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences >/dev/null 2>&1
