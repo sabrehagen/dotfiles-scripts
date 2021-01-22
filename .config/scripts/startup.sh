@@ -98,18 +98,18 @@ tmux new-session \
   2>/dev/null
 
 # Start mouse disabler
-tmux new-session \
-  -d \
-  -s disable-mouse \
-  ~/.config/scripts/disable-mouse.sh \
-  2>/dev/null
+# tmux new-session \
+#   -d \
+#   -s disable-mouse \
+#   ~/.config/scripts/disable-mouse.sh \
+#   2>/dev/null
 
 # Start musikcube
-tmux new-session \
-  -d \
-  -s musikcube \
-  musikcube \
-  2>/dev/null
+# tmux new-session \
+#   -d \
+#   -s musikcube \
+#   musikcube \
+#   2>/dev/null
 
 # Start openvpn
 if [ "$SECRETS_EXIST" -eq 0 ]; then
@@ -175,7 +175,7 @@ tmux new-session \
   2>/dev/null
 
 # Swap caps lock and escape
-setxkbmap -option caps:swapescape
+# setxkbmap -option caps:swapescape
 
 # Map print screen to menu
 xmodmap -e "keycode 105 = Menu"
