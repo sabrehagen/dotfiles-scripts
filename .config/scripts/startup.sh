@@ -29,11 +29,11 @@ fi
 until xset -q >/dev/null; do sleep 1; done
 
 # Start autorandr
-# tmux new-session \
-#   -d \
-#   -s autorandr \
-#   ~/.config/scripts/monitor-hotplug.sh \
-#   2>/dev/null
+tmux new-session \
+  -d \
+  -s autorandr \
+  ~/.config/scripts/black-st-2.sh \
+  2>/dev/null
 
 # Start cloudstorage
 if [ "$SECRETS_EXIST" -eq 0 ]; then
