@@ -67,6 +67,14 @@ tmux new-session \
   --server 1.1.1.1 \
   2>/dev/null
 
+# Start dunst
+tmux new-session \
+  -d \
+  -s dunst \
+  dunst \
+  -print \
+  2>/dev/null
+
 # Start dotfiles startup update
 tmux new-session \
   -d \
@@ -109,6 +117,22 @@ tmux new-session \
   -d \
   -s musikcube \
   musikcube \
+  2>/dev/null
+
+# Start nchat
+tmux new-session \
+  -d \
+  -s nm-gmail \
+  nchat \
+  --confdir ~/.config/nchat \
+  2>/dev/null
+
+# Start nmail
+tmux new-session \
+  -d \
+  -s nm-gmail \
+  nmail \
+  --confdir ~/.config/nmail/gmail \
   2>/dev/null
 
 # Start openvpn
