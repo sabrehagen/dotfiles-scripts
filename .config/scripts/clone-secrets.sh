@@ -20,7 +20,6 @@ eval $(find ~/.ssh-private -regextype posix-extended -regex '.*id_rsa[a-z_]*' | 
 vcsh clone git@github.com:sabrehagen/dotfiles-aws 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-cloudstorage 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-docker 2>/dev/null &
-vcsh clone git@github.com:sabrehagen/dotfiles-gauth 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gcloud 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gist 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-irssi 2>/dev/null &
@@ -28,6 +27,7 @@ vcsh clone git@github.com:sabrehagen/dotfiles-nchat 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-nmail 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-npm 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-openvpn 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-pass 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-rescuetime 2>/dev/null &
 
 # Wait for repositories to clone in parallel

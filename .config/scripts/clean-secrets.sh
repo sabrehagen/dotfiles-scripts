@@ -1,5 +1,3 @@
-export VCSH_REPO_D=$HOME/.config/vcsh/repo-private.d
-
 # vcsh doesn't support unattended removal, so manual cleanup is required
 remove_vcsh_repo() {
   REPO=$1
@@ -15,7 +13,7 @@ remove_vcsh_repo() {
     xargs -n 1 -I directory rm -rf $HOME/directory 2>/dev/null
 
   # Remove vcsh repository git folder
-  rm -rf ~/.config/vcsh/repo-private.d/$REPO.git 2>/dev/null
+  rm -rf ~/.config/vcsh/repo.d/$REPO.git 2>/dev/null
 }
 
 PRIVATE_DOTFILES=$(grep dotfiles\- $HOME/.config/scripts/clone-secrets.sh | sed -E 's;.*(dotfiles-[^ ]*) .*;\1;')
