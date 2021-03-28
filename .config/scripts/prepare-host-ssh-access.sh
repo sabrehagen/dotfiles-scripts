@@ -23,4 +23,4 @@ ssh-keygen \
   -t rsa
 
 # Copy public key to server's authorized_keys
-sshpass -p $PASSWORD ssh-copy-id -i $PRIVATE_KEY_PATH $USER@172.18.0.1 2>/dev/null
+sshpass -p $PASSWORD ssh-copy-id -i $PRIVATE_KEY_PATH $USER@$(~/.config/scripts/host-ip.sh) 2>/dev/null
