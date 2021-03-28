@@ -2,7 +2,7 @@
 export DISPLAY=:1
 
 # Check if secrets required for private services have been cloned
-SECRETS_EXIST=$(test -d ~/.config/vcsh/repo-private.d/dotfiles-openvpn.git; echo $?)
+SECRETS_EXIST=$(test -d ~/.ssh-private; echo $?)
 
 # Start the tmux server for daemonised services
 tmux start-server

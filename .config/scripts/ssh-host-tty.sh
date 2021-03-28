@@ -6,4 +6,4 @@ if [ ! -f $PRIVATE_KEY_PATH ]; then
 fi
 
 # Connect to host using authorized ssh key
-ssh -i $PRIVATE_KEY_PATH -t $USER@172.18.0.1 "$@"
+ssh -i $PRIVATE_KEY_PATH -t $USER@$(~/.config/scripts/host-ip.sh) "$@"
