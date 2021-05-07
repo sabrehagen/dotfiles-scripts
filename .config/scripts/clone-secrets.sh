@@ -30,6 +30,7 @@ vcsh clone git@github.com:sabrehagen/dotfiles-kubernetes 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-nchat 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-nmail 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-npm 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-op.git 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-openvpn 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-rescuetime 2>/dev/null &
 
