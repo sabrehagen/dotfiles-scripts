@@ -21,6 +21,7 @@ vcsh clone git@github.com:sabrehagen/dotfiles-aws 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-cloudstorage 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-docker 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gcloud 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-gh 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gist 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gopass 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gpg 2>/dev/null &
