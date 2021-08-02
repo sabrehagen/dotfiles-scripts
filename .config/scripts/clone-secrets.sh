@@ -23,14 +23,11 @@ vcsh clone git@github.com:sabrehagen/dotfiles-docker 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gcloud 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gh 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gist 2>/dev/null &
-vcsh clone git@github.com:sabrehagen/dotfiles-gopass 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gpg 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-irssi 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-kubernetes 2>/dev/null &
-vcsh clone git@github.com:sabrehagen/dotfiles-nchat 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-nmail 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-npm 2>/dev/null &
-vcsh clone git@github.com:sabrehagen/dotfiles-op.git 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-openvpn 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-rescuetime 2>/dev/null &
 
