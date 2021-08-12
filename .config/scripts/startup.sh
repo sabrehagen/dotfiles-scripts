@@ -7,6 +7,13 @@ SECRETS_EXIST=$(test -d ~/.ssh-private; echo $?)
 # Start the tmux server for daemonised services
 tmux start-server
 
+# Start the dbus message bus
+export $(dbus-launch)
+
+# Export the dbus environment to the global tmux environment
+tmux set-environment -g DBUS_SESSION_BUS_ADDRESS $DBUS_SESSION_BUS_ADDRESS
+tmux set-environment -g DBUS_SESSION_BUS_PID $DBUS_SESSION_BUS_PID
+
 if [ -w /dev/tty3 ]; then
   # If a physical display is attached to the container, start a hardware x server
   tmux new-session \
