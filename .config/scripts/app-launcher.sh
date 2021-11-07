@@ -15,7 +15,7 @@ else
   DMENU_COMMAND="dmenu -nb $DMENU_FG -nf $DMENU_BG -sb $DMENU_BG -sf $DMENU_FG"
 
   # Get application paths
-  APP_PATHS=$(find $APPS_DIR/*/* -maxdepth 0 ! -path . -type d | sed -E "s;$APPS_DIR/;;" | sed 's;de-;;')
+  APP_PATHS=$(find $APPS_DIR/*/* -maxdepth 0 ! -path . -type d | sed -E "s;$APPS_DIR/;;" | sed 's;de-;;' | grep -v archived)
 
   # Present application names for user selection
   APP_NAME=$(echo $APP_PATHS | tr ' ' \\n | $DMENU_COMMAND)
