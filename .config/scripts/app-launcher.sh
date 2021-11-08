@@ -1,11 +1,12 @@
 APPS_DIR=~/apps
+ARCHIVE_DIR=archived
 LAUNCH_APP=$1
 
 # If an application was supplied
 if [ ! -z "$LAUNCH_APP" ]; then
 
   # Launch the supplied application
-  find $APPS_DIR/*/* -maxdepth 1 -type f -name $LAUNCH_APP -exec {} \; &
+  find $APPS_DIR/*/* -maxdepth 1 -type f -name $LAUNCH_APP -not -path "$APPS_DIR/$ARCHIVE_DIR/*" -exec {} \; &
 
 else
 
@@ -15,7 +16,7 @@ else
   DMENU_COMMAND="dmenu -nb $DMENU_FG -nf $DMENU_BG -sb $DMENU_BG -sf $DMENU_FG"
 
   # Get application paths
-  APP_PATHS=$(find $APPS_DIR/*/* -maxdepth 0 ! -path . -type d | sed -E "s;$APPS_DIR/;;" | sed 's;de-;;' | grep -v archived)
+  APP_PATHS=$(find $APPS_DIR/*/* -maxdepth 0 ! -path . -type d | sed -E "s;$APPS_DIR/;;" | sed 's;de-;;' | grep -v $ARCHIVE_DIR)
 
   # Present application names for user selection
   APP_NAME=$(echo $APP_PATHS | tr ' ' \\n | $DMENU_COMMAND)
