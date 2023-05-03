@@ -42,17 +42,6 @@ tmux new-session \
   ~/.config/scripts/monitor-hotplug.sh \
   2>/dev/null
 
-# Start cloudstorage
-if [ "$SECRETS_EXIST" -eq 0 ]; then
-  tmux new-session \
-    -d \
-    -s cloudstorage \
-    "CLOUD_COMPUTER_HOST_ID=$USER \
-    CLOUD_COMPUTER_REDIRECT_URI=https://localhost:12345 \
-    cloudstorage-fuse -f -d -o allow_other,auto_unmount ~/cloudstorage" \
-    2>/dev/null
-fi
-
 # Start desktop environment shell
 tmux new-session \
   -d \
@@ -89,22 +78,6 @@ tmux new-session \
   zsh -c "vcsh list | xargs -I@ -n1 -P0 vcsh @ pull; ~/.config/scripts/startup.sh" \
   2>/dev/null
 
-# Start irc
-if [ "$SECRETS_EXIST" -eq 0 ]; then
-  tmux new-session \
-    -d \
-    -s irc \
-    irssi \
-    2>/dev/null
-fi
-
-# Start jack
-tmux new-session \
-  -d \
-  -s jack \
-  jackd -r -d alsa -r 44100 \
-  2>/dev/null
-
 # Start jobber
 tmux new-session \
   -d \
@@ -117,29 +90,6 @@ tmux new-session \
   -d \
   -s disable-mouse \
   ~/.config/scripts/disable-mouse.sh \
-  2>/dev/null
-
-# Start musikcube
-tmux new-session \
-  -d \
-  -s musikcube \
-  musikcube \
-  2>/dev/null
-
-# Start nchat
-tmux new-session \
-  -d \
-  -s nm-gmail \
-  nchat \
-  --confdir ~/.config/nchat \
-  2>/dev/null
-
-# Start nmail
-tmux new-session \
-  -d \
-  -s nm-gmail \
-  nmail \
-  --confdir ~/.config/nmail/gmail \
   2>/dev/null
 
 # Start openvpn
@@ -218,4 +168,4 @@ numlockx on
 xset r rate 180 140
 
 # Force chrome to restore session on startup
-sed -i 's/Crashed/normal/' ~/.config/google-chrome/Default/Preferences 2>&1 >/dev/null
+sed -i 's/Crashed/normal/' ~/.config/google-chrome/Profile\ 1/Preferences 2>&1 >/dev/null
