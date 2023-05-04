@@ -14,10 +14,10 @@ kill -USR1 $(pgrep xava) &
 gtk-theme-switch2 ~/.themes/warna &
 
 # Reload vs code theme
-xdotool search --onlyvisible --class code \
-  windowactivate --sync \
-  windowfocus --sync \
-  key ctrl+shift+r &
+# xdotool search --onlyvisible --class code \
+#   windowactivate --sync \
+#   windowfocus --sync \
+#   key ctrl+shift+r &
 
 # Wait for themes to update in parallel
 wait
