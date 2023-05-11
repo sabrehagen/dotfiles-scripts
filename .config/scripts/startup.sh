@@ -18,7 +18,7 @@ if [ -w /dev/tty3 ]; then
   # If a physical display is attached to the container, start a hardware x server
   tmux new-session \
     -d \
-    -s xserver \
+    -s x11 \
     xinit /usr/bin/i3 -- $DISPLAY vt03 \
     2>/dev/null
 else
