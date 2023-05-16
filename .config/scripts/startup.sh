@@ -86,7 +86,7 @@ tmux new-session \
   2>/dev/null
 
 # Start mouse disabler
-tmux new-session \
+true || tmux new-session \
   -d \
   -s disable-mouse \
   ~/.config/scripts/disable-mouse.sh \
