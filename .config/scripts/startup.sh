@@ -111,6 +111,13 @@ tmux new-session \
   pulseaudio \
   2>/dev/null
 
+# Start redshift
+tmux new-session \
+  -d \
+  -s redshift \
+  redshift -l 33.8688:151.2093 -t 6500:3600 \
+  2>/dev/null
+
 # Start rescuetime
 if [ "$SECRETS_EXIST" -eq 0 ]; then
   tmux new-session \
