@@ -141,6 +141,16 @@ tmux new-session \
   --watch-dir $HOME/torrents/.watch \
   2>/dev/null
 
+# Start unclutter
+tmux new-session \
+  -d \
+  -s unclutter \
+  unclutter \
+  -idle 0.06 \
+  -notclass 'kdenlive' \
+  -root \
+  2>/dev/null
+
 # If ssh-agent isn't running but the ssh socket exists, remove it otherwise ssh-agent will fail to start
 SSH_AGENT_EXISTS=$(ps aux | grep $SSH_AUTH_SOCK | grep -vq grep; echo $?)
 SSH_SOCKET_EXISTS=$(test -S $SSH_AUTH_SOCK; echo $?)
