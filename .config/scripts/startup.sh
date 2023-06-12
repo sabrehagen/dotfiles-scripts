@@ -146,9 +146,9 @@ tmux new-session \
   -d \
   -s unclutter \
   unclutter \
-  -idle 0.06 \
-  -notclass 'kdenlive' \
-  -root \
+  --ignore-scrolling \
+  --not kdenlive \
+  --timeout 0.15 \
   2>/dev/null
 
 # If ssh-agent isn't running but the ssh socket exists, remove it otherwise ssh-agent will fail to start

@@ -18,9 +18,12 @@ if pidof ffmpeg; then
         -framerate 60 \
         -thread_queue_size 512 \
         -i $DISPLAY.0+$X,$Y \
+        -f alsa -ac 2 -i hw:0,0 -acodec mp3 \
         -vcodec libx264 \
         -qp 18 \
         -preset ultrafast \
         ~/videos/recording-$time.mp4
+
+      echo ~/videos/recording-$time.mp4
     fi
 fi
