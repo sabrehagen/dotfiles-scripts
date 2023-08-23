@@ -2,5 +2,5 @@
 tmux new-session \
   -d \
   -s vnc-server \
-  x0vncserver -rfbport 5901 -SecurityTypes none \
+  x0vncserver -SecurityTypes none \
   2>/dev/null
