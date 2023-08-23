@@ -22,6 +22,9 @@ if [ -w /dev/tty3 ]; then
     xinit /usr/bin/i3 -- $DISPLAY vt03 \
     2>/dev/null
 else
+  # Update i3 config to use web browser compatible keybindings
+  ~/.config/i3/set-vnc-config.sh
+
   # If operating in a server environment, start a vnc x server
   tmux new-session \
     -d \
