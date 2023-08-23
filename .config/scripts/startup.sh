@@ -172,7 +172,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s vnc-client \
-  /opt/noVNC/utils/launch.sh --listen 8080 --vnc localhost:5900 \
+  /opt/noVNC/utils/launch.sh --listen 8080 --vnc localhost:5901 \
   2>/dev/null
 
 # Swap caps lock and escape
