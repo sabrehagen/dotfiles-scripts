@@ -23,7 +23,10 @@ if [ -w /dev/tty3 ]; then
     2>/dev/null
 else
   # If operating in a server environment, start a vnc x server
-  vncserver $DISPLAY \
+  tmux new-session \
+    -d \
+    -s vnc-server \
+    vncserver $DISPLAY \
     -autokill \
     -fg \
     -geometry 1920x1080 \
