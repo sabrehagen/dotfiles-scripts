@@ -29,7 +29,6 @@ else
     vncserver $DISPLAY \
     -autokill \
     -fg \
-    -geometry 1920x1080 \
     -localhost true \
     -SecurityTypes none \
     -xstartup /usr/bin/i3
