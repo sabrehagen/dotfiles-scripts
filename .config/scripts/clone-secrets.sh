@@ -17,6 +17,7 @@ fi
 eval $(find ~/.ssh-private -regextype posix-extended -regex '.*id_rsa[a-z_]*' | xargs -n1 -I@ keychain --inherit any --eval @)
 
 # Clone private repositories using ssh key
+vcsh clone git@github.com:sabrehagen/dotfiles-mopidy 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-openvpn 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-rescuetime 2>/dev/null &
 
