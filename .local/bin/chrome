@@ -1,0 +1,7 @@
+ARCH=$(dpkg --print-architecture)
+
+if [ "$ARCH" = "arm64" ]; then
+  chromium-browser --no-sandbox --disable-gpu --force-device-scale-factor=2
+else
+  google-chrome
+fi
