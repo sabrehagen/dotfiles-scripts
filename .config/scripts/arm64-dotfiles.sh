@@ -1,6 +1,8 @@
 ARCH=$(dpkg --print-architecture)
 
+fetch_and_checkout_arm64 () { vcsh $1 fetch; vcsh $1 checkout arm64; }
+
 if [ "$ARCH" = "arm64" ]; then
-  vcsh dotfiles-alacritty checkout arm64
-  vcsh dotfiles-i3 checkout arm64
+  fetch_and_checkout_arm64 dotfiles-alacritty
+  fetch_and_checkout_arm64 dotfiles-i3
 fi
