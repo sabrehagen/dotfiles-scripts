@@ -88,7 +88,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s jobber \
-  sudo /usr/lib/x86_64-linux-gnu/jobbermaster \
+  sudo $(find /usr/lib -name jobbermaster) \
   2>/dev/null
 
 # Start mouse disabler
