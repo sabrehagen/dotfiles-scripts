@@ -14,6 +14,9 @@ export $(dbus-launch)
 tmux set-environment -g DBUS_SESSION_BUS_ADDRESS $DBUS_SESSION_BUS_ADDRESS
 tmux set-environment -g DBUS_SESSION_BUS_PID $DBUS_SESSION_BUS_PID
 
+# Handle arm versions of dotfiles
+~/.config/scripts/arm64-dotfiles.sh
+
 if [ -w /dev/tty3 ]; then
   # If a physical display is attached to the container, start a hardware x server
   tmux new-session \
@@ -139,12 +142,12 @@ tmux new-session \
   -s transmission \
   transmission-daemon \
   --bind-address-ipv4 localhost \
-  --config-dir $HOME/.config/transmission \
-  --download-dir $HOME/torrents \
+  --config-dir ~/.config/transmission \
+  --download-dir ~/torrents \
   --foreground \
   --no-auth \
   --rpc-bind-address localhost \
-  --watch-dir $HOME/torrents/.watch \
+  --watch-dir ~/torrents/.watch \
   2>/dev/null
 
 # Start unclutter
