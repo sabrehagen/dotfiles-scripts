@@ -178,11 +178,8 @@ tmux new-session \
   /opt/noVNC/utils/launch.sh --listen 8080 --vnc localhost:5901 \
   2>/dev/null
 
-# Swap caps lock and escape
-setxkbmap -option caps:swapescape
-
-# Map print screen to menu
-xmodmap -e "keycode 105 = Menu"
+# Map key modifiers
+xmodmap ~/.Xmodmap.$(dpkg --print-architecture)
 
 # Enable numlock
 numlockx on
@@ -191,4 +188,4 @@ numlockx on
 xset r rate 180 140
 
 # Force chrome to restore session on startup
-sed -i 's/Crashed/normal/' ~/.config/google-chrome/Profile\ 1/Preferences 2>&1 >/dev/null
+sed -i 's/Crashed/normal/' ~/.config/google-chrome/Profile\ 1/Preferences >/dev/null 2>&1
