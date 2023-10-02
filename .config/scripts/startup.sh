@@ -189,3 +189,6 @@ xset r rate 180 140
 
 # Force chrome to restore session on startup
 sed -i 's/Crashed/normal/' ~/.config/google-chrome/Profile\ 1/Preferences >/dev/null 2>&1
+
+# Handle arm versions of dotfiles
+~/.config/scripts/arm64-dotfiles.sh
