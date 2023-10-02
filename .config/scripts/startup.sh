@@ -14,9 +14,6 @@ export $(dbus-launch)
 tmux set-environment -g DBUS_SESSION_BUS_ADDRESS $DBUS_SESSION_BUS_ADDRESS
 tmux set-environment -g DBUS_SESSION_BUS_PID $DBUS_SESSION_BUS_PID
 
-# Handle arm versions of dotfiles
-~/.config/scripts/arm64-dotfiles.sh
-
 if [ -w /dev/tty3 ]; then
   # If a physical display is attached to the container, start a hardware x server
   tmux new-session \
