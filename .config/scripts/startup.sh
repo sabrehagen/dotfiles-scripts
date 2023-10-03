@@ -179,7 +179,7 @@ tmux new-session \
   2>/dev/null
 
 # Map key modifiers
-xmodmap ~/.Xmodmap.$(dpkg --print-architecture)
+xmodmap ~/.Xmodmap
 
 # Enable numlock
 numlockx on
