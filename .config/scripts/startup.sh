@@ -2,7 +2,7 @@
 export DISPLAY=:1
 
 # Check if secrets required for private services have been cloned
-SECRETS_EXIST=$(test -d ~/.ssh-private; echo $?)
+SECRETS_EXIST=$(test -d $HOME/.ssh-private; echo $?)
 
 # Start the tmux server for daemonised services
 tmux start-server
@@ -19,11 +19,11 @@ if [ -w /dev/tty3 ]; then
   tmux new-session \
     -d \
     -s x11 \
-    xinit /usr/bin/i3 -- $DISPLAY vt03 \
+    xinit \
     2>/dev/null
 else
   # Update i3 config to use web browser compatible keybindings
-  ~/.config/i3/set-vnc-config.sh
+  $HOME/.config/i3/set-vnc-config.sh
 
   # If operating in a server environment, start a vnc x server
   tmux new-session \
@@ -41,14 +41,11 @@ fi
 # Wait until x server is running before proceeding
 until xset -q >/dev/null; do sleep 1; done
 
-# Load x client configuration
-xrdb ~/.Xresources
-
 # Start autorandr
 tmux new-session \
   -d \
   -s autorandr \
-  ~/.config/scripts/monitor-hotplug.sh \
+  $HOME/.config/scripts/monitor-hotplug.sh \
   2>/dev/null
 
 # Start desktop environment shell
@@ -84,7 +81,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s dotfiles-startup-update \
-  zsh -c "vcsh list | xargs -I@ -n1 -P0 vcsh @ pull; ~/.config/scripts/startup.sh" \
+  zsh -c "vcsh list | xargs -I@ -n1 -P0 vcsh @ pull; $HOME/.config/scripts/startup.sh" \
   2>/dev/null
 
 # Start jobber
@@ -98,7 +95,7 @@ tmux new-session \
 true || tmux new-session \
   -d \
   -s disable-mouse \
-  ~/.config/scripts/disable-mouse.sh \
+  $HOME/.config/scripts/disable-mouse.sh \
   2>/dev/null
 
 # Start openvpn
@@ -107,9 +104,9 @@ if [ "$SECRETS_EXIST" -eq 0 ] && false; then
     -d \
     -s openvpn \
     sudo openvpn \
-    --config ~/.config/openvpn/default.ovpn \
-    --auth-user-pass ~/.config/openvpn/credentials \
-    --dev-node ~/.config/openvpn/tun \
+    --config $HOME/.config/openvpn/default.ovpn \
+    --auth-user-pass $HOME/.config/openvpn/credentials \
+    --dev-node $HOME/.config/openvpn/tun \
     2>/dev/null
 fi
 
@@ -142,12 +139,12 @@ tmux new-session \
   -s transmission \
   transmission-daemon \
   --bind-address-ipv4 localhost \
-  --config-dir ~/.config/transmission \
-  --download-dir ~/torrents \
+  --config-dir $HOME/.config/transmission \
+  --download-dir $HOME/torrents \
   --foreground \
   --no-auth \
   --rpc-bind-address localhost \
-  --watch-dir ~/torrents/.watch \
+  --watch-dir $HOME/torrents/.watch \
   2>/dev/null
 
 # Start unclutter
@@ -180,15 +177,3 @@ tmux new-session \
   -s vnc-client \
   /opt/noVNC/utils/launch.sh --listen 8080 --vnc localhost:5901 \
   2>/dev/null
-
-# Map key modifiers
-xmodmap ~/.Xmodmap
-
-# Enable numlock
-numlockx on
-
-# Set keyboard repeat delay and rate
-xset r rate 180 140
-
-# Force chrome to restore session on startup
-sed -i 's/Crashed/normal/' ~/.config/google-chrome/Profile\ 1/Preferences >/dev/null 2>&1
