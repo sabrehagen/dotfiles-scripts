@@ -1,7 +1,12 @@
 ARCH=$(dpkg --print-architecture)
 
+# Force chrome to restore session on startup
+force_restore () { sed -i 's/Crashed/normal/' "~/.config/$1/Preferences" >/dev/null 2>&1; }
+
 if [ "$ARCH" = "arm64" ]; then
+  force_restore "chromium/System Profile"
   chromium-browser --no-sandbox --disable-gpu --force-device-scale-factor=1.5 --test-type
 else
+  force_restore "google-chrome/Profile 1"
   google-chrome
 fi
