@@ -41,6 +41,9 @@ fi
 # Wait until x server is running before proceeding
 until xset -q >/dev/null; do sleep 1; done
 
+# Load x client configuration
+xrdb ~/.Xresources
+
 # Start autorandr
 tmux new-session \
   -d \
