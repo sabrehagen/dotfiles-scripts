@@ -5,7 +5,7 @@ force_restore () { sed -i 's/Crashed/normal/' "~/.config/$1/Preferences" >/dev/n
 
 if [ "$ARCH" = "arm64" ]; then
   force_restore "chromium/System Profile"
-  chromium-browser --no-sandbox --disable-gpu --force-device-scale-factor=1.5 --test-type
+  chromium-browser --no-sandbox --disable-gpu --force-device-scale-factor=1 --test-type
 else
   force_restore "google-chrome/Profile 1"
   google-chrome
