@@ -177,3 +177,6 @@ tmux new-session \
   -s vnc-client \
   /opt/noVNC/utils/launch.sh --listen 8080 --vnc localhost:5901 \
   2>/dev/null
+
+# Manually load xinitrc
+. $HOME/.xinitrc
