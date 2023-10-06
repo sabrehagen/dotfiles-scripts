@@ -25,7 +25,7 @@ else
   # Update i3 config to use web browser compatible keybindings
   $HOME/.config/i3/set-vnc-config.sh
 
-  # If operating in a server environment, start a vnc x server
+  # If operating in a headless server environment, start a vnc x server
   tmux new-session \
     -d \
     -s vnc-server \
