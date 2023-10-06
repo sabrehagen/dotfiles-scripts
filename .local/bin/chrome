@@ -2,10 +2,10 @@ ARCH=$(dpkg --print-architecture)
 
 if [ "$ARCH" = "arm64" ]; then
   # Force chrome to restore session on startup
-  sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' "~/.config/chromium/Local State" >/dev/null 2>&1
-  sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences >/dev/null 2>&1
+  sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' "$HOME/.config/chromium/Local State" >/dev/null 2>&1
+  sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' $HOME/.config/chromium/Default/Preferences >/dev/null 2>&1
 
-  DPI=$(cat ~/.Xresources | grep dpi | sed 's/.*: //')
+  DPI=$(cat $HOME/.Xresources | grep dpi | sed 's/.*: //')
 
   if [ "$DPI" -gt 96 ]; then
     SCALE_FACTOR=1.5
@@ -21,7 +21,7 @@ if [ "$ARCH" = "arm64" ]; then
     --test-type
 else
   # Force chrome to restore session on startup
-  sed -i 's/Crashed/normal/' "~/.config/google-chrome/Default Profile/Preferences" >/dev/null 2>&1
+  sed -i 's/Crashed/normal/' "$HOME/.config/google-chrome/Default Profile/Preferences" >/dev/null 2>&1
 
   google-chrome
 fi

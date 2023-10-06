@@ -22,8 +22,8 @@ if pidof ffmpeg; then
         -vcodec libx264 \
         -qp 18 \
         -preset ultrafast \
-        ~/videos/recording-$time.mp4
+        $HOME/videos/recording-$time.mp4
 
-      echo ~/videos/recording-$time.mp4
+      echo $HOME/videos/recording-$time.mp4
     fi
 fi
