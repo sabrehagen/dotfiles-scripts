@@ -1,9 +1,9 @@
-PRIVATE_KEY_PATH=~/.ssh/desktop-environment-host-access
+PRIVATE_KEY_PATH=$HOME/.ssh/desktop-environment-host-access
 
 # Confiture ssh client access if not already configured
 if [ ! -f $PRIVATE_KEY_PATH ]; then
-  ~/.config/scripts/prepare-host-ssh-access.sh
+  $HOME/.config/scripts/prepare-host-ssh-access.sh
 fi
 
 # Connect to host using authorized ssh key
-ssh -i $PRIVATE_KEY_PATH $USER@$(~/.config/scripts/host-ip.sh) "$@"
+ssh -i $PRIVATE_KEY_PATH $USER@$($HOME/.config/scripts/host-ip.sh) "$@"

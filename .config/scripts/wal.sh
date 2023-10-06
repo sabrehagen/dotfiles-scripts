@@ -1,8 +1,8 @@
 # Set wallpaper and run per-application update scripts
-~/.local/bin/wal -i ~/.local/share/wallpapers
+$HOME/.local/bin/wal -i $HOME/.local/share/wallpapers
 
 # Reload dunst theme
-~/.config/dunst/wal.sh
+$HOME/.config/dunst/wal.sh
 
 # Reload xava
 kill -USR1 $(pgrep xava)
@@ -11,7 +11,7 @@ kill -USR1 $(pgrep xava)
 /opt/warnai/warnai --wal --gtk fantome --norender
 
 # Reload gtk theme
-gtk-theme-switch2 ~/.themes/warna
+gtk-theme-switch2 $HOME/.themes/warna
 
 # Reload vs code theme
 # xdotool search --onlyvisible --class code \

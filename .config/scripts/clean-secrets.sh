@@ -13,7 +13,7 @@ remove_vcsh_repo() {
     xargs -I directory rm -rf $HOME/directory 2>/dev/null
 
   # Remove vcsh repository git folder
-  rm -rf ~/.config/vcsh/repo.d/$REPO.git 2>/dev/null
+  rm -rf $HOME/.config/vcsh/repo.d/$REPO.git 2>/dev/null
 }
 
 PRIVATE_DOTFILES=$(grep dotfiles\- $HOME/.config/scripts/clone-secrets.sh | sed -E 's;.*(dotfiles-[^ ]*) .*;\1;')

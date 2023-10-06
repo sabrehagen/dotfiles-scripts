@@ -1,4 +1,4 @@
-APPS_DIR=~/apps
+APPS_DIR=$HOME/apps
 ARCHIVE_DIR=archived
 LAUNCH_APP=$1
 
@@ -11,8 +11,8 @@ if [ ! -z "$LAUNCH_APP" ]; then
 else
 
   # Configure dmenu
-  DMENU_FG=$(cat ~/.cache/wal/colors | head -1)
-  DMENU_BG=$(cat ~/.cache/wal/colors | tail -1)
+  DMENU_FG=$(cat $HOME/.cache/wal/colors | head -1)
+  DMENU_BG=$(cat $HOME/.cache/wal/colors | tail -1)
   DMENU_COMMAND="dmenu -nb $DMENU_FG -nf $DMENU_BG -sb $DMENU_BG -sf $DMENU_FG"
 
   # Get application paths

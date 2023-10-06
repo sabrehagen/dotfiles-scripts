@@ -1,5 +1,5 @@
 #!/bin/bash
-PRIVATE_KEY_PATH=~/.ssh/desktop-environment-host-access
+PRIVATE_KEY_PATH=$HOME/.ssh/desktop-environment-host-access
 
 # Exit if ssh client already configured
 if [ -f $PRIVATE_KEY_PATH ]; then
@@ -23,4 +23,4 @@ ssh-keygen \
   -t rsa
 
 # Copy public key to server's authorized_keys
-sshpass -p $PASSWORD ssh-copy-id -i $PRIVATE_KEY_PATH $USER@$(~/.config/scripts/host-ip.sh) 2>/dev/null
+sshpass -p $PASSWORD ssh-copy-id -i $PRIVATE_KEY_PATH $USER@$($HOME/.config/scripts/host-ip.sh) 2>/dev/null

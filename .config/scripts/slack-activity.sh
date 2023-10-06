@@ -1,5 +1,5 @@
 touchWindow () {
-  ~/.config/i3/move-to-next-window-of-type.sh $1
+  $HOME/.config/i3/move-to-next-window-of-type.sh $1
   xdotool key tab
   sleep 10
 }
