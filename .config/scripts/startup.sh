@@ -69,14 +69,6 @@ tmux new-session \
   --server 1.1.1.1 \
   2>/dev/null
 
-# Start dunst
-tmux new-session \
-  -d \
-  -s dunst \
-  dunst \
-  -print \
-  2>/dev/null
-
 # Start dotfiles startup update
 tmux new-session \
   -d \
