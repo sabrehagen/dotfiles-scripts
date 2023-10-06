@@ -1,12 +1,27 @@
 ARCH=$(dpkg --print-architecture)
 
-# Force chrome to restore session on startup
-force_restore () { sed -i 's/Crashed/normal/' "~/.config/$1/Preferences" >/dev/null 2>&1; }
-
 if [ "$ARCH" = "arm64" ]; then
-  force_restore "chromium/System Profile"
-  chromium-browser --no-sandbox --disable-gpu --force-device-scale-factor=1 --test-type
+  # Force chrome to restore session on startup
+  sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' "~/.config/chromium/Local State" >/dev/null 2>&1
+  sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences >/dev/null 2>&1
+
+  DPI=$(cat ~/.Xresources | grep dpi | sed 's/.*: //')
+
+  if [ "$DPI" -gt 96 ]; then
+    SCALE_FACTOR=1.5
+  else
+    SCALE_FACTOR=1
+  fi
+
+  chromium-browser \
+    --disable-gpu \
+    --force-device-scale-factor=$SCALE_FACTOR \
+    --hide-crash-restore-bubble \
+    --no-sandbox \
+    --test-type
 else
-  force_restore "google-chrome/Profile 1"
+  # Force chrome to restore session on startup
+  sed -i 's/Crashed/normal/' "~/.config/google-chrome/Default Profile/Preferences" >/dev/null 2>&1
+
   google-chrome
 fi
