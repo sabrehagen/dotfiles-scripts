@@ -12,9 +12,3 @@ kill -USR1 $(pgrep xava)
 
 # Reload gtk theme
 gtk-theme-switch2 $HOME/.themes/warna
-
-# Reload vs code theme
-# xdotool search --onlyvisible --class code \
-#   windowactivate --sync \
-#   windowfocus --sync \
-#   key ctrl+shift+r
