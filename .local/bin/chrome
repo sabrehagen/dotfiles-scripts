@@ -17,11 +17,13 @@ if [ "$ARCH" = "arm64" ]; then
     --disable-gpu \
     --force-device-scale-factor=$SCALE_FACTOR \
     --hide-crash-restore-bubble \
+    --load-extension=$HOME/.cache/wal \
     --no-sandbox \
-    --test-type
+    --test-type \
+    "$@"
 else
   # Force chrome to restore session on startup
   sed -i 's/Crashed/normal/' "$HOME/.config/google-chrome/Default Profile/Preferences" >/dev/null 2>&1
 
-  google-chrome
+  google-chrome "$@"
 fi
