@@ -18,7 +18,8 @@ for WORKSPACE_NUMBER in $WORKSPACE_NUMBERS; do
 
     # Open placeholder in sibling container
     i3-msg split h
-    i3-msg exec open
+    i3-msg exec xterm
+    i3-msg focus parent
     i3-msg mark PLACEHOLDER
   fi
 
@@ -26,57 +27,15 @@ for WORKSPACE_NUMBER in $WORKSPACE_NUMBERS; do
 
 done
 
+sleep 0.5
+
 # Kill chromium
 pkill -f chromium-browser
-
-i3-msg [con_mark=PLACEHOLDER] focus
 
 # Start chromium
 i3-msg "exec chrome --class=i3-chromium-launch"
 
+sleep 1.5
+
 # Remove placeholders
-i3-msg [con_mark=PLACEHOLDER] kill
-
-exit 0
-
-# Focus placeholder
-i3-msg [con_mark=PLACEHOLDER] focus
-i3-msg kill
-
-
-# Open chrome in the placeholder
-chrome
-
-exit 0
-
-# i3-msg swap container with mark PLACEHOLDER
-
-# for each chromium window
-
-i3-msg focus chromium window
-i3-msg "split h"
-i3-msg open
-i3-msg mark open placeholder
-
-# end for
-
-i3-msg close windows matching chromium class
-
-# start chrome on hidden scratchpad
-i3-msg set window rule chrome scratchpad_chrome
-chrome &
-
-# wait for chromium windows to appear
-xdotool search for chromium windows
-
-# for each chrome window
-
-# move window to open mark
-i3-msg move window to open mark
-
-# end for
-
-if [ ! -z "$MATCHING_WORKSPACE_WINDOW" ]; then
-  xdotool windowactivate $MATCHING_WORKSPACE_WINDOW
-  break
-fi
+pkill -f xterm
