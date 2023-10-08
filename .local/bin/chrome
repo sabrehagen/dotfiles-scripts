@@ -19,6 +19,7 @@ if [ "$ARCH" = "arm64" ]; then
     --hide-crash-restore-bubble \
     --load-extension=$HOME/.cache/wal \
     --no-sandbox \
+    --restore-last-session \
     --test-type \
     "$@"
 else
