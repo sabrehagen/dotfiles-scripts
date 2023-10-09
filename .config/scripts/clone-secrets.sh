@@ -16,6 +16,12 @@ fi
 # Unlock ssh private key so remaining repositories can be cloned
 eval $(find $HOME/.ssh-private -regextype posix-extended -regex '.*id_rsa[a-z_]*' | xargs -n1 -I@ keychain --inherit any --eval @)
 
+# Convert all https cloned repositories to use ssh
+https_to_git () { sed -i 's;=.*://.*github.com/\(.*\);= git@github.com:\1;' "$1"; }
+for REPOSITORY in $(ls -d $HOME/.config/vcsh/repo.d/*); do
+  https_to_git $REPOSITORY/config
+done
+
 # Clone private repositories using ssh key
 vcsh clone git@github.com:sabrehagen/dotfiles-mopidy 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-op 2>/dev/null &
@@ -24,12 +30,6 @@ vcsh clone git@github.com:sabrehagen/dotfiles-rescuetime 2>/dev/null &
 
 # Wait for repositories to clone in parallel
 wait
-
-# Convert all https cloned repositories to use ssh
-https_to_git () { sed -i 's;=.*://.*github.com/\(.*\);= git@github.com:\1;' "$1"; }
-for REPOSITORY in $(ls -d $HOME/.config/vcsh/repo.d/*); do
-  https_to_git $REPOSITORY/config
-done
 
 # Start services that depend on private secrets
 $HOME/.config/scripts/startup.sh
