@@ -1,0 +1,1 @@
+chrome --user-data-dir=/mnt/host/chrome-teams "$@"
