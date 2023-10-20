@@ -150,7 +150,7 @@ tmux new-session \
   2>/dev/null
 
 # If ssh-agent isn't running but the ssh socket exists, remove it otherwise ssh-agent will fail to start
-SSH_AGENT_EXISTS=$(ps aux | grep $SSH_AUTH_SOCK | grep -vq grep; echo $?)
+SSH_AGENT_EXISTS=$(ps aux | grep -v grep | grep -q $SSH_AUTH_SOCK; echo $?)
 SSH_SOCKET_EXISTS=$(test -S $SSH_AUTH_SOCK; echo $?)
 if [ "$SSH_AGENT_EXISTS" -eq 1 ] && [ "$SSH_SOCKET_EXISTS" -eq 0 ]; then
   rm $SSH_AUTH_SOCK 2>/dev/null
