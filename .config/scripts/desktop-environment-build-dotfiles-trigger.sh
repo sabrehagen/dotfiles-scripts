@@ -1,4 +1,4 @@
-DESKTOP_ENVIRONMENT_LAST_MODIFIED=$(cat $HOME/repositories/sabrehagen/desktop-environment/.dotfiles-cachebust 2>/dev/null || echo 0)
+DESKTOP_ENVIRONMENT_LAST_MODIFIED=$(head -n1 $HOME/repositories/sabrehagen/desktop-environment/.dotfiles-cachebust 2>/dev/null || echo 0)
 DOTFILES_LAST_MODIFIED=$(vcsh foreach log -1 --date=unix --format=%cd | grep -v dotfiles | sort | tail -n 1)
 
 if [ "$DOTFILES_LAST_MODIFIED" -ge "$DESKTOP_ENVIRONMENT_LAST_MODIFIED" ]; then
