@@ -3,10 +3,10 @@ HEIGHT=$2
 MODE=${WIDTH}x${HEIGHT}
 
 # Add resolution mode
-xrandr --newmode $MODE $(cvt $WIDTH $HEIGHT | tail -n 1 | cut -d ' ' -f 3-)
+xrandr --newmode $MODE $(cvt $WIDTH $HEIGHT | tail -n 1 | cut -d' ' -f3-)
 
 # Get display output
-OUTPUT=$(xrandr | grep " connected" | cut -d ' ' -f 1)
+OUTPUT=$(xrandr | grep " connected" | cut -d' ' -f1)
 
 # Add display mode
 xrandr --addmode $OUTPUT $MODE

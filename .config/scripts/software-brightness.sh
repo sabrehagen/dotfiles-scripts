@@ -1,4 +1,4 @@
-BRIGHTNESS=$(xrandr --verbose | grep -m 1 -i brightness | cut -f2 -d ' ')
+BRIGHTNESS=$(xrandr --verbose | grep -m 1 -i brightness | cut -d' ' -f2)
 
 if [ "$1" = '+' ]; then
   NEW_BRIGHTNESS=$(echo "$BRIGHTNESS + 0.05" | bc)
