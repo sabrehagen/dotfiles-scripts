@@ -14,7 +14,7 @@ if [ ! -f $HOME/.ssh/id_rsa ]; then
 fi
 
 # Unlock ssh private key so remaining repositories can be cloned
-eval $(find $HOME/.ssh-private -regextype posix-extended -regex '.*id_rsa[a-z_]*' | xargs -n1 -I@ keychain --inherit any --eval @)
+eval $(find $HOME/.ssh-private -regextype posix-extended -regex '.*id_rsa[a-z_]*' | xargs -I@ keychain --inherit any --eval @)
 
 # Convert all https cloned repositories to use ssh
 https_to_git () { sed -i 's;=.*://.*github.com/\(.*\);= git@github.com:\1;' "$1"; }
