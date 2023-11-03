@@ -2,4 +2,4 @@
 tmux ls | \
   grep shell- | \
   cut -d: -f1 | \
-  xargs -n 1 tmux kill-session -t
+  xargs -n1 tmux kill-session -t
