@@ -73,7 +73,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s dotfiles-startup-update \
-  zsh -c "vcsh list | xargs -I@ -n1 -P0 vcsh @ pull; $HOME/.config/scripts/startup.sh" \
+  zsh -c "vcsh list | xargs -I@ -P0 vcsh @ pull; $HOME/.config/scripts/startup.sh" \
   2>/dev/null
 
 # Start jobber
