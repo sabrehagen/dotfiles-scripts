@@ -170,11 +170,9 @@ tmux new-session \
   /opt/noVNC/utils/launch.sh --listen 8080 --vnc localhost:5901 \
   2>/dev/null
 
-# Take ownership if docker volumes are not writable
-if [ ! -w "$DESKTOP_ENVIRONMENT_STATE_CODE" ]; then
-  tmux new-session \
-    -d \
-    -s take-ownership \
-    /opt/desktop-environment/docker/scripts/take-ownership.sh \
-    2>/dev/null
-fi
+# Take ownership of docker volumes
+tmux new-session \
+  -d \
+  -s take-ownership \
+  /opt/desktop-environment/docker/scripts/take-ownership.sh \
+  2>/dev/null
