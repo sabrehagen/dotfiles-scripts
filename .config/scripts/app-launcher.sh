@@ -3,7 +3,7 @@ ARCHIVE_DIR=archived
 LAUNCH_APP=$1
 
 # If an application was supplied
-if [ ! -z "$LAUNCH_APP" ]; then
+if [ -n "$LAUNCH_APP" ]; then
 
   # Launch the supplied application
   find $APPS_DIR/*/* -maxdepth 1 -type f -name $LAUNCH_APP -not -path "$APPS_DIR/$ARCHIVE_DIR/*" -exec {} \; &
