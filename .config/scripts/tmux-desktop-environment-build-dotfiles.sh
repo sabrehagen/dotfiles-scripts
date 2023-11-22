@@ -12,4 +12,4 @@ tmux new-session \
 
 # Open a gotop host network monitor in the build session
 tmux split-window -t $SESSION_NAME $HOME/.config/scripts/host-network.sh
-tmux resize-pane -t ${SESSION_NAME}:1 -y 5
+tmux resize-pane -t $SESSION_NAME:1 -y 5
