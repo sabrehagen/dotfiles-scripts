@@ -7,7 +7,11 @@ SESSION_NAME=desktop-environment-build-dotfiles-$(date +%s)
 tmux new-session \
   -d \
   -s $SESSION_NAME \
-  zsh -c "$HOME/repositories/sabrehagen/desktop-environment/docker/scripts/build-dotfiles.sh; sleep infinity" \
+  zsh -c "\
+    $HOME/repositories/sabrehagen/desktop-environment/docker/scripts/build-dotfiles.sh; \
+    $HOME/.config/scripts/host-ssh.sh 'kill -STOP \$(pgrep gotop)'; \
+    sleep infinity \
+  " \
   2>/dev/null
 
 # Open a gotop host network monitor in the build session
