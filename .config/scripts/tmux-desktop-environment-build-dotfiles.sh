@@ -9,7 +9,7 @@ tmux new-session \
   -s $SESSION_NAME \
   zsh -c "\
     $HOME/repositories/sabrehagen/desktop-environment/docker/scripts/build-dotfiles.sh; \
-    $HOME/.config/scripts/host-ssh.sh 'kill -STOP \$(pgrep gotop)'; \
+    $HOME/.config/scripts/host-ssh.sh 'kill -STOP \$(pgrep gotop | sort -nr | head -n1)'; \
     sleep infinity \
   " \
   2>/dev/null
