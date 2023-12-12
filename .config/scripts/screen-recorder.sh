@@ -5,7 +5,7 @@ if pidof ffmpeg; then
   else
     slop=$(slop -f "%x %y %w %h")
     read -r X Y W H < <(echo $slop)
-    time=$(date +%F%T)
+    OUTPUT_FILE=$HOME/videos/recording-$(date +%F%T).mp4
 
     # only start recording if we give a width (e.g we press escape to get out of slop - don't record)
     if [ ${#W} -gt 0 ]; then
@@ -22,8 +22,10 @@ if pidof ffmpeg; then
         -vcodec libx264 \
         -qp 18 \
         -preset ultrafast \
-        $HOME/videos/recording-$time.mp4
+        $OUTPUT_FILE
 
-      echo $HOME/videos/recording-$time.mp4
+      echo $OUTPUT_FILE
+
+      $HOME/.config/scripts/compress-screen-recording.sh $OUTPUT_FILE
     fi
 fi
