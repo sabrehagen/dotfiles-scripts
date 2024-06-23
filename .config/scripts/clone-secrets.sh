@@ -35,5 +35,8 @@ vcsh clone git@github.com:sabrehagen/dotfiles-zsh-private 2>/dev/null &
 # Wait for repositories to clone in parallel
 wait
 
+# Reload shell environment
+source $HOME/.zshenv
+
 # Start services that depend on private secrets
 $HOME/.config/scripts/startup.sh
