@@ -30,6 +30,7 @@ vcsh clone git@github.com:sabrehagen/dotfiles-mopidy 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-op 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-openvpn 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-rescuetime 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-zsh-private 2>/dev/null &
 
 # Wait for repositories to clone in parallel
 wait
