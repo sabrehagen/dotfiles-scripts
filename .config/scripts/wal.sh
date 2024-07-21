@@ -1,5 +1,5 @@
 # Set wallpaper and run per-application update scripts
-$HOME/.local/bin/wal -i $HOME/.local/share/wallpapers --saturate 0.3
+$HOME/.local/bin/wal -i ${1-$HOME/.local/share/wallpapers} --saturate 0.3
 
 # Reload dunst theme
 $HOME/.config/dunst/wal.sh
