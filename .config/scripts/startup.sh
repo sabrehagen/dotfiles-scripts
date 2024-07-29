@@ -106,7 +106,7 @@ fi
 tmux new-session \
   -d \
   -s pulseaudio \
-  pulseaudio -D \
+  pulseaudio --daemonize=no \
   2>/dev/null
 
 # Start redshift
