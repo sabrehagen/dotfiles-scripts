@@ -27,6 +27,7 @@ vcsh clone git@github.com:sabrehagen/dotfiles-aws 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-fastfetch 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gh 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-mopidy 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-ngrok 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-op 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-openvpn 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-rescuetime 2>/dev/null &
