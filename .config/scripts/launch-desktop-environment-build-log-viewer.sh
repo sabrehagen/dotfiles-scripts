@@ -16,7 +16,7 @@ if [ -n "$BUILD_TMUX_SESSION" ]; then
   fi
 
   # Create a new build log viewer
-  $HOME/.config/scripts/launch-alacritty.sh \
+  alacritty \
     --option window.dimensions.columns=108 \
     --option window.dimensions.lines=50 \
     --title i3bar_desktop-environment-build \
