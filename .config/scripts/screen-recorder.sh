@@ -18,7 +18,7 @@ if pidof ffmpeg; then
         -framerate 60 \
         -thread_queue_size 512 \
         -i $DISPLAY.0+$X,$Y \
-        -f alsa -ac 2 -i hw:0,0 -acodec mp3 \
+        -f alsa -ac 2 -i hw:1,0 -acodec mp3 \
         -vcodec libx264 \
         -qp 18 \
         -preset ultrafast \
