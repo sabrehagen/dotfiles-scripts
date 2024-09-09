@@ -1,3 +1,3 @@
-udevadm monitor --subsystem-match=drm --property --udev | \
-  grep -E --line-buffered "UDEV .*card0" | \
+udevadm monitor | \
+  grep -E --line-buffered drm/card1 | \
   xargs -L 1 $HOME/.config/scripts/autorandr.sh
