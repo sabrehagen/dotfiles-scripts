@@ -8,7 +8,7 @@ $HOME/.config/dunst/wal.sh
 $HOME/.config/i3/chromium-replace.sh
 
 # Reload xava
-kill -USR1 $(pgrep xava)
+kill -USR1 $(pgrep xava) 2>/dev/null
 
 # Generate gtk theme
 /opt/warnai/warnai --wal --gtk fantome --norender
