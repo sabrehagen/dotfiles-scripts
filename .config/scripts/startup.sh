@@ -125,6 +125,20 @@ if [ "$SECRETS_EXIST" -eq 0 ]; then
     2>/dev/null
 fi
 
+# Start screenpipe
+tmux new-session \
+  -d \
+  -s screenpipe \
+  screenpipe \
+  2>/dev/null
+
+# Start screenpipe ui
+tmux new-session \
+  -d \
+  -s screenpipe-ui \
+  npm --prefix /opt/screenpipe/examples/typescript/vercel-ai-chatbot run start -- --port 3003 \
+  2>/dev/null
+
 # Start transmission
 tmux new-session \
   -d \
