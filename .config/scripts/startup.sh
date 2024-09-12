@@ -76,6 +76,13 @@ tmux new-session \
   zsh -c "vcsh list | xargs -I@ -P0 vcsh @ pull; $HOME/.config/scripts/startup.sh" \
   2>/dev/null
 
+# Start chromium crashed session fixer
+tmux new-session \
+  -d \
+  -s chromium-crashed-session-fixer \
+  $HOME/.config/scripts/chromium-fix-crashed-session.sh \
+  2>/dev/null
+
 # Start jobber
 tmux new-session \
   -d \
