@@ -1,3 +1,6 @@
+# Make container docker group id the same as the host docker group id so mounted docker socket permissions match local docker group
+sudo groupmod -g $DESKTOP_ENVIRONMENT_HOST_DOCKER_GROUP_ID docker
+
 # Use the first x server
 export DISPLAY=:1
 
