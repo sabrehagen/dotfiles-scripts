@@ -22,9 +22,6 @@ if [ -w /dev/tty3 ]; then
     xinit -- $DISPLAY vt0$DESKTOP_ENVIRONMENT_TTY \
     2>/dev/null
 else
-  # Update i3 config to use web browser compatible keybindings
-  $HOME/.config/i3/set-vnc-config.sh
-
   # If operating in a headless server environment, start a vnc x server
   tmux new-session \
     -d \
@@ -98,7 +95,7 @@ true || tmux new-session \
   2>/dev/null
 
 # Start openvpn
-if [ "$SECRETS_EXIST" -eq 0 ] && false; then
+if [ "$SECRETS_EXIST" -eq 0 ]; then
   tmux new-session \
     -d \
     -s openvpn \
