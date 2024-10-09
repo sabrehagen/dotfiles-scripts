@@ -49,7 +49,7 @@ APT_PATH=$APT_DATA_DIR/bin:$APT_DATA_DIR/sbin:$APT_DATA_DIR/usr/bin:$APT_DATA_DI
 APT_LD_LIBRARY_PATH=$APT_DATA_DIR/usr/lib/x86_64-linux-gnu:$APT_DATA_DIR/usr/lib/i386-linux-gnu:$APT_DATA_DIR/usr/lib
 
 # Make user's shell use the local apt library paths
-if [[ $PATH =~ $APT_DATA_DIR ]]; then
+if [[ $PATH =~ $APT_DATA_DIR ]] && [[ -f $HOME/.bashrc ]]; then
   echo export PATH=$APT_PATH:$PATH >> $HOME/.bashrc
   echo export LD_LIBRARY_PATH=$APT_LD_LIBRARY_PATH >> $HOME/.bashrc
 fi
