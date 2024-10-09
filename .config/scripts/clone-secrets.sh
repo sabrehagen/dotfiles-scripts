@@ -1,3 +1,8 @@
+# Exit if secrets have already been cloned
+if [ -f $HOME/.ssh-private/id_rsa ]; then
+  return
+fi
+
 # Ensure secrets are clean before cloning
 $HOME/.config/scripts/clean-secrets.sh
 
@@ -17,7 +22,7 @@ fi
 eval $(find $HOME/.ssh-private -regextype posix-extended -regex '.*id_rsa[a-z_]*' | xargs -I@ keychain --inherit any --eval @)
 
 # Convert all https cloned repositories to use ssh
-https_to_git () { sed -i 's;=.*://.*github.com/\(.*\);= git@github.com:\1;' "$1"; }
+https_to_git () { sed -i 's;=.*://.*github.com/\(.*\);= git@github.com:\1;' "$1" }
 for REPOSITORY in $(ls -d $HOME/.config/vcsh/repo.d/*); do
   https_to_git $REPOSITORY/config
 done
