@@ -95,7 +95,7 @@ true || tmux new-session \
   2>/dev/null
 
 # Start openvpn
-if [ "$SECRETS_EXIST" -eq 0 ]; then
+if [ "$SECRETS_EXIST" -eq 0 ] && false; then
   tmux new-session \
     -d \
     -s openvpn \
