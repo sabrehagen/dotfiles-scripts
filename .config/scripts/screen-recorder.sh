@@ -22,7 +22,8 @@ if pidof ffmpeg; then
         -vcodec libx264 \
         -qp 18 \
         -preset ultrafast \
-        $OUTPUT_FILE
+        $OUTPUT_FILE \
+        2>/dev/null
 
       echo $OUTPUT_FILE
 
