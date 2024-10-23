@@ -19,11 +19,11 @@ if [ ! -f $APT_SOURCES ]; then
 
   cat /etc/apt/sources.list > $APT_SOURCES
   cp -R /etc/apt/sources.list.d $APT_SOURCEPARTS_DIR
+
+  apt-get $APT_OPTIONS update
 fi
 
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR -o dir::etc::sourcelist=$APT_SOURCES -o dir::etc::sourceparts=$APT_SOURCEPARTS_DIR"
-
-apt-get $APT_OPTIONS update
 
 for PACKAGE in $*; do
   if [[ $PACKAGE == *.deb ]]; then
