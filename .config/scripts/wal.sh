@@ -5,7 +5,7 @@ $HOME/.local/bin/wal -i ${1-$HOME/.local/share/wallpapers} --saturate 0.3
 $HOME/.config/dunst/wal.sh
 
 # Reload chromium
-$HOME/.config/i3/chromium-replace.sh
+# $HOME/.config/i3/chromium-replace.sh
 
 # Reload xava
 kill -USR1 $(pgrep xava) 2>/dev/null
