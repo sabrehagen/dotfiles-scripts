@@ -25,18 +25,7 @@ if [ ! -f $APT_SOURCES ]; then
   apt-get $APT_OPTIONS update
 fi
 
-for PACKAGE in $*; do
-  if [[ $PACKAGE == *.deb ]]; then
-    PACKAGE_NAME=$(basename $PACKAGE .deb)
-    PACKAGE_FILE=$APT_CACHE_DIR/archives/$PACKAGE_NAME.deb
-
-    echo Fetching $PACKAGE
-    curl -s -L -z $PACKAGE_FILE -o $PACKAGE_FILE $PACKAGE 2>&1
-  else
-    echo Fetching .debs for $PACKAGE
-    apt-get $APT_OPTIONS -y --force-yes -d install --reinstall $PACKAGE
-  fi
-done
+apt-get $APT_OPTIONS -y --force-yes -d install --reinstall $*
 
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   echo Installing $(basename $DEB)
