@@ -8,6 +8,7 @@ ffmpeg \
   -preset medium \
   -c:a aac \
   -b:a 128k \
-  $OUTPUT_FILE
+  $OUTPUT_FILE \
+  2>/dev/null
 
 echo $OUTPUT_FILE
