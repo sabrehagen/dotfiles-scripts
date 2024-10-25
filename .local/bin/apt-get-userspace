@@ -29,7 +29,7 @@ apt-get $APT_OPTIONS -y --force-yes -d install --reinstall $*
 
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   echo Installing $(basename $DEB)
-  dpkg -i -x $DEB $APT_DATA_DIR/
+  dpkg -x $DEB $APT_DATA_DIR/
   rm $DEB
 done
 
