@@ -29,7 +29,8 @@ apt-get $APT_OPTIONS -y --force-yes -d install --reinstall $*
 
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   echo Installing $(basename $DEB)
-  dpkg -x $DEB $APT_DATA_DIR/
+  dpkg -i -x $DEB $APT_DATA_DIR/
+  rm $DEB
 done
 
 find $APT_DATA_DIR -type f -ipath '*/pkgconfig/*.pc' -print0 | xargs -0 --no-run-if-empty -n 1 sed -i -e 's!^prefix=\(.*\)$!prefix='$APT_DATA_DIR'\1!g'
