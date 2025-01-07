@@ -32,6 +32,7 @@ vcsh clone git@github.com:sabrehagen/dotfiles-aws 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-aicommit2 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-fastfetch 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gh 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-git-private 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-mopidy 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-ngrok 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-op 2>/dev/null &
