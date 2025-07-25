@@ -1,0 +1,12 @@
+# Force classic red and green colours for git diff output for all git usage
+git config --global color.diff-highlight.oldNormal '203 bold'
+git config --global color.diff-highlight.oldHighlight '203 bold 52'
+git config --global color.diff-highlight.newNormal '113 bold'
+git config --global color.diff-highlight.newHighlight '113 bold 22'
+git config --global color.diff.meta '226'
+git config --global color.diff.frag '135 bold'
+git config --global color.diff.commit 'yellow bold'
+git config --global color.diff.old '203 bold'
+git config --global color.diff.new '113 bold'
+git config --global color.diff.whitespace '203 reverse'
+git config --global color.diff.func '146 bold'
