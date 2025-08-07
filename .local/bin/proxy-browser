@@ -1,0 +1,1 @@
+thorium-browser --proxy-server=socks5://localhost:1080 --user-data-dir=~/.cache/thorium/proxy --use-system-ca-store
