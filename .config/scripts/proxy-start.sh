@@ -8,7 +8,7 @@ if ! netstat -tuln | grep -q 1080; then
 
   # Start the proxy connection
   ssh -o HostName=$PROXY_SERVER_IP proxy-server
-  echo "Proxy started."
+  echo "Proxy to $PROXY_SERVER_IP started."
 else
   echo "Proxy already running (PID $(lsof -i :1080 -t))."
 fi
