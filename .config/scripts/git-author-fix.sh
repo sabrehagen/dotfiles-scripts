@@ -87,13 +87,13 @@ if ! git rev-parse HEAD >/dev/null 2>&1; then
     exit 1
 fi
 
-# Find commits with the old email in the last 50 commits
-print_color "$BLUE" "Scanning last 50 commits for matching email addresses..."
+# Find commits with the old email
+print_color "$BLUE" "Scanning for matching email addresses..."
 echo ""
 
-# Get list of commits with the old email (last 50 commits)
+# Get list of commits with the old email
 # Check both author and committer emails
-MATCHING_COMMITS=$(git log --max-count=50 --pretty=format:"%H" --perl-regexp --grep="." --all-match | \
+MATCHING_COMMITS=$(git log --pretty=format:"%H" --perl-regexp --grep="." --all-match | \
     while IFS= read -r commit_hash; do
         if [ -n "$commit_hash" ]; then
             author_email=$(git log --max-count=1 --pretty=format:"%ae" "$commit_hash" 2>/dev/null || true)
@@ -105,7 +105,7 @@ MATCHING_COMMITS=$(git log --max-count=50 --pretty=format:"%H" --perl-regexp --g
     done | head -50)
 
 if [ -z "$MATCHING_COMMITS" ]; then
-    print_color "$GREEN" "No commits found with email '$OLD_EMAIL' in the last 50 commits."
+    print_color "$GREEN" "No commits found with email '$OLD_EMAIL'."
     print_color "$GREEN" "Nothing to update."
     exit 0
 fi
@@ -241,7 +241,7 @@ echo ""
 echo "$MATCHING_COMMITS" | while IFS= read -r commit_hash; do
     if [ -n "$commit_hash" ]; then
         # Find the new commit hash after filter-branch
-        new_commit_info=$(git log --max-count=50 --pretty=format:"%h - %s (%an <%ae>) [%ad]" --date=short | grep -F "$(git log --max-count=1 --pretty=format:"%s" "$commit_hash" 2>/dev/null || echo "COMMIT_NOT_FOUND")" | head -1 || echo "Could not find updated commit")
+        new_commit_info=$(git log --pretty=format:"%h - %s (%an <%ae>) [%ad]" --date=short | grep -F "$(git log --max-count=1 --pretty=format:"%s" "$commit_hash" 2>/dev/null || echo "COMMIT_NOT_FOUND")" | head -1 || echo "Could not find updated commit")
         print_color "$GREEN" "  $new_commit_info"
     fi
 done
