@@ -66,7 +66,7 @@ if [ ! -d "$REPO_DIR" ]; then
 fi
 
 # Check if it's a git repository
-if [ ! -d "$REPO_DIR/.git" ]; then
+if [ ! -d "$REPO_DIR/.git" ] && [ -z "$GIT_DIR" ]; then
     print_color "$RED" "Error: '$REPO_DIR' is not a git repository"
     exit 1
 fi
@@ -180,12 +180,12 @@ CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
 print_color "$BLUE" "Current branch: $CURRENT_BRANCH"
 
 # Get the commit hash from 50 commits ago (or first commit if less than 50)
-SINCE_COMMIT=$(git log --max-count=50 --pretty=format:"%H" | tail -1)
-if [ -n "$SINCE_COMMIT" ]; then
-    SINCE_COMMIT="$SINCE_COMMIT^"
-else
-    SINCE_COMMIT=""
-fi
+# SINCE_COMMIT=$(git log --max-count=50 --pretty=format:"%H" | tail -1)
+# if [ -n "$SINCE_COMMIT" ]; then
+#     SINCE_COMMIT="$SINCE_COMMIT^"
+# else
+#     SINCE_COMMIT=""
+# fi
 
 # Check for existing filter-branch backup refs
 if git for-each-ref refs/original/ >/dev/null 2>&1; then
@@ -215,7 +215,7 @@ if [ -n "$SINCE_COMMIT" ]; then
     if ! FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch \
         --env-filter "$FILTER_SCRIPT" \
         --tag-name-filter cat \
-        -- "$SINCE_COMMIT..HEAD" 2>/dev/null; then
+        -- "$SINCE_COMMIT..HEAD"; then
         print_color "$RED" "Error: git filter-branch failed"
         print_color "$RED" "This might happen if there are no commits to rewrite in the specified range"
         exit 1
@@ -224,7 +224,7 @@ else
     if ! FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch \
         --env-filter "$FILTER_SCRIPT" \
         --tag-name-filter cat \
-        -- --all 2>/dev/null; then
+        -- --all; then
         print_color "$RED" "Error: git filter-branch failed"
         exit 1
     fi
