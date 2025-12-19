@@ -1,4 +1,4 @@
 PRIVATE_KEY_PATH=$HOME/.ssh/desktop-environment-host-access
 
-# Connect to host using authorized ssh key
-ssh -i $PRIVATE_KEY_PATH -t $USER@$($HOME/.config/scripts/host-ip.sh) "$@"
+# Connect to host with tty and interactive shell environment
+$HOME/.config/scripts/host-ssh.sh -t zsh -i ${@:+-c "$@"}
