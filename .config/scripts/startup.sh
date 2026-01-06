@@ -85,6 +85,13 @@ tmux new-session \
   $HOME/.config/scripts/chromium-fix-crashed-session.sh \
   2>/dev/null
 
+# Start jackd
+tmux new-session \
+  -d \
+  -s jackd \
+  jackd -d alsa -d hw:1 -r 48000 -p 256 -n 2 \
+  2>/dev/null
+
 # Start jobber
 tmux new-session \
   -d \
