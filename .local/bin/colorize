@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+color=${1:--1}
+color=$((color + 2))
+
+printf "\033[0;3%sm" "$color"
+cat -
+printf "\033[0m"
