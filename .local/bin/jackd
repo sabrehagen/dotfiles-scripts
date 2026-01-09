@@ -1,0 +1,3 @@
+ulimit -r 95
+ulimit -l unlimited
+exec command jackd "$@"
