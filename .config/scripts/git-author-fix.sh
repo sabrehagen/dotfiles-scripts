@@ -54,25 +54,53 @@ if [ $# -ne 4 ]; then
 fi
 
 # Assign arguments to variables
-REPO_DIR="$1"
+REPO_INPUT="$1"
 OLD_EMAIL="$2"
 NEW_NAME="$3"
 NEW_EMAIL="$4"
 
 # Validate repository directory
-if [ ! -d "$REPO_DIR" ]; then
-    print_color "$RED" "Error: Repository directory '$REPO_DIR' does not exist"
+if [ ! -d "$REPO_INPUT" ]; then
+    print_color "$RED" "Error: Repository directory '$REPO_INPUT' does not exist"
     exit 1
 fi
 
-# Check if it's a git repository
-if [ ! -d "$REPO_DIR/.git" ] && [ -z "$GIT_DIR" ]; then
-    print_color "$RED" "Error: '$REPO_DIR' is not a git repository"
+# Resolve working tree and git directory
+RESOLVED_WORKTREE=""
+RESOLVED_GITDIR=""
+if git -C "$REPO_INPUT" rev-parse --show-toplevel >/dev/null 2>&1; then
+    RESOLVED_WORKTREE=$(git -C "$REPO_INPUT" rev-parse --show-toplevel)
+    RESOLVED_GITDIR=$(git -C "$REPO_INPUT" rev-parse --git-dir)
+elif git --git-dir="$REPO_INPUT" rev-parse --git-dir >/dev/null 2>&1; then
+    RESOLVED_GITDIR=$(cd "$REPO_INPUT" && pwd)
+    RESOLVED_WORKTREE=$(git --git-dir="$RESOLVED_GITDIR" config --get core.worktree 2>/dev/null || true)
+    if [ -z "$RESOLVED_WORKTREE" ]; then
+        print_color "$RED" "Error: Could not determine work tree for bare repository '$REPO_INPUT'."
+        print_color "$RED" "       Set core.worktree or provide the working tree path instead."
+        exit 1
+    fi
+else
+    print_color "$RED" "Error: '$REPO_INPUT' is not a git repository"
     exit 1
 fi
 
-# Change to repository directory
-cd "$REPO_DIR"
+# Normalize git dir path to absolute
+case "$RESOLVED_GITDIR" in
+    /*) ;;
+    *)
+        RESOLVED_GITDIR="$RESOLVED_WORKTREE/$RESOLVED_GITDIR"
+        ;;
+esac
+
+# Export git directory when it is detached from the work tree (e.g., vcsh)
+if [ ! -d "$RESOLVED_WORKTREE/.git" ]; then
+    export GIT_DIR="$RESOLVED_GITDIR"
+    export GIT_WORK_TREE="$RESOLVED_WORKTREE"
+fi
+
+# Change to repository work tree root
+cd "$RESOLVED_WORKTREE"
+REPO_DIR="$RESOLVED_WORKTREE"
 
 print_color "$BLUE" "=== Git Credentials Update Script ==="
 echo ""
@@ -112,6 +140,25 @@ fi
 
 # Count matching commits
 COMMIT_COUNT=$(echo "$MATCHING_COMMITS" | wc -l | tr -d ' ')
+
+# Determine the oldest matching commit so we can limit the rewrite
+EARLIEST_COMMIT=$(echo "$MATCHING_COMMITS" | tail -1)
+FILTER_RANGE="--all"
+if [ -n "$EARLIEST_COMMIT" ]; then
+    if git rev-parse "${EARLIEST_COMMIT}^" >/dev/null 2>&1; then
+        SINCE_COMMIT="${EARLIEST_COMMIT}^"
+        FILTER_RANGE="$SINCE_COMMIT..HEAD"
+    else
+        SINCE_COMMIT=""
+    fi
+fi
+
+if [ "$FILTER_RANGE" = "--all" ]; then
+    print_color "$YELLOW" "Rewrite scope: entire history (oldest matching commit has no parent)."
+else
+    EARLIEST_SHORT=$(git rev-parse --short "$EARLIEST_COMMIT")
+    print_color "$YELLOW" "Rewrite scope: commits reachable from $EARLIEST_SHORT to HEAD."
+fi
 
 print_color "$YELLOW" "Found $COMMIT_COUNT commit(s) with email '$OLD_EMAIL':"
 echo ""
@@ -179,17 +226,10 @@ fi
 CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
 print_color "$BLUE" "Current branch: $CURRENT_BRANCH"
 
-# Get the commit hash from 50 commits ago (or first commit if less than 50)
-# SINCE_COMMIT=$(git log --max-count=50 --pretty=format:"%H" | tail -1)
-# if [ -n "$SINCE_COMMIT" ]; then
-#     SINCE_COMMIT="$SINCE_COMMIT^"
-# else
-#     SINCE_COMMIT=""
-# fi
-
 # Check for existing filter-branch backup refs
 if git for-each-ref refs/original/ >/dev/null 2>&1; then
-    print_color "$YELLOW" "Found existing git filter-branch backup refs."
+    BACKUP_PATH="${GIT_DIR:-.git}/refs/original"
+    print_color "$YELLOW" "Found existing git filter-branch backup refs at $BACKUP_PATH."
     printf "Do you want to remove them and continue? This will permanently delete the backup. (y/N): "
     read -r cleanup_confirmation
     case "$cleanup_confirmation" in
@@ -211,21 +251,21 @@ print_color "$BLUE" "Executing git filter-branch..."
 echo ""
 
 # Use git filter-branch to rewrite history
-if [ -n "$SINCE_COMMIT" ]; then
+if [ "$FILTER_RANGE" = "--all" ]; then
     if ! FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch \
         --env-filter "$FILTER_SCRIPT" \
         --tag-name-filter cat \
-        -- "$SINCE_COMMIT..HEAD"; then
+        -- --all; then
         print_color "$RED" "Error: git filter-branch failed"
-        print_color "$RED" "This might happen if there are no commits to rewrite in the specified range"
         exit 1
     fi
 else
     if ! FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch \
         --env-filter "$FILTER_SCRIPT" \
         --tag-name-filter cat \
-        -- --all; then
+        -- "$FILTER_RANGE"; then
         print_color "$RED" "Error: git filter-branch failed"
+        print_color "$RED" "This might happen if there are no commits to rewrite in the specified range"
         exit 1
     fi
 fi
