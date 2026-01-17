@@ -68,9 +68,23 @@ fi
 # Resolve working tree and git directory
 RESOLVED_WORKTREE=""
 RESOLVED_GITDIR=""
-if git -C "$REPO_INPUT" rev-parse --show-toplevel >/dev/null 2>&1; then
+
+# Treat explicit git directories (e.g., vcsh repos) before falling back to work tree discovery
+if [ -f "$REPO_INPUT/HEAD" ] && [ -d "$REPO_INPUT/objects" ]; then
+    RESOLVED_GITDIR=$(cd "$REPO_INPUT" && pwd)
+    RESOLVED_WORKTREE=$(git --git-dir="$RESOLVED_GITDIR" config --get core.worktree 2>/dev/null || true)
+    if [ -z "$RESOLVED_WORKTREE" ]; then
+        print_color "$RED" "Error: Could not determine work tree for bare repository '$REPO_INPUT'."
+        print_color "$RED" "       Set core.worktree or provide the working tree path instead."
+        exit 1
+    fi
+elif git -C "$REPO_INPUT" rev-parse --show-toplevel >/dev/null 2>&1; then
     RESOLVED_WORKTREE=$(git -C "$REPO_INPUT" rev-parse --show-toplevel)
-    RESOLVED_GITDIR=$(git -C "$REPO_INPUT" rev-parse --git-dir)
+    if RESOLVED_GITDIR=$(git -C "$REPO_INPUT" rev-parse --absolute-git-dir 2>/dev/null); then
+        :
+    else
+        RESOLVED_GITDIR=$(git -C "$REPO_INPUT" rev-parse --git-dir)
+    fi
 elif git --git-dir="$REPO_INPUT" rev-parse --git-dir >/dev/null 2>&1; then
     RESOLVED_GITDIR=$(cd "$REPO_INPUT" && pwd)
     RESOLVED_WORKTREE=$(git --git-dir="$RESOLVED_GITDIR" config --get core.worktree 2>/dev/null || true)
@@ -84,11 +98,24 @@ else
     exit 1
 fi
 
-# Normalize git dir path to absolute
+# Normalize git dir path to absolute when older git versions return a relative path
 case "$RESOLVED_GITDIR" in
     /*) ;;
     *)
         RESOLVED_GITDIR="$RESOLVED_WORKTREE/$RESOLVED_GITDIR"
+        ;;
+esac
+
+# Ensure work tree is absolute when read from core.worktree
+case "$RESOLVED_WORKTREE" in
+    /*) ;;
+    *)
+        if RESOLVED_WORKTREE=$(cd "$RESOLVED_GITDIR" && cd "$RESOLVED_WORKTREE" 2>/dev/null && pwd); then
+            :
+        else
+            print_color "$RED" "Error: Could not resolve work tree path '$RESOLVED_WORKTREE'."
+            exit 1
+        fi
         ;;
 esac
 
@@ -98,9 +125,9 @@ if [ ! -d "$RESOLVED_WORKTREE/.git" ]; then
     export GIT_WORK_TREE="$RESOLVED_WORKTREE"
 fi
 
-# Change to repository work tree root
+# Change to repository work tree root for commands that read from working tree
 cd "$RESOLVED_WORKTREE"
-REPO_DIR="$RESOLVED_WORKTREE"
+REPO_DIR="$RESOLVED_GITDIR"
 
 print_color "$BLUE" "=== Git Credentials Update Script ==="
 echo ""
@@ -121,7 +148,7 @@ echo ""
 
 # Get list of commits with the old email
 # Check both author and committer emails
-MATCHING_COMMITS=$(git log --pretty=format:"%H" --perl-regexp --grep="." --all-match | \
+MATCHING_COMMITS=$(git rev-list --max-count=500 --all | \
     while IFS= read -r commit_hash; do
         if [ -n "$commit_hash" ]; then
             author_email=$(git log --max-count=1 --pretty=format:"%ae" "$commit_hash" 2>/dev/null || true)
@@ -227,7 +254,8 @@ CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
 print_color "$BLUE" "Current branch: $CURRENT_BRANCH"
 
 # Check for existing filter-branch backup refs
-if git for-each-ref refs/original/ >/dev/null 2>&1; then
+BACKUP_REFS=$(git for-each-ref --format='%(refname)' refs/original/ 2>/dev/null || true)
+if [ -n "$BACKUP_REFS" ]; then
     BACKUP_PATH="${GIT_DIR:-.git}/refs/original"
     print_color "$YELLOW" "Found existing git filter-branch backup refs at $BACKUP_PATH."
     printf "Do you want to remove them and continue? This will permanently delete the backup. (y/N): "
@@ -235,7 +263,7 @@ if git for-each-ref refs/original/ >/dev/null 2>&1; then
     case "$cleanup_confirmation" in
         [Yy]|[Yy][Ee][Ss])
             print_color "$BLUE" "Removing existing backup refs..."
-            git for-each-ref --format='delete %(refname)' refs/original/ | git update-ref --stdin
+            printf "%s\n" "$BACKUP_REFS" | sed 's/^/delete /' | git update-ref --stdin
             print_color "$GREEN" "✓ Backup refs removed"
             ;;
         *)
