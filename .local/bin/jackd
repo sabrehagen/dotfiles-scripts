@@ -1,3 +1,4 @@
 ulimit -r 95
 ulimit -l unlimited
-exec command jackd "$@"
+
+exec /usr/bin/jackd -d alsa -d hw:1 -r 48000 -p 256 -n 2 "$@"
