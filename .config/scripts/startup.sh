@@ -15,6 +15,14 @@ if command -v dbus-launch >/dev/null; then
   # Export the dbus environment to the global tmux environment
   tmux set-environment -g DBUS_SESSION_BUS_ADDRESS $DBUS_SESSION_BUS_ADDRESS
   tmux set-environment -g DBUS_SESSION_BUS_PID $DBUS_SESSION_BUS_PID
+
+  # Enable accessibility status on dbus
+  dbus-send --session --dest=org.a11y.Status /org/a11y/status \
+    org.freedesktop.DBus.Properties.Set \
+    string:org.a11y.Status string:IsEnabled variant:boolean:true
+  dbus-send --session --dest=org.a11y.Status /org/a11y/status \
+    org.freedesktop.DBus.Properties.Set \
+    string:org.a11y.Status string:ScreenReaderEnabled variant:boolean:true
 fi
 
 if [ -w /dev/tty3 ]; then
