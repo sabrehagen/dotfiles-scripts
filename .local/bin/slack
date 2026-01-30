@@ -1,1 +1,1 @@
-/usr/bin/slack --force-renderer-accessibility
+/usr/bin/slack --force-renderer-accessibility "$@"
