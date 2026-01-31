@@ -9,11 +9,11 @@ tmux new-session \
   -s $SESSION_NAME \
   zsh -c "\
     $HOME/repositories/sabrehagen/desktop-environment/docker/scripts/build-dotfiles.sh; \
-    $HOME/.config/scripts/host-ssh.sh 'kill -STOP \$(pgrep gotop | sort -nr | head -n1)'; \
+    $HOME/.config/scripts/host-ssh.sh pkill -STOP -x $SESSION_NAME; \
     sleep infinity \
   " \
   2>/dev/null
 
 # Open a gotop host network monitor in the build session
-tmux split-window -t $SESSION_NAME $HOME/.config/scripts/host-network.sh
+tmux split-window -t $SESSION_NAME zsh -c "$HOME/.config/scripts/host-network.sh $SESSION_NAME; sleep infinity"
 tmux resize-pane -t $SESSION_NAME:1 -y 5
