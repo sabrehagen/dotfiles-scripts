@@ -34,6 +34,7 @@ vcsh clone git@github.com:sabrehagen/dotfiles-cursor-cli 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-fastfetch 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gh 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-git-private 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-gpg 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-mopidy 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-ngrok 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-nicotine 2>/dev/null &
