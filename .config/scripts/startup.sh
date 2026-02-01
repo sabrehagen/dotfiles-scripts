@@ -153,18 +153,18 @@ tmux new-session \
   tmux select-layout -t pipewire-stack even-vertical
 
 # Start jackd
-tmux new-session \
-  -d \
-  -s jackd \
-  jackd -d alsa -d hw:1 -r 48000 -p 256 -n 2 \
-  2>/dev/null
+# tmux new-session \
+#   -d \
+#   -s jackd \
+#   jackd -d alsa -d hw:1 -r 48000 -p 256 -n 2 \
+#   2>/dev/null
 
 # Start pulseaudio
-tmux new-session \
-  -d \
-  -s pulseaudio \
-  pulseaudio --daemonize=no \
-  2>/dev/null
+# tmux new-session \
+#   -d \
+#   -s pulseaudio \
+#   pulseaudio --daemonize=no \
+#   2>/dev/null
 
 # Start redshift
 tmux new-session \
