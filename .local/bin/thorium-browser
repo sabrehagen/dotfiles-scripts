@@ -1,1 +1,1 @@
-exec /usr/bin/thorium-browser --force-renderer-accessibility "$@"
+/usr/bin/thorium-browser --force-renderer-accessibility "$@"
