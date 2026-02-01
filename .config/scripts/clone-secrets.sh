@@ -50,4 +50,4 @@ wait
 source $HOME/.zshenv
 
 # Start services that depend on private secrets
-$HOME/.config/scripts/startup.sh
+exec $HOME/.config/scripts/startup.sh

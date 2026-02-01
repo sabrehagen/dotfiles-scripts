@@ -1,1 +1,1 @@
-/usr/bin/cursor --force-renderer-accessibility "$@"
+exec /usr/bin/cursor --reuse-window --force-renderer-accessibility "$@"

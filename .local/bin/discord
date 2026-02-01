@@ -1,1 +1,1 @@
-/usr/bin/discord --force-renderer-accessibility "$@"
+exec /usr/bin/discord --force-renderer-accessibility "$@"
