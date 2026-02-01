@@ -1,9 +1,6 @@
 # Use the first x server
 export DISPLAY=:1
 
-# Check if secrets required for private services have been cloned
-SECRETS_EXIST=$(test -d $HOME/.ssh-private; echo $?)
-
 # Start the tmux server for daemonised services
 tmux start-server
 
@@ -54,6 +51,9 @@ fi
 if command -v xset >/dev/null; then
   until xset -q >/dev/null; do sleep 1; done
 fi
+
+# Check if secrets required for private services have been cloned
+SECRETS_EXIST=$(test -d $HOME/.ssh-private; echo $?)
 
 # Start autorandr
 tmux new-session \
