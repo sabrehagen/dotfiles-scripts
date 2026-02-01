@@ -114,6 +114,19 @@ true || tmux new-session \
   $HOME/.config/scripts/disable-mouse.sh \
   2>/dev/null
 
+# Bring up tailscale (enables Tailscale SSH when authenticated)
+if [ "$SECRETS_EXIST" -eq 0 ]; then
+  # Start tailscaled
+  tmux new-session \
+    -d \
+    -s tailscaled \
+    $HOME/.local/bin/tailscaled \
+    2>/dev/null
+
+    # Join tailscale network
+    $HOME/.local/bin/tailscale-up 2>/dev/null
+fi
+
 # Start openvpn
 if [ "$SECRETS_EXIST" -eq 0 ] && false; then
   tmux new-session \
