@@ -7,23 +7,27 @@ SECRETS_EXIST=$(test -d $HOME/.ssh-private; echo $?)
 # Start the tmux server for daemonised services
 tmux start-server
 
-# If running in an environment with dbus
-if command -v dbus-launch >/dev/null; then
-  # Start the dbus message bus
-  export $(dbus-launch)
-
-  # Export the dbus environment to the global tmux environment
-  tmux set-environment -g DBUS_SESSION_BUS_ADDRESS $DBUS_SESSION_BUS_ADDRESS
-  tmux set-environment -g DBUS_SESSION_BUS_PID $DBUS_SESSION_BUS_PID
-
-  # Enable accessibility status on dbus
-  dbus-send --session --dest=org.a11y.Status /org/a11y/status \
-    org.freedesktop.DBus.Properties.Set \
-    string:org.a11y.Status string:IsEnabled variant:boolean:true
-  dbus-send --session --dest=org.a11y.Status /org/a11y/status \
-    org.freedesktop.DBus.Properties.Set \
-    string:org.a11y.Status string:ScreenReaderEnabled variant:boolean:true
+# Launch system bus if not already running
+if [ ! -S /run/dbus/system_bus_socket ]; then
+  sudo dbus-daemon --system --fork --nopidfile
 fi
+
+# Launch session bus if not already running
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+  eval "$(dbus-launch --sh-syntax --exit-with-session)"
+fi
+
+# Enable accessibility status on dbus
+dbus-send --session --dest=org.a11y.Status /org/a11y/status \
+  org.freedesktop.DBus.Properties.Set \
+  string:org.a11y.Status string:IsEnabled variant:boolean:true
+dbus-send --session --dest=org.a11y.Status /org/a11y/status \
+  org.freedesktop.DBus.Properties.Set \
+  string:org.a11y.Status string:ScreenReaderEnabled variant:boolean:true
+
+# Export the dbus environment to the global tmux environment
+tmux set-environment -g DBUS_SESSION_BUS_ADDRESS $DBUS_SESSION_BUS_ADDRESS
+tmux set-environment -g DBUS_SESSION_BUS_PID $DBUS_SESSION_BUS_PID
 
 if [ -w /dev/tty3 ]; then
   # If a physical display is attached to the container, start a hardware x server
