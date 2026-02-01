@@ -66,18 +66,18 @@ tmux new-session \
   2>/dev/null
 
 # Start dnsmasq
-tmux new-session \
-  -d \
-  -s dnsmasq \
-  sudo dnsmasq \
-  --addn-hosts=/home/$USER/.config/dnsmasq/hostnames.txt \
-  --log-queries \
-  --no-daemon \
-  --no-resolv \
-  --strict-order \
-  --server 1.0.0.1 \
-  --server 1.1.1.1 \
-  2>/dev/null
+# tmux new-session \
+#   -d \
+#   -s dnsmasq \
+#   sudo dnsmasq \
+#   --addn-hosts=/home/$USER/.config/dnsmasq/hostnames.txt \
+#   --log-queries \
+#   --no-daemon \
+#   --no-resolv \
+#   --strict-order \
+#   --server 1.0.0.1 \
+#   --server 1.1.1.1 \
+#   2>/dev/null
 
 # Start dotfiles startup update
 tmux new-session \
