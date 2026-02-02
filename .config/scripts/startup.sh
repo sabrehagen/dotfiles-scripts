@@ -4,19 +4,19 @@ export DISPLAY=:1
 # Start the tmux server for daemonised services
 tmux start-server
 
-# Launch system bus if not already running
-if [ ! -S /run/dbus/system_bus_socket ]; then
-  sudo dbus-daemon --system --fork --nopidfile
-fi
+# Launch system bus
+tmux new-session \
+  -d \
+  -s dbus-system-bus \
+  sudo dbus-daemon --system --nofork --nopidfile \
+  2>/dev/null
 
-# Launch session bus if not already running
-if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-  eval "$(dbus-launch --sh-syntax --exit-with-session)"
-fi
-
-# Export the dbus environment to the global tmux environment
-tmux set-environment -g DBUS_SESSION_BUS_ADDRESS $DBUS_SESSION_BUS_ADDRESS
-tmux set-environment -g DBUS_SESSION_BUS_PID $DBUS_SESSION_BUS_PID
+# Launch session bus
+tmux new-session \
+  -d \
+  -s dbus-session-bus \
+  dbus-daemon --session --nofork --address=unix:path=$XDG_RUNTIME_DIR/dbus-session-bus --nopidfile \
+  2>/dev/null
 
 if [ -w /dev/tty3 ]; then
   # If a physical display is attached to the container, start a hardware x server
