@@ -139,7 +139,7 @@ fi
 tmux new-session \
   -d \
   -s pipewire-stack \
-  pipewire && \
+  pipewire 2>/dev/null && \
   tmux split-window -v -t pipewire-stack wireplumber && \
   tmux split-window -v -t pipewire-stack pipewire-pulse && \
   tmux select-layout -t pipewire-stack even-vertical
