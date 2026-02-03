@@ -4,6 +4,13 @@ export DISPLAY=:1
 # Start the tmux server for daemonised services
 tmux start-server
 
+# Launch wallpaper daemon
+tmux new-session \
+  -d \
+  -s wallpaper \
+  $HOME/.config/scripts/wallpaper-daemon.sh \
+  2>/dev/null
+
 # Launch system bus
 tmux new-session \
   -d \
