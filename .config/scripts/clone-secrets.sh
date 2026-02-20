@@ -22,7 +22,7 @@ fi
 eval $(find $HOME/.ssh-private -regextype posix-extended -regex '.*id_rsa[a-z_]*' | xargs -I@ keychain --inherit any --eval @)
 
 # Convert all https cloned repositories to use ssh
-for REPOSITORY in $(ls -d $HOME/.config/vcsh/repo.d/*); do
+for REPOSITORY in $(command ls -d $HOME/.config/vcsh/repo.d/*); do
   git_https_to_ssh $REPOSITORY/config
 done
 
