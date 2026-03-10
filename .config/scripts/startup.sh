@@ -103,6 +103,15 @@ tmux new-session \
   $HOME/.config/scripts/monitor-hotplug.sh \
   2>/dev/null
 
+# Start gcfs
+if [ $SECRETS_EXIST -eq 0 ]; then
+  tmux new-session \
+    -d \
+    -s gcfs \
+    gcfs mount $HOME/gdrive -s $USER \
+    2>/dev/null
+fi
+
 # Start jobber
 tmux new-session \
   -d \
