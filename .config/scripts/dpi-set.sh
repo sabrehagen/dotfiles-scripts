@@ -8,7 +8,7 @@ if [ $NEW_DPI = "96" ]; then
   sed -i -e 's/^separator_block_width=.*/separator_block_width=18/' $HOME/.config/i3blocks/config
 elif [ $NEW_DPI = "144" ]; then
   xrandr --size 3840x2160
-  sed -i -e 's/^separator_block_width=.*/separator_block_width=24/' $HOME/.config/i3blocks/config
+  sed -i -e 's/^separator_block_width=.*/separator_block_width=22/' $HOME/.config/i3blocks/config
 fi
 
 # Update i3
