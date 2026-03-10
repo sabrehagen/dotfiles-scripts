@@ -15,7 +15,7 @@ fi
 i3-msg restart >/dev/null
 
 # Update wallpaper window to match resolution
-xdotool windowsize $(xdotool search --class xwinwrap) 100% 100%
+xdotool windowsize $(xdotool search --class xwinwrap) 100% 100% 2>/dev/null || true
 
 # Update xresources and apply to x server
 sed -iE "s/Xft.dpi.*/Xft.dpi: $NEW_DPI/" $HOME/.Xresources
