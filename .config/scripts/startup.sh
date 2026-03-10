@@ -103,12 +103,12 @@ tmux new-session \
   $HOME/.config/scripts/monitor-hotplug.sh \
   2>/dev/null
 
-# Start gcfs
+# Start gcsf
 if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
     -d \
-    -s gcfs \
-    gcfs mount $HOME/gdrive -s $USER \
+    -s gcsf \
+    gcsf mount $HOME/gdrive -s $USER \
     2>/dev/null
 fi
 
