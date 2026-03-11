@@ -55,11 +55,11 @@ fi
 SECRETS_EXIST=$(test -d $HOME/.ssh-private; echo $?)
 
 # Start autorandr
-tmux new-session \
-  -d \
-  -s autorandr \
-  $HOME/.config/scripts/monitor-hotplug.sh \
-  2>/dev/null
+# tmux new-session \
+#   -d \
+#   -s autorandr \
+#   $HOME/.config/scripts/monitor-hotplug.sh \
+#   2>/dev/null
 
 # Start desktop environment shell
 tmux new-session \
