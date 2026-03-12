@@ -11,7 +11,7 @@ menu_entries=$(printf '%s\n' "$windows" | awk -F '\t' '{
 }' | sort -k1,1)
 [ -z "$menu_entries" ] && exit 0
 
-selected=$(printf '%s\n' "$menu_entries" | cut -f1 | $HOME/.config/scripts/dmenu.sh -l 10)
+selected=$(printf '%s\n' "$menu_entries" | cut -f1 | $HOME/.config/scripts/dmenu.sh -l 18)
 [ -z "$selected" ] && exit 0
 
 window_id=$(printf '%s\n' "$menu_entries" | awk -F '\t' -v name="$selected" '$1 == name {print $2; exit}')
