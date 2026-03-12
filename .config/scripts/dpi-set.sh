@@ -9,8 +9,11 @@ elif [ $DPI = "144" ]; then
   I3_BLOCKS_SEPARATOR_WIDTH=22
 fi
 
+# Get display output
+OUTPUT=$(xrandr | grep ' connected' | cut -d' ' -f1)
+
 # Set resolution
-xrandr --size $RESOLUTION || exit $?
+xrandr --output $OUTPUT --mode $RESOLUTION || exit $?
 
 # Set i3blocks separator width matching resolution
 sed -i -e s/^separator_block_width=.*/separator_block_width=$I3_BLOCKS_SEPARATOR_WIDTH/ $HOME/.config/i3blocks/config
