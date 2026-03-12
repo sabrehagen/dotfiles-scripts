@@ -197,6 +197,15 @@ if [ $SECRETS_EXIST -eq 0 ]; then
     2>/dev/null
 fi
 
+# Start github actions runner
+if [ $SECRETS_EXIST -eq 0 ]; then
+  tmux new-session \
+    -d \
+    -s actions-runner \
+    /opt/actions-runner/run.sh \
+    2>/dev/null
+fi
+
 # Start transmission
 tmux new-session \
   -d \
