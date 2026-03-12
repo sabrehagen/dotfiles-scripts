@@ -40,7 +40,6 @@ vcsh clone git@github.com:sabrehagen/dotfiles-ngrok 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-nicotine 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-op 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-openvpn 2>/dev/null &
-vcsh clone git@github.com:sabrehagen/dotfiles-rescuetime 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-tailscale 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-zsh-private 2>/dev/null &
 
