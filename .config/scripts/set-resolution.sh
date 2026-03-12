@@ -6,7 +6,7 @@ MODE=${WIDTH}x${HEIGHT}
 xrandr --newmode $MODE $(cvt $WIDTH $HEIGHT | tail -n 1 | cut -d' ' -f3-)
 
 # Get display output
-OUTPUT=$(xrandr | grep " connected" | cut -d' ' -f1)
+OUTPUT=$(xrandr | grep ' connected' | cut -d' ' -f1)
 
 # Add display mode
 xrandr --addmode $OUTPUT $MODE
