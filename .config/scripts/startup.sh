@@ -188,7 +188,7 @@ if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
     -d \
     -s actions-runner \
-    /opt/actions-runner/run.sh \
+    actions-runner \
     2>/dev/null
 fi
 
