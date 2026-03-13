@@ -27,8 +27,8 @@ for REPOSITORY in $(command ls -d $HOME/.config/vcsh/repo.d/*); do
 done
 
 # Clone private repositories using ssh key
-vcsh clone git@github.com:sabrehagen/dotfiles-aws 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-aicommit2 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-aws 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-claude 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-fastfetch 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gcsf 2>/dev/null &
