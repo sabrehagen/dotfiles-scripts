@@ -7,6 +7,9 @@ gtk-theme-switch2 $HOME/.themes/warna
 # Update tty, reload i3, reload gtk
 wal -n -i ${1-$HOME/.local/share/wallpapers} --saturate 0.3
 
+# Update telegram theme
+/opt/walogram/walogram
+
 # Reload dunst theme
 $HOME/.config/dunst/wal.sh
 
