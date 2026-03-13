@@ -98,6 +98,15 @@ if [ $SECRETS_EXIST -eq 0 ]; then
     2>/dev/null
 fi
 
+# Start github actions runner
+if [ $SECRETS_EXIST -eq 0 ]; then
+  tmux new-session \
+    -d \
+    -s github-actions-runner \
+    github-actions-runner \
+    2>/dev/null
+fi
+
 # Start jobber
 tmux new-session \
   -d \
@@ -180,15 +189,6 @@ if [ $SECRETS_EXIST -eq 0 ]; then
     -d \
     -s screenpipe-ui \
     npm --prefix /opt/screenpipe/examples/typescript/vercel-ai-chatbot run start -- --port 3003 \
-    2>/dev/null
-fi
-
-# Start github actions runner
-if [ $SECRETS_EXIST -eq 0 ]; then
-  tmux new-session \
-    -d \
-    -s github-actions-runner \
-    github-actions-runner \
     2>/dev/null
 fi
 
