@@ -122,7 +122,7 @@ if [ $SECRETS_EXIST -eq 0 ]; then
     2>/dev/null
 
   # Join tailscale network
-  $HOME/.local/bin/tailscale-up 2>/dev/null
+  $HOME/.local/bin/tailscale-up 2>/dev/null &
 fi
 
 # Start openvpn
