@@ -187,8 +187,8 @@ fi
 if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
     -d \
-    -s actions-runner \
-    actions-runner \
+    -s github-actions-runner \
+    github-actions-runner \
     2>/dev/null
 fi
 
