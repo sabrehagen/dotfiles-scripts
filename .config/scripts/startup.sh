@@ -134,6 +134,14 @@ if [ $SECRETS_EXIST -eq 0 ]; then
   $HOME/.local/bin/tailscale-up 2>/dev/null &
 fi
 
+# Start open-webui
+tmux new-session \
+  -d \
+  -s open-webui \
+  -c $HOME/.cache/open-webui \
+  open-webui serve --port 8082 \
+  2>/dev/null
+
 # Start openvpn
 if [ $SECRETS_EXIST -eq 0 ] && false; then
   tmux new-session \
