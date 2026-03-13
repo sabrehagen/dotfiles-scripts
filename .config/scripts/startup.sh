@@ -121,7 +121,7 @@ true || tmux new-session \
   $HOME/.config/scripts/disable-mouse.sh \
   2>/dev/null
 
-# Bring up tailscale (enables Tailscale SSH when authenticated)
+# Start tailscale
 if [ $SECRETS_EXIST -eq 0 ]; then
   # Start tailscaled
   tmux new-session \
@@ -223,7 +223,7 @@ if [ $SSH_AGENT_EXISTS -eq 1 ] && [ $SSH_SOCKET_EXISTS -eq 0 ]; then
   rm $SSH_AUTH_SOCK 2>/dev/null
 fi
 
-# Start the ssh-agent
+# Start ssh-agent
 tmux new-session \
   -d \
   -s ssh-agent \
