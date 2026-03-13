@@ -41,6 +41,7 @@ vcsh clone git@github.com:sabrehagen/dotfiles-nicotine 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-op 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-openvpn 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-tailscale 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-x2x 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-zsh-private 2>/dev/null &
 
 # Wait for repositories to clone in parallel
