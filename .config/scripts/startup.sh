@@ -148,8 +148,7 @@ if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
     -d \
     -s open-webui \
-    -c $HOME/.cache/open-webui \
-    open-webui serve --port 8083 \
+    ollama-webui \
     2>/dev/null
 fi
 
