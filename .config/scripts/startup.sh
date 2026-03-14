@@ -139,7 +139,7 @@ if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
     -d \
     -s ollama \
-    ollama serve --port 8082 \
+    ollama serve \
     2>/dev/null
 fi
 
