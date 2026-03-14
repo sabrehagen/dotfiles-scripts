@@ -18,8 +18,6 @@ printf '{"command":["loadfile","%s","replace"]}\n' $(cat $WALL_CACHE/wal) \
 # Reload dunst theme
 $HOME/.config/dunst/wal.sh
 
-# Update krita theme
-cp $HOME/.cache/wal/colors-krita $HOME/.local/share/color-schemes/wal.colors
 
 # Reload chromium
 # $HOME/.config/i3/chromium-replace.sh
