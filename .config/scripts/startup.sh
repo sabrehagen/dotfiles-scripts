@@ -134,6 +134,15 @@ if [ $SECRETS_EXIST -eq 0 ]; then
   $HOME/.local/bin/tailscale-up 2>/dev/null &
 fi
 
+# Start cloudflared
+if [ $SECRETS_EXIST -eq 0 ]; then
+  tmux new-session \
+    -d \
+    -s cloudflared \
+    cloudflared tunnel run \
+    2>/dev/null
+fi
+
 # Start ollama
 if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
