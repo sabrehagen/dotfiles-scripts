@@ -54,13 +54,6 @@ fi
 # Check if secrets required for private services have been cloned
 SECRETS_EXIST=$(test -d $HOME/.ssh-private; echo $?)
 
-# Start autorandr
-tmux new-session \
-  -d \
-  -s autorandr \
-  $HOME/.config/scripts/monitor-hotplug.sh \
-  2>/dev/null
-
 # Start desktop environment shell
 tmux new-session \
   -d \
@@ -82,13 +75,6 @@ tmux new-session \
   $HOME/.config/scripts/chromium-fix-crashed-session.sh \
   2>/dev/null
 
-# Start autorandr
-tmux new-session \
-  -d \
-  -s autorandr \
-  $HOME/.config/scripts/monitor-hotplug.sh \
-  2>/dev/null
-
 # Start gcsf
 if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
@@ -106,6 +92,27 @@ if [ $SECRETS_EXIST -eq 0 ]; then
     github-actions-runner \
     2>/dev/null
 fi
+
+# Start hotplug focusrite
+tmux new-session \
+  -d \
+  -s hotplug-focusrite \
+  $HOME/.config/scripts/hotplug-focusrite.sh \
+  2>/dev/null
+
+# Start hotplug mic
+tmux new-session \
+  -d \
+  -s hotplug-mic \
+  $HOME/.config/scripts/hotplug-mic.sh \
+  2>/dev/null
+
+# Start hotplug monitor
+tmux new-session \
+  -d \
+  -s hotplug-monitor \
+  $HOME/.config/scripts/hotplug-monitor.sh \
+  2>/dev/null
 
 # Start jobber
 tmux new-session \
