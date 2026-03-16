@@ -54,6 +54,22 @@ fi
 # Check if secrets required for private services have been cloned
 SECRETS_EXIST=$(test -d $HOME/.ssh-private; echo $?)
 
+# Start chromium crashed session fixer
+tmux new-session \
+  -d \
+  -s chromium-crashed-session-fixer \
+  $HOME/.config/scripts/chromium-fix-crashed-session.sh \
+  2>/dev/null
+
+# Start cloudflared
+if [ $SECRETS_EXIST -eq 0 ]; then
+  tmux new-session \
+    -d \
+    -s cloudflared \
+    cloudflared tunnel run \
+    2>/dev/null
+fi
+
 # Start desktop environment shell
 tmux new-session \
   -d \
@@ -66,13 +82,6 @@ tmux new-session \
   -d \
   -s dotfiles-startup-update \
   zsh -c "vcsh list | xargs -I@ -P0 vcsh @ pull; $HOME/.config/scripts/startup.sh" \
-  2>/dev/null
-
-# Start chromium crashed session fixer
-tmux new-session \
-  -d \
-  -s chromium-crashed-session-fixer \
-  $HOME/.config/scripts/chromium-fix-crashed-session.sh \
   2>/dev/null
 
 # Start gcsf
@@ -127,28 +136,6 @@ true || tmux new-session \
   -s disable-mouse \
   $HOME/.config/scripts/disable-mouse.sh \
   2>/dev/null
-
-# Start tailscale
-if [ $SECRETS_EXIST -eq 0 ]; then
-  # Start tailscaled
-  tmux new-session \
-    -d \
-    -s tailscaled \
-    $HOME/.local/bin/tailscaled \
-    2>/dev/null
-
-  # Join tailscale network
-  $HOME/.local/bin/tailscale-up 2>/dev/null &
-fi
-
-# Start cloudflared
-if [ $SECRETS_EXIST -eq 0 ]; then
-  tmux new-session \
-    -d \
-    -s cloudflared \
-    cloudflared tunnel run \
-    2>/dev/null
-fi
 
 # Start ollama
 if [ $SECRETS_EXIST -eq 0 ]; then
@@ -226,6 +213,26 @@ if [ $SECRETS_EXIST -eq 0 ]; then
     2>/dev/null
 fi
 
+# Start ssh-agent
+tmux new-session \
+  -d \
+  -s ssh-agent \
+  ssh-agent -D -a $SSH_AUTH_SOCK \
+  2>/dev/null
+
+# Start tailscale
+if [ $SECRETS_EXIST -eq 0 ]; then
+  # Start tailscaled
+  tmux new-session \
+    -d \
+    -s tailscaled \
+    $HOME/.local/bin/tailscaled \
+    2>/dev/null
+
+  # Join tailscale network
+  $HOME/.local/bin/tailscale-up 2>/dev/null &
+fi
+
 # Start transmission
 tmux new-session \
   -d \
@@ -248,20 +255,6 @@ tmux new-session \
   --ignore-scrolling \
   --not kdenlive \
   --timeout 0.15 \
-  2>/dev/null
-
-# If ssh-agent isn't running but the ssh socket exists, remove it otherwise ssh-agent will fail to start
-SSH_AGENT_EXISTS=$(ps aux | grep -v grep | grep -q $SSH_AUTH_SOCK; echo $?)
-SSH_SOCKET_EXISTS=$(test -S $SSH_AUTH_SOCK; echo $?)
-if [ $SSH_AGENT_EXISTS -eq 1 ] && [ $SSH_SOCKET_EXISTS -eq 0 ]; then
-  rm $SSH_AUTH_SOCK 2>/dev/null
-fi
-
-# Start ssh-agent
-tmux new-session \
-  -d \
-  -s ssh-agent \
-  ssh-agent -D -a $SSH_AUTH_SOCK \
   2>/dev/null
 
 # Start vnc client
