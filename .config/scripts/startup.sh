@@ -264,6 +264,15 @@ tmux new-session \
   /opt/noVNC/utils/launch.sh --listen 8080 --vnc localhost:5901 \
   2>/dev/null
 
+# Start x2x
+if [ $HOSTNAME = linux ]; then
+  tmux new-session \
+    -d \
+    -s x2x \
+    $HOME/.config/x2x/start.sh \
+    2>/dev/null
+fi
+
 # Take ownership of docker volumes
 tmux new-session \
   -d \
