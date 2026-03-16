@@ -25,15 +25,15 @@ tmux new-session \
   dbus-daemon --session --nofork --address=unix:path=$XDG_RUNTIME_DIR/dbus-session-bus --nopidfile \
   2>/dev/null
 
-if [ -w /dev/tty3 ]; then
-  # If a physical display is attached to the container, start a hardware x server
+if [ -w /dev/tty$DESKTOP_ENVIRONMENT_TTY ]; then
+  # Start x server on the virtual terminal if attached to the container
   tmux new-session \
     -d \
     -s x11 \
     xinit -- $DISPLAY vt0$DESKTOP_ENVIRONMENT_TTY \
     2>/dev/null
 else
-  # If operating in a headless server environment, start a vnc x server
+  # Start vnc x server if operating in a headless server environment
   tmux new-session \
     -d \
     -s vnc-server \
