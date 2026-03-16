@@ -34,7 +34,7 @@ if [ -w /dev/tty$DESKTOP_ENVIRONMENT_TTY ]; then
     2>/dev/null
 
   # Switch to the virtual terminal
-  chvt $DESKTOP_ENVIRONMENT_TTY
+  sudo chvt $DESKTOP_ENVIRONMENT_TTY
 else
   # Start vnc x server if operating in a headless server environment
   tmux new-session \
