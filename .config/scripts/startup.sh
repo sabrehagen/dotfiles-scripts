@@ -66,7 +66,7 @@ if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
     -d \
     -s cloudflared \
-    cloudflared tunnel run \
+    cloudflared-tunnel \
     2>/dev/null
 fi
 
