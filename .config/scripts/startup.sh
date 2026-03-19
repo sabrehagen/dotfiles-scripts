@@ -210,7 +210,7 @@ if [ $SECRETS_EXIST -eq 0 ]; then
   true || tmux new-session \
     -d \
     -s screenpipe-ui \
-    npm --prefix /opt/screenpipe/examples/typescript/vercel-ai-chatbot run start -- --port 3003 \
+    npm --prefix $DESKTOP_ENVIRONMENT_SOURCE_SCREENPIPE/examples/typescript/vercel-ai-chatbot run start -- --port 3003 \
     2>/dev/null
 fi
 
@@ -262,7 +262,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s vnc-client \
-  /opt/noVNC/utils/launch.sh --listen 8080 --vnc localhost:5901 \
+  $DESKTOP_ENVIRONMENT_SOURCE_NOVNC/utils/launch.sh --listen 8080 --vnc localhost:5901 \
   2>/dev/null
 
 # Start x2x
@@ -278,5 +278,12 @@ fi
 tmux new-session \
   -d \
   -s take-ownership \
-  /opt/desktop-environment/docker/scripts/take-ownership.sh \
+  $DESKTOP_ENVIRONMENT_SOURCE_DESKTOP_ENVIRONMENT/docker/scripts/take-ownership.sh \
+  2>/dev/null
+
+# Update desktop environment application sources
+tmux new-session \
+  -d \
+  -s sources-update \
+  $DESKTOP_ENVIRONMENT_SOURCE_DESKTOP_ENVIRONMENT/docker/scripts/update-sources.sh \
   2>/dev/null

@@ -1,5 +1,5 @@
 # Generate gtk theme
-/opt/warnai/warnai --wal --gtk fantome --norender
+$DESKTOP_ENVIRONMENT_SOURCE_WARNAI/warnai --wal --gtk fantome --norender
 
 # Reload gtk theme
 gtk-theme-switch2 $HOME/.themes/warna
@@ -13,7 +13,7 @@ printf '{"command":["loadfile","%s","replace"]}\n' $(cat $WALL_CACHE/wal) \
   | socat - $WALL_CACHE/mpv-ipc
 
 # Update telegram theme
-/opt/walogram/walogram
+walogram
 
 # Reload dunst theme
 $HOME/.config/dunst/wal.sh
