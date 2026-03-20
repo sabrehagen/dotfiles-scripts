@@ -1,5 +1,5 @@
 # Generate gtk theme
-$DESKTOP_ENVIRONMENT_SOURCE_WARNAI/warnai --wal --gtk fantome --norender
+warnai --wal --gtk fantome --norender
 
 # Reload gtk theme
 gtk-theme-switch2 $HOME/.themes/warna
