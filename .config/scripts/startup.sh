@@ -131,6 +131,13 @@ tmux new-session \
   sudo -E $(find /usr/lib -name jobbermaster) \
   2>/dev/null
 
+# Start mpd
+tmux new-session \
+  -d \
+  -s mpd \
+  mpd --no-daemon \
+  2>/dev/null
+
 # Start mouse disabler
 true || tmux new-session \
   -d \
