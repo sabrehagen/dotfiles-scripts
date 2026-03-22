@@ -110,11 +110,11 @@ tmux new-session \
   $HOME/.config/scripts/hotplug-focusrite.sh \
   2>/dev/null
 
-# Start hotplug mic
+# Start hotplug microphone
 tmux new-session \
   -d \
-  -s hotplug-mic \
-  $HOME/.config/scripts/hotplug-mic.sh \
+  -s hotplug-microphone \
+  $HOME/.config/scripts/hotplug-microphone.sh \
   2>/dev/null
 
 # Start hotplug monitor
