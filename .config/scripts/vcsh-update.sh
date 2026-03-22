@@ -47,18 +47,22 @@ while IFS= read -r repo; do
         new_sha=$(vcsh "$repo" rev-parse HEAD 2>/dev/null) || continue
         [[ "$old_sha" == "$new_sha" ]] && continue
 
-        short_sha=$(vcsh "$repo" rev-parse --short HEAD 2>/dev/null) || short_sha="${new_sha:0:7}"
-        commit_msg=$(vcsh "$repo" log -1 --format="%s" 2>/dev/null) || commit_msg="(no message)"
+        body=""
+        while IFS= read -r logline; do
+            commit_sha="${logline%% *}"
+            commit_msg="${logline#* }"
+            [[ -n "$body" ]] && body+=$'\n'
+            body+="${commit_sha} ${commit_msg}"
 
-        body="${short_sha} ${commit_msg}"
+            numstat=$(vcsh "$repo" diff --numstat "${commit_sha}~1" "$commit_sha" 2>/dev/null) || numstat=""
+            if [[ -n "$numstat" ]]; then
+                while IFS=$'\t' read -r added deleted file; do
+                    body+=$'\n'"+${added} -${deleted} ${file}"
+                done <<< "$numstat"
+            fi
+        done < <(vcsh "$repo" log --reverse --format="%h %s" "${old_sha}..HEAD" 2>/dev/null)
 
-        numstat=$(vcsh "$repo" diff --numstat "$old_sha" HEAD 2>/dev/null) || numstat=""
-        if [[ -n "$numstat" ]]; then
-            while IFS=$'\t' read -r added deleted file; do
-                body+=$'\n'"+${added} -${deleted} ${file}"
-            done <<< "$numstat"
-        fi
-
-        _notify "$repo" "$body"
+        commit_count=$(vcsh "$repo" rev-list --count "${old_sha}..HEAD" 2>/dev/null) || commit_count="?"
+        _notify "$repo - ${commit_count} commits" "$body"
     fi
 done < <(vcsh list)
