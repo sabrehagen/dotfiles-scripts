@@ -10,7 +10,7 @@ if $HOME/.config/scripts/host-ssh.sh test -d $INTEL_BACKLIGHT; then
   SET_BRIGHTNESS=set_brightness_intel
 else
   BRIGHTNESS=$(cat $DDC_CACHE 2>/dev/null || sudo ddcutil --bus 1 getvcp --brief 10 2>/dev/null | awk '{print $4}')
-  INCREMENT=${2-10}
+  INCREMENT=${2-20}
   SET_BRIGHTNESS=set_brightness_ddc
 fi
 
