@@ -95,7 +95,7 @@ if [ $SECRETS_EXIST -eq 0 ]; then
 fi
 
 # Start github actions runner
-if [ $SECRETS_EXIST -eq 0 ]; then
+if [ $SECRETS_EXIST -eq 0 ] && [ $HOSTNAME = erika ]; then
   tmux new-session \
     -d \
     -s github-actions-runner \
