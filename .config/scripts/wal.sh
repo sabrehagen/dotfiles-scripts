@@ -4,8 +4,8 @@ warnai --wal --gtk fantome --norender
 # Reload gtk theme
 gtk-theme-switch2 $HOME/.themes/warna
 
-# Broadcast theme change to gtk apps via xsettingsd
-kill -HUP $(pgrep xsettingsd) 2>/dev/null
+# Reload pcmanfm theme
+kill -USR1 $(pgrep pcmanfm) 2>/dev/null
 
 # Update tty, reload i3, reload gtk
 wal -n -i ${1-$HOME/.local/share/wallpapers} --saturate 0.3
