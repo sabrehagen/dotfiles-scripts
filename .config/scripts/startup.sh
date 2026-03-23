@@ -288,6 +288,13 @@ if [ $HOSTNAME = linux ]; then
     2>/dev/null
 fi
 
+# Start xsettingsd
+tmux new-session \
+  -d \
+  -s xsettingsd \
+  xsettingsd \
+  2>/dev/null
+
 # Take ownership of docker volumes
 tmux new-session \
   -d \
