@@ -4,7 +4,7 @@ warnai --wal --gtk fantome --norender
 # Reload gtk theme
 gtk-theme-switch2 $HOME/.themes/warna
 
-# Broadcast theme change to GTK3 apps via xsettingsd
+# Broadcast theme change to gtk apps via xsettingsd
 kill -HUP $(pgrep xsettingsd) 2>/dev/null
 
 # Update tty, reload i3, reload gtk
