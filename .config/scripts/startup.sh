@@ -228,6 +228,13 @@ tmux new-session \
   ssh-agent -D -a $SSH_AUTH_SOCK \
   2>/dev/null
 
+# Start sshd
+tmux new-session \
+  -d \
+  -s sshd \
+  sudo /usr/sbin/sshd -D -e \
+  2>/dev/null
+
 # Start tailscale
 if [ $SECRETS_EXIST -eq 0 ]; then
   # Start tailscaled
