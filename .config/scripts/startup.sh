@@ -198,6 +198,13 @@ tmux new-session \
 #   pulseaudio --daemonize=no \
 #   2>/dev/null
 
+# Start picom
+tmux new-session \
+  -d \
+  -s picom \
+  picom \
+  2>/dev/null
+
 # Start redshift
 tmux new-session \
   -d \
