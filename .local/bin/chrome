@@ -1,26 +1,17 @@
-ARCH=$(dpkg --print-architecture)
-
 # Ignore unclean exit and restore session on startup
 sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' "$HOME/.config/thorium/Local State" >/dev/null 2>&1
 
-if [ "$ARCH" = "arm64" ]; then
-  DPI=$(cat $HOME/.Xresources | grep dpi | sed 's/.*: //')
+DPI=$(grep dpi $HOME/.Xresources | sed 's/.*: //')
 
-  if [ "$DPI" -gt 96 ]; then
-    SCALE_FACTOR=1.5
-  else
-    SCALE_FACTOR=1
-  fi
-
-  exec thorium-browser \
-    --disable-gpu \
-    --force-device-scale-factor=$SCALE_FACTOR \
-    --hide-crash-restore-bubble \
-    --load-extension=$HOME/.cache/wal \
-    --no-sandbox \
-    --restore-last-session \
-    --test-type \
-    "$@"
+if [ "$DPI" -gt 96 ]; then
+  SCALE_FACTOR=1.5
 else
-  exec thorium-browser "$@"
+  SCALE_FACTOR=1
 fi
+
+exec thorium-browser \
+  --force-device-scale-factor=$SCALE_FACTOR \
+  --hide-crash-restore-bubble \
+  --restore-last-session \
+  --test-type \
+  "$@"
