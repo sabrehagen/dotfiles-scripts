@@ -14,9 +14,7 @@ sed -i "s;Net/ThemeName .*;Net/ThemeName \"$THEME_NAME\";" $HOME/.xsettingsd
 killall -HUP xsettingsd
 
 # Update mpv wallpapr
-WALL_CACHE=$HOME/.cache/wal
-printf '{"command":["loadfile","%s","replace"]}\n' $(cat $WALL_CACHE/wal) \
-  | socat - $WALL_CACHE/mpv-ipc
+socat - $HOME/.cache/wal/mpv-ipc <<< '{"command":["loadfile","'$(cat $HOME/.cache/wal/wal)'","replace"]}'
 
 # Update telegram theme
 walogram

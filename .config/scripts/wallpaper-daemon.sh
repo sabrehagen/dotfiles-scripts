@@ -1,5 +1,3 @@
-WALL_CACHE=$HOME/.cache/wal
-
 # Start mpv with window enhancements for picom shading
 xwinwrap -b -s -fs -st -sp -nf -ovr -fdt -- \
   /usr/bin/mpv \
@@ -18,5 +16,5 @@ xwinwrap -b -s -fs -st -sp -nf -ovr -fdt -- \
   --keep-open=always \
   --idle=yes \
   --force-window=yes \
-  --input-ipc-server=$WALL_CACHE/mpv-ipc \
-  $(cat $WALL_CACHE/wal)
+  --input-ipc-server=$HOME/.cache/wal/mpv-ipc \
+  $(cat $HOME/.cache/wal/wal)
