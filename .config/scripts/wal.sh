@@ -1,4 +1,7 @@
-# Generate gtk theme
+# Generate pywal colors from wallpaper
+wal -n -i ${1-$HOME/.local/share/wallpapers} --saturate 0.3
+
+# Generate gtk theme from pywal colors
 warnai --wal --gtk fantome --norender
 
 # Reload gtk theme
