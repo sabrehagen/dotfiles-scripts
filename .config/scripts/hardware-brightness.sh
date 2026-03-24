@@ -1,7 +1,7 @@
 DDC_CACHE=$HOME/.ddcutil_cache
 INTEL_BACKLIGHT=/sys/class/backlight/intel_backlight
 
-set_brightness_intel() { $HOME/.config/scripts/host-ssh.sh "echo $1 | sudo tee $INTEL_BACKLIGHT/brightness"; }
+set_brightness_intel() { $HOME/.config/scripts/host-ssh.sh echo $1 | sudo tee $INTEL_BACKLIGHT/brightness; }
 set_brightness_ddc() { flock $DDC_CACHE sudo ddcutil --bus 1 setvcp 10 $1 && echo $1 > $DDC_CACHE; }
 
 if $HOME/.config/scripts/host-ssh.sh test -d $INTEL_BACKLIGHT; then
