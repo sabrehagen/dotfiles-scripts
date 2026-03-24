@@ -25,8 +25,10 @@ _notify_open() {
     disown 2>/dev/null || true
 }
 
-while IFS= read -r repo; do
-    old_sha=$(vcsh "$repo" rev-parse HEAD 2>/dev/null) || continue
+_pull_repo() {
+    local repo="$1"
+    local old_sha
+    old_sha=$(vcsh "$repo" rev-parse HEAD 2>/dev/null) || return
 
     vcsh "$repo" pull 2>&1 >/dev/null && pull_ok=true || pull_ok=false
 
@@ -44,10 +46,11 @@ while IFS= read -r repo; do
             vcsh "$repo" merge --abort 2>/dev/null || true
         fi
     else
-        new_sha=$(vcsh "$repo" rev-parse HEAD 2>/dev/null) || continue
-        [[ "$old_sha" == "$new_sha" ]] && continue
+        local new_sha
+        new_sha=$(vcsh "$repo" rev-parse HEAD 2>/dev/null) || return
+        [[ "$old_sha" == "$new_sha" ]] && return
 
-        body=""
+        local body=""
         while IFS= read -r logline; do
             commit_sha="${logline%% *}"
             commit_msg="${logline#* }"
@@ -62,7 +65,13 @@ while IFS= read -r repo; do
             fi
         done < <(vcsh "$repo" log --reverse --format="%h %s" "${old_sha}..HEAD" 2>/dev/null)
 
+        local commit_count
         commit_count=$(vcsh "$repo" rev-list --count "${old_sha}..HEAD" 2>/dev/null) || commit_count="?"
         _notify "$repo - ${commit_count} commits" "$body"
     fi
+}
+
+while IFS= read -r repo; do
+    _pull_repo "$repo" &
 done < <(vcsh list)
+wait
