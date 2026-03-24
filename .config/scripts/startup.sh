@@ -340,7 +340,7 @@ tmux set-option -t take-ownership remain-on-exit on
 tmux new-session \
   -d \
   -s sources-update \
-  $DESKTOP_ENVIRONMENT_SOURCE_DESKTOP_ENVIRONMENT/docker/scripts/update-sources.sh \
+  $DESKTOP_ENVIRONMENT_SOURCE_DESKTOP_ENVIRONMENT/docker/scripts/sources-update.sh \
   2>/dev/null
 
 tmux set-option -t sources-update remain-on-exit on
