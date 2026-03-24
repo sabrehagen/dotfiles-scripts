@@ -103,6 +103,13 @@ if [ $SECRETS_EXIST -eq 0 ] && [ $HOSTNAME = erika ]; then
     2>/dev/null
 fi
 
+# Start hintsd
+tmux new-session \
+  -d \
+  -s hintsd \
+  hintsd \
+  2>/dev/null
+
 # Start hotplug focusrite
 tmux new-session \
   -d \
