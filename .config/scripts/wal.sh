@@ -21,7 +21,6 @@ walogram
 # Reload dunst theme
 $HOME/.config/dunst/wal.sh
 
-
 # Reload chromium
 # $HOME/.config/i3/chromium-replace.sh
 
