@@ -15,14 +15,21 @@ tmux new-session \
 tmux new-session \
   -d \
   -s dbus-system-bus \
-  sudo dbus-daemon --system --nofork --nopidfile \
+  sudo dbus-daemon \
+  --nofork \
+  --nopidfile \
+  --system \
   2>/dev/null
 
 # Launch session bus
 tmux new-session \
   -d \
   -s dbus-session-bus \
-  dbus-daemon --session --nofork --address=unix:path=$XDG_RUNTIME_DIR/dbus-session-bus --nopidfile \
+  dbus-daemon \
+  --address=unix:path=$XDG_RUNTIME_DIR/dbus-session-bus \
+  --nofork \
+  --nopidfile \
+  --session \
   2>/dev/null
 
 if [ -w /dev/tty$DESKTOP_ENVIRONMENT_TTY ]; then
@@ -290,7 +297,9 @@ tmux new-session \
 tmux new-session \
   -d \
   -s vnc-client \
-  $DESKTOP_ENVIRONMENT_SOURCE_NOVNC/utils/launch.sh --listen 8080 --vnc localhost:5901 \
+  $DESKTOP_ENVIRONMENT_SOURCE_NOVNC/utils/launch.sh \
+  --listen 8080 \
+  --vnc localhost:5901 \
   2>/dev/null
 
 # Start x2x
@@ -306,7 +315,9 @@ fi
 tmux new-session \
   -d \
   -s xautolock \
-  xautolock -time 10 -locker $HOME/.config/i3/lockscreen.sh \
+  xautolock \
+  -locker $HOME/.config/i3/lockscreen.sh \
+  -time 10 \
   2>/dev/null
 
 # Start xsettingsd
