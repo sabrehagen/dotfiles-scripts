@@ -97,7 +97,7 @@ if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
     -d \
     -s gcsf \
-    gcsf mount $HOME/gdrive -s $USER \
+    gcsf mount $HOME/gdrive --session enigmalabs \
     2>/dev/null
 fi
 
