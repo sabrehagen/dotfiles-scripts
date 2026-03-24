@@ -73,9 +73,10 @@ _pull_repo() {
 
 # Ensure control master exists so parallel pulls multiplex over one connection
 if ! ssh -O check git@github.com &>/dev/null; then
-    rm -f $HOME/.ssh/cm/git@github.com:22
+    rm -f "$HOME/.ssh/cm/git@github.com:22"
     ssh -fNM git@github.com 2>/dev/null
-    while ! ssh -O check git@github.com &>/dev/null; do sleep 0.1; done
+    for _ in $(seq 50); do ssh -O check git@github.com &>/dev/null && break; sleep 0.1; done
+    ssh -O check git@github.com &>/dev/null || exit 0
 fi
 
 max_jobs=10
