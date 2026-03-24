@@ -26,4 +26,4 @@ $HOME/.config/dunst/wal.sh
 # $HOME/.config/i3/chromium-replace.sh
 
 # Reload xava
-kill -USR1 $(pgrep xava) 2>/dev/null
+killall -USR1 xava 2>/dev/null
