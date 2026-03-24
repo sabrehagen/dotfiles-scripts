@@ -302,6 +302,13 @@ if [ $HOSTNAME = linux ]; then
     2>/dev/null
 fi
 
+# Start xautolock
+tmux new-session \
+  -d \
+  -s xautolock \
+  xautolock -time 10 -locker $HOME/.config/i3/lockscreen.sh \
+  2>/dev/null
+
 # Start xsettingsd
 tmux new-session \
   -d \
