@@ -71,7 +71,17 @@ _pull_repo() {
     fi
 }
 
+# Ensure control master exists so parallel pulls multiplex over one connection
+if ! ssh -O check git@github.com &>/dev/null; then
+    rm -f $HOME/.ssh/cm/git@github.com:22
+    ssh -fNM git@github.com 2>/dev/null
+    while ! ssh -O check git@github.com &>/dev/null; do sleep 0.1; done
+fi
+
+max_jobs=10
+running=0
 while IFS= read -r repo; do
     _pull_repo "$repo" &
+    (( ++running >= max_jobs )) && { wait -n; ((running--)); }
 done < <(vcsh list)
 wait
