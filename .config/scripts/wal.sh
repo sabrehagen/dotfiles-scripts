@@ -4,14 +4,14 @@ wal -n -i ${1-$HOME/.local/share/wallpapers} --saturate 0.3
 # Generate gtk theme from pywal colors
 warnai --wal --gtk fantome --norender
 
-# Reload gtk theme
+# Reload gtk2 theme
 gtk-theme-switch2 $HOME/.themes/warna
 
-# Reload pcmanfm theme
-kill -USR1 $(pgrep pcmanfm) 2>/dev/null
-
-# Update tty, reload i3, reload gtk
-wal -n -i ${1-$HOME/.local/share/wallpapers} --saturate 0.3
+# Reload gtk3 theme by simulating theme name change
+THEME_NAME=warna-$(date +%N)
+ln -s warna $HOME/.themes/$THEME_NAME
+sed -i "s;Net/ThemeName .*;Net/ThemeName \"$THEME_NAME\";" $HOME/.xsettingsd
+killall -HUP xsettingsd
 
 # Update mpv wallpapr
 WALL_CACHE=$HOME/.cache/wal
