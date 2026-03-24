@@ -334,9 +334,13 @@ tmux new-session \
   $DESKTOP_ENVIRONMENT_SOURCE_DESKTOP_ENVIRONMENT/docker/scripts/take-ownership.sh \
   2>/dev/null
 
+tmux set-option -t take-ownership remain-on-exit on
+
 # Update desktop environment application sources
 tmux new-session \
   -d \
   -s sources-update \
   $DESKTOP_ENVIRONMENT_SOURCE_DESKTOP_ENVIRONMENT/docker/scripts/update-sources.sh \
   2>/dev/null
+
+tmux set-option -t sources-update remain-on-exit on
