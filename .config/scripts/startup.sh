@@ -125,11 +125,11 @@ tmux new-session \
   2>/dev/null
 
 # Start hotplug microphone
-tmux new-session \
-  -d \
-  -s hotplug-microphone \
-  $HOME/.config/scripts/hotplug-microphone.sh \
-  2>/dev/null
+# tmux new-session \
+#   -d \
+#   -s hotplug-microphone \
+#   $HOME/.config/scripts/hotplug-microphone.sh \
+#   2>/dev/null
 
 # Start hotplug monitor
 tmux new-session \
