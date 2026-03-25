@@ -197,7 +197,7 @@ tmux new-session \
   -s pipewire-stack \
   pipewire 2>/dev/null && \
   tmux split-window -v -t pipewire-stack pipewire-pulse && \
-  tmux split-window -v -t pipewire-stack 'while true; do wireplumber; sleep 1; done' && \
+  tmux split-window -v -t pipewire-stack wireplumber && \
   tmux select-layout -t pipewire-stack even-vertical
 
 # Start jackd
