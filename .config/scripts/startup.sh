@@ -142,7 +142,9 @@ tmux new-session \
 tmux new-session \
   -d \
   -s jobber \
-  sudo -E $(find /usr/lib -name jobbermaster) \
+  $(find /usr/lib -name jobberrunner) \
+  -t /tmp \
+  $HOME/.jobber \
   2>/dev/null
 
 # Start mpd
