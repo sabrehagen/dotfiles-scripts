@@ -6,18 +6,18 @@ set -uo pipefail
 # On a merge conflict:  aborts the merge (leaving no conflict markers on disk)
 #                       and notifies with the repo name and git diff output.
 
+# Prevent concurrent runs: jobber fires every 30s but a run takes ~27s, so
+# without this a new invocation can start before the previous one finishes,
+# corrupting FETCH_HEAD and causing "Cannot rebase onto multiple branches".
+exec 9>/tmp/vcsh-update.lock
+flock -n 9 || exit 0
 
 _html_escape() { sed 's/\x1b\[[0-9;]*m//g; s/^─\+$/'"$(printf '─%.0s' {1..63})"'/; s/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'; }
 
-_notify() {
-    local summary="$1" body="${2:-}"
-    notify-send -- "$summary" "$body"
-}
-
 _notify_open() {
-    local summary="$1" body="$2" && shift 2
+    local summary="$1" body="$2"
+    shift 2
     local files=("$@")
-    # Run in background: show notification with action button, open files in code if clicked.
     (
         action=$(notify-send --action="open=Open in code" -- "$summary" "$body")
         [[ "$action" == "open" ]] && code "${files[@]}" &
@@ -34,10 +34,7 @@ _pull_repo() {
     # --index, which silently drops the staged/unstaged distinction on restore.
     vcsh "$repo" diff --cached --quiet 2>/dev/null || return
 
-    vcsh "$repo" pull 2>&1 >/dev/null && pull_ok=true || pull_ok=false
-
-    if [[ "$pull_ok" == "false" ]]; then
-        # Detect merge conflict via porcelain status.
+    if ! vcsh "$repo" pull 2>&1 >/dev/null; then
         conflict_files=$(vcsh "$repo" status --porcelain 2>/dev/null \
             | awk '$1 ~ /^(UU|AA|DD|AU|UA|DU|UD)$/ {print $2}') || true
 
@@ -71,19 +68,16 @@ _pull_repo() {
 
         local commit_count
         commit_count=$(vcsh "$repo" rev-list --count "${old_sha}..HEAD" 2>/dev/null) || commit_count="?"
-        _notify "$repo - ${commit_count} commits" "$body"
+        notify-send -- "$repo - ${commit_count} commits" "$body"
     fi
 }
 
-# Ensure control master exists so parallel pulls multiplex over one connection
-if ! ssh -O check git@github.com &>/dev/null; then
-    rm -f "$HOME/.ssh/cm/git@github.com:22"
-    ssh -fNM git@github.com 2>/dev/null
-    for _ in $(seq 50); do ssh -O check git@github.com &>/dev/null && break; sleep 0.1; done
-    ssh -O check git@github.com &>/dev/null || exit 0
-fi
+# Ensure a ControlMaster is running before pulling — start one if not already up.
+ssh -O check git@github.com &>/dev/null || ssh -fNM git@github.com 2>/dev/null
+for _ in $(seq 50); do ssh -O check git@github.com &>/dev/null && break; sleep 0.1; done
+ssh -O check git@github.com &>/dev/null || exit 0
 
-max_jobs=5
+max_jobs=3
 running=0
 while IFS= read -r repo; do
     _pull_repo "$repo" &
