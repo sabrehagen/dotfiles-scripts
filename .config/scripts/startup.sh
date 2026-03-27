@@ -22,22 +22,22 @@ tmux new-session \
   --session \
   2>/dev/null
 
-if [ -w /dev/tty$DESKTOP_ENVIRONMENT_TTY ]; then
-  # Start x server on the virtual terminal if attached to the container
+if [ -w /dev/tty$DESKTOP_ENVIRONMENT_X_TTY ]; then
+  # Start x server on virtual terminal if attached to the container
   tmux new-session \
     -d \
     -s x11 \
-    xinit -- $DISPLAY vt0$DESKTOP_ENVIRONMENT_TTY \
+    xinit -- $DESKTOP_ENVIRONMENT_X_DISPLAY vt0$DESKTOP_ENVIRONMENT_X_TTY \
     2>/dev/null
 
   # Switch to the virtual terminal
-  sudo chvt $DESKTOP_ENVIRONMENT_TTY
+  sudo chvt $DESKTOP_ENVIRONMENT_X_TTY
 else
-  # Start vnc x server if operating in a headless server environment
+  # Start vnc x server if in a headless environment
   tmux new-session \
     -d \
     -s vnc-server \
-    vncserver $DISPLAY \
+    vncserver $DESKTOP_ENVIRONMENT_X_DISPLAY \
     -autokill \
     -fg \
     -geometry 1920x1080 \
@@ -49,7 +49,7 @@ fi
 # Wait until x server is running before proceeding
 until xset -q >/dev/null; do sleep 0.1; done
 
-# Check if secrets required for private services have been cloned
+# Check if secrets required for private services exist
 SECRETS_EXIST=$(test -d $HOME/.ssh-private; echo $?)
 
 # Start chromium crashed session fixer
