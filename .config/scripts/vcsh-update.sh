@@ -77,7 +77,7 @@ ssh -O check git@github.com &>/dev/null || ssh -fNM git@github.com 2>/dev/null
 for _ in $(seq 50); do ssh -O check git@github.com &>/dev/null && break; sleep 0.1; done
 ssh -O check git@github.com &>/dev/null || exit 0
 
-max_jobs=3
+max_jobs=5
 running=0
 while IFS= read -r repo; do
     _pull_repo "$repo" &
