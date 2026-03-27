@@ -83,7 +83,7 @@ if ! ssh -O check git@github.com &>/dev/null; then
     ssh -O check git@github.com &>/dev/null || exit 0
 fi
 
-max_jobs=10
+max_jobs=5
 running=0
 while IFS= read -r repo; do
     _pull_repo "$repo" &
