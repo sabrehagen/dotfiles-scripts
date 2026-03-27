@@ -1,6 +1,3 @@
-# Use the first x server
-export DISPLAY=:1
-
 # Start the tmux server for daemonised services
 tmux start-server
 
