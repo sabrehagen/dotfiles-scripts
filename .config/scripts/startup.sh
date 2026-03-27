@@ -1,13 +1,6 @@
 # Start the tmux server for daemonised services
 tmux start-server
 
-# Launch wallpaper daemon
-tmux new-session \
-  -d \
-  -s wallpaper \
-  $HOME/.config/scripts/wallpaper-daemon.sh \
-  2>/dev/null
-
 # Launch system bus
 tmux new-session \
   -d \
@@ -299,6 +292,13 @@ tmux new-session \
   $DESKTOP_ENVIRONMENT_SOURCE_NOVNC/utils/launch.sh \
   --listen 8080 \
   --vnc localhost:5901 \
+  2>/dev/null
+
+# Launch wallpaper daemon
+tmux new-session \
+  -d \
+  -s wallpaper \
+  $HOME/.config/scripts/wallpaper-daemon.sh \
   2>/dev/null
 
 # Start x2x
