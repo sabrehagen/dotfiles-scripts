@@ -52,13 +52,6 @@ until xset -q >/dev/null; do sleep 0.1; done
 # Check if secrets required for private services exist
 SECRETS_EXIST=$(test -d $HOME/.ssh-private; echo $?)
 
-# Start chromium crashed session fixer
-tmux new-session \
-  -d \
-  -s chromium-crashed-session-fixer \
-  $HOME/.config/scripts/chromium-fix-crashed-session.sh \
-  2>/dev/null
-
 # Start cloudflared
 if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
