@@ -30,6 +30,10 @@ _pull_repo() {
     local old_sha
     old_sha=$(vcsh "$repo" rev-parse HEAD 2>/dev/null) || return
 
+    # Skip repos with staged changes — autostash (rebase.autostash=true) pops without
+    # --index, which silently drops the staged/unstaged distinction on restore.
+    vcsh "$repo" diff --cached --quiet 2>/dev/null || return
+
     vcsh "$repo" pull 2>&1 >/dev/null && pull_ok=true || pull_ok=false
 
     if [[ "$pull_ok" == "false" ]]; then
