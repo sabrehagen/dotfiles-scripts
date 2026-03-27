@@ -162,6 +162,13 @@ if [ $SECRETS_EXIST -eq 0 ]; then
     2>/dev/null
 fi
 
+# Start op session daemon
+tmux new-session \
+  -d \
+  -s op-session-daemon \
+  $HOME/.config/scripts/op-session-daemon.sh \
+  2>/dev/null
+
 # Start openvpn
 if [ $SECRETS_EXIST -eq 0 ] && false; then
   tmux new-session \
