@@ -11,7 +11,7 @@ while true; do
       account=$(op account list --format=json | jq --raw-output '.[].shorthand' | $HOME/.config/scripts/dmenu.sh -l 5 -p "account")
       [ -z "$account" ] && exit 0
       if ! op whoami --account "$account" >/dev/null 2>&1; then
-        password=$(printf '' | $HOME/.config/scripts/dmenu.sh -P -p "$account > password:")
+        password=$(printf '' | $HOME/.config/scripts/dmenu.sh -P -p "$account > unlock")
         [ $? -eq 2 ] && continue
         [ -z "$password" ] && exit 0
         session=$(printf '%s' "$password" | op signin --raw --account "$account" 2>/dev/null)
