@@ -211,6 +211,13 @@ tmux new-session \
   picom \
   2>/dev/null
 
+# Start postgres
+tmux new-session \
+  -d \
+  -s postgres \
+  sudo pg_ctlcluster 16 main start --foreground \
+  2>/dev/null
+
 # Start redshift
 tmux new-session \
   -d \
