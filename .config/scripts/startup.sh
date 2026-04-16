@@ -22,7 +22,7 @@ tmux new-session \
   --session \
   2>/dev/null
 
-if [ $DESKTOP_ENVIRONMENT_X_HEADLESS != 1 ] && [ -w /dev/tty$DESKTOP_ENVIRONMENT_X_TTY ]; then
+if [ "$DESKTOP_ENVIRONMENT_X_HEADLESS" != 1 ] && [ -w /dev/tty$DESKTOP_ENVIRONMENT_X_TTY ]; then
   # Start x server on virtual terminal if attached to the container
   tmux new-session \
     -d \
