@@ -125,7 +125,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s jobber \
-  sudo -E $(find /usr/lib -name jobbermaster) \
+  sudo -E /usr/lib/x86_64-linux-gnu/jobbermaster \
   2>/dev/null
 
 # Start mpd
