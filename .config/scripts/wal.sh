@@ -11,7 +11,7 @@ gtk-theme-switch2 $HOME/.themes/warna
 THEME_NAME=warna-$(date +%N)
 ln -s warna $HOME/.themes/$THEME_NAME
 sed -i "s;Net/ThemeName .*;Net/ThemeName \"$THEME_NAME\";" $HOME/.xsettingsd
-killall -HUP xsettingsd
+pkill -HUP xsettingsd
 
 # Update mpv wallpapr
 socat - $HOME/.cache/wal/mpv-ipc <<< '{"command":["loadfile","'$(cat $HOME/.cache/wal/wal)'","replace"]}'
@@ -26,4 +26,4 @@ $HOME/.config/dunst/wal.sh
 # $HOME/.config/i3/chromium-replace.sh
 
 # Reload xava
-killall -USR1 xava 2>/dev/null
+pkill -USR1 xava 2>/dev/null
