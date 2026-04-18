@@ -13,8 +13,10 @@ ln -s warna $HOME/.themes/$THEME_NAME
 sed -i "s;Net/ThemeName .*;Net/ThemeName \"$THEME_NAME\";" $HOME/.xsettingsd
 pkill -HUP xsettingsd
 
-# Update mpv wallpapr
-echo '{"command":["loadfile","'"$(cat $HOME/.cache/wal/wal)"'","replace"]}' | socat - $HOME/.cache/wal/mpv-ipc
+# Update mpv wallpaper on each monitor
+for ipc in $HOME/.cache/wal/mpv-ipc-*; do
+  echo '{"command":["loadfile","'"$(cat $HOME/.cache/wal/wal)"'","replace"]}' | socat - $ipc
+done
 
 # Update telegram theme
 walogram
