@@ -23,6 +23,11 @@ tmux new-session \
   2>/dev/null
 
 if [ "$DESKTOP_ENVIRONMENT_X_HEADLESS" != 1 ] && [ -w /dev/tty$DESKTOP_ENVIRONMENT_X_TTY ]; then
+  # Use nvidia as primary gpu on non-laptop hosts
+  if ! grep -qE '^(8|9|10|11|14)$' /sys/class/dmi/id/chassis_type 2>/dev/null; then
+    sudo sed -i 's/"PrimaryGPU" "no"/"PrimaryGPU" "yes"/' /etc/X11/xorg.conf.d/20-nvidia.conf
+  fi
+
   # Start x server on virtual terminal if attached to the container
   tmux new-session \
     -d \
