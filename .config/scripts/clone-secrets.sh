@@ -33,6 +33,7 @@ vcsh clone git@github.com:sabrehagen/dotfiles-claude 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-cloudflared 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-fastfetch 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gcsf 2>/dev/null &
+vcsh clone git@github.com:sabrehagen/dotfiles-gemini 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gh 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-git-private 2>/dev/null &
 vcsh clone git@github.com:sabrehagen/dotfiles-gpg 2>/dev/null &
