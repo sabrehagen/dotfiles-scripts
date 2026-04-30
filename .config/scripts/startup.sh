@@ -48,7 +48,8 @@ else
     -geometry 1920x1080 \
     -localhost true \
     -SecurityTypes none \
-    -xstartup /usr/local/bin/i3
+    -xstartup /usr/local/bin/i3 \
+    2>/dev/null
 fi
 
 # Wait until x server is running before proceeding
