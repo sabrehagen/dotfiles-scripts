@@ -259,6 +259,7 @@ tmux new-session \
   2>/dev/null
 
 # Start sshd
+sudo mkdir -p /run/sshd
 tmux new-session \
   -d \
   -s sshd \
