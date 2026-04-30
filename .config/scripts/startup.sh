@@ -90,12 +90,18 @@ if [ $SECRETS_EXIST -eq 0 ]; then
     2>/dev/null
 fi
 
-# Start github actions runner
+# Start github actions runners
 if [ $SECRETS_EXIST -eq 0 ] && [ $HOSTNAME = erika ]; then
   tmux new-session \
     -d \
-    -s github-actions-runner \
-    github-actions-runner \
+    -s github-actions-runner-desktop-environment \
+    github-actions-runner sabrehagen desktop-environment \
+    2>/dev/null
+
+  tmux new-session \
+    -d \
+    -s github-actions-runner-firefox-android \
+    github-actions-runner sabrehagen firefox-android \
     2>/dev/null
 fi
 
