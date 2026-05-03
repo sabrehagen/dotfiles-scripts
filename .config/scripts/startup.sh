@@ -48,7 +48,7 @@ else
     -geometry 1920x1080 \
     -localhost true \
     -SecurityTypes none \
-    -xstartup /usr/local/bin/i3 \
+    -xstartup $HOME/.xinitrc \
     2>/dev/null
 fi
 
