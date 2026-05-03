@@ -7,10 +7,10 @@ remove_vcsh_repo() {
   vcsh $REPO ls-files --full-name $HOME 2>/dev/null | \
     xargs -I file rm -rf $HOME/file 2>/dev/null
 
-  # Remove vcsh repository tracked directories
+  # Remove vcsh repository tracked directories if empty
   vcsh $REPO ls-files --full-name $HOME 2>/dev/null | \
     xargs dirname 2>/dev/null | \
-    xargs -I directory rm -rf $HOME/directory 2>/dev/null
+    xargs -I directory rmdir --parents --ignore-fail-on-non-empty $HOME/directory 2>/dev/null
 
   # Remove vcsh repository git folder
   rm -rf $HOME/.config/vcsh/repo.d/$REPO.git 2>/dev/null
