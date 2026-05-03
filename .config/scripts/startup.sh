@@ -44,6 +44,7 @@ else
     -s vnc-server \
     vncserver $DESKTOP_ENVIRONMENT_X_DISPLAY \
     -autokill \
+    -cleanstale \
     -fg \
     -geometry 1920x1080 \
     -localhost true \
