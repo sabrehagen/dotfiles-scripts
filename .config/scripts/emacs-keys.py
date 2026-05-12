@@ -14,6 +14,7 @@ BINDINGS = [
     ('ctrl+a', 'Home'),
     ('alt+f', 'ctrl+Right'),
     ('alt+d', 'ctrl+Delete'),
+    ('alt+s', 'alt+d'),
     ('alt+b', 'ctrl+Left'),
     ('ctrl+shift+w', 'ctrl+w'),
     ('ctrl+shift+h', 'shift+Left'),
