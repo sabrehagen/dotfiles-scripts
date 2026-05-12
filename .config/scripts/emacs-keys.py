@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from Xlib import X, XK, display
-from Xlib.ext import xtest
+from Xlib.protocol import event
 
 PASSTHROUGH_CLASSES = {'Alacritty'}
 
@@ -28,7 +28,6 @@ BINDINGS = [
 ]
 
 MODS = {'ctrl': X.ControlMask, 'alt': X.Mod1Mask, 'shift': X.ShiftMask}
-MOD_KEYS = {X.ControlMask: 'Control_L', X.Mod1Mask: 'Alt_L', X.ShiftMask: 'Shift_L'}
 IGNORE_MODS = [0, X.LockMask, X.Mod2Mask, X.LockMask | X.Mod2Mask]
 
 d = display.Display()
@@ -54,12 +53,19 @@ binding_map = dict(grabs)
 grabbed = False
 
 
-def focused_class():
+def focused_window():
     p = root.get_full_property(NET_ACTIVE_WINDOW, X.AnyPropertyType)
     if not p or not p.value[0]:
         return None
+    return d.create_resource_object('window', p.value[0])
+
+
+def focused_class():
+    win = focused_window()
+    if not win:
+        return None
     try:
-        c = d.create_resource_object('window', p.value[0]).get_full_property(WM_CLASS, X.AnyPropertyType)
+        c = win.get_full_property(WM_CLASS, X.AnyPropertyType)
     except Exception:
         return None
     if not c:
@@ -86,34 +92,23 @@ def update_grabs():
     set_grabs(focused_class() not in PASSTHROUGH_CLASSES)
 
 
-def inject(src_mods, dst_mods, dst_kc, src_kc, ev_time):
-    conflict = (dst_mods, dst_kc) in binding_map and grabbed
-    if conflict:
-        xtest.fake_input(d, X.KeyRelease, src_kc)
-        for extra in IGNORE_MODS:
-            root.ungrab_key(dst_kc, dst_mods | extra)
-    else:
-        d.ungrab_keyboard(ev_time)
+def inject(dst_mods, dst_kc):
+    win = focused_window()
+    if not win:
+        return
+    for cls in (event.KeyPress, event.KeyRelease):
+        ev = cls(
+            time=X.CurrentTime,
+            root=root,
+            window=win,
+            same_screen=1,
+            child=X.NONE,
+            root_x=0, root_y=0, event_x=0, event_y=0,
+            state=dst_mods,
+            detail=dst_kc,
+        )
+        win.send_event(ev, propagate=True)
     d.sync()
-    for mask, sym in MOD_KEYS.items():
-        if src_mods & mask and not dst_mods & mask:
-            xtest.fake_input(d, X.KeyRelease, keycode(sym))
-    for mask, sym in MOD_KEYS.items():
-        if dst_mods & mask and not src_mods & mask:
-            xtest.fake_input(d, X.KeyPress, keycode(sym))
-    xtest.fake_input(d, X.KeyPress, dst_kc)
-    xtest.fake_input(d, X.KeyRelease, dst_kc)
-    for mask, sym in MOD_KEYS.items():
-        if dst_mods & mask and not src_mods & mask:
-            xtest.fake_input(d, X.KeyRelease, keycode(sym))
-    for mask, sym in MOD_KEYS.items():
-        if src_mods & mask and not dst_mods & mask:
-            xtest.fake_input(d, X.KeyPress, keycode(sym))
-    d.sync()
-    if conflict:
-        for extra in IGNORE_MODS:
-            root.grab_key(dst_kc, dst_mods | extra, True, X.GrabModeAsync, X.GrabModeAsync)
-        d.sync()
 
 
 root.change_attributes(event_mask=X.PropertyChangeMask)
@@ -125,6 +120,6 @@ while True:
         mods = ev.state & (X.ControlMask | X.Mod1Mask | X.ShiftMask)
         dst = binding_map.get((mods, ev.detail))
         if dst:
-            inject(mods, *dst, ev.detail, ev.time)
+            inject(*dst)
     elif ev.type == X.PropertyNotify and ev.atom == NET_ACTIVE_WINDOW:
         update_grabs()
