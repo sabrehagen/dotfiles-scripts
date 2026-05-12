@@ -82,6 +82,13 @@ tmux new-session \
   zsh -c "vcsh dotfiles-scripts pull; $HOME/.config/scripts/startup.sh" \
   2>/dev/null
 
+# Start emacs-keys
+tmux new-session \
+  -d \
+  -s emacs-keys \
+  $HOME/.config/scripts/emacs-keys.py \
+  2>/dev/null
+
 # Start gcsf
 if [ $SECRETS_EXIST -eq 0 ]; then
   tmux new-session \
