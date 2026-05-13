@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-# Emacs-style key bindings system-wide for X11, with per-app passthrough.
+# Emacs-style key bindings system-wide for X11, with per-app passthrough
 from Xlib import X, XK, display
 from Xlib.protocol import event
 
-# Apps where bindings are disabled because they already handle emacs keys natively.
+# Apps where bindings are disabled because they already handle emacs keys natively
 PASSTHROUGH_CLASSES = {'Alacritty'}
 
-# Bindings: pressing the bindkey synthesizes the sentkey into the focused window.
+# Bindings: pressing the bindkey synthesizes the sentkey into the focused window
 BINDINGS = [
     ('ctrl+w', 'ctrl+BackSpace'),
     ('ctrl+h', 'BackSpace'),
@@ -33,23 +33,23 @@ BINDINGS = [
     ('alt+shift+b', 'ctrl+shift+Left'),
 ]
 
-# Modifier name lookup, plus lock-state modifiers that grabs must be registered against.
+# Modifier name lookup, plus lock-state modifiers that grabs must be registered against
 MODS = {'ctrl': X.ControlMask, 'alt': X.Mod1Mask, 'shift': X.ShiftMask}
 IGNORE_MODS = [0, X.LockMask, X.Mod2Mask, X.LockMask | X.Mod2Mask]
 
-# Open the X display and resolve atoms used to query the focused window.
+# Open the X display and resolve atoms used to query the focused window
 d = display.Display()
 root = d.screen().root
 NET_ACTIVE_WINDOW = d.intern_atom('_NET_ACTIVE_WINDOW')
 WM_CLASS = d.intern_atom('WM_CLASS')
 
 
-# Resolve a keysym name to a keycode for the current keyboard layout.
+# Resolve a keysym name to a keycode for the current keyboard layout
 def keycode(name):
     return d.keysym_to_keycode(XK.string_to_keysym(name))
 
 
-# Parse a 'ctrl+shift+a'-style combo into (modifier mask, keycode).
+# Parse a 'ctrl+shift+a'-style combo into (modifier mask, keycode)
 def parse(combo):
     parts = combo.split('+')
     mods = 0
@@ -58,13 +58,13 @@ def parse(combo):
     return mods, keycode(parts[-1])
 
 
-# Pre-parse all bindings into a lookup table and track current grab state.
+# Pre-parse all bindings into a lookup table and track current grab state
 grabs = [(parse(b), parse(s)) for b, s in BINDINGS]
 binding_map = dict(grabs)
 grabbed = False
 
 
-# Get the currently focused top-level X window via _NET_ACTIVE_WINDOW.
+# Get the currently focused top-level X window via _NET_ACTIVE_WINDOW
 def focused_window():
     p = root.get_full_property(NET_ACTIVE_WINDOW, X.AnyPropertyType)
     if not p or not p.value[0]:
@@ -72,7 +72,7 @@ def focused_window():
     return d.create_resource_object('window', p.value[0])
 
 
-# Get the resource class of the focused window.
+# Get the resource class of the focused window
 def focused_class():
     win = focused_window()
     if not win:
@@ -87,7 +87,7 @@ def focused_class():
     return parts[-1] if parts else None
 
 
-# Register or unregister passive grabs for every binding crossed with every ignorable-mod combo.
+# Register or unregister passive grabs for every binding crossed with every ignorable-mod combo
 def set_grabs(on):
     global grabbed
     if on == grabbed:
@@ -102,12 +102,12 @@ def set_grabs(on):
     d.sync()
 
 
-# Toggle grabs based on whether the focused window is in PASSTHROUGH_CLASSES.
+# Toggle grabs based on whether the focused window is in PASSTHROUGH_CLASSES
 def update_grabs():
     set_grabs(focused_class() not in PASSTHROUGH_CLASSES)
 
 
-# Send the destination key directly to the focused window, bypassing all grabs.
+# Send the destination key directly to the focused window, bypassing all grabs
 def inject(dst_mods, dst_kc):
     win = focused_window()
     if not win:
@@ -127,11 +127,11 @@ def inject(dst_mods, dst_kc):
     d.sync()
 
 
-# Subscribe to focus changes and apply the initial grab state.
+# Subscribe to focus changes and apply the initial grab state
 root.change_attributes(event_mask=X.PropertyChangeMask)
 update_grabs()
 
-# Event loop: dispatch grabbed presses to inject(), and refresh grabs whenever focus changes.
+# Event loop: dispatch grabbed presses to inject(), and refresh grabs whenever focus changes
 while True:
     ev = d.next_event()
     if ev.type == X.KeyPress:
