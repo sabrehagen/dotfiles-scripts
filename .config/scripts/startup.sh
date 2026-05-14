@@ -171,15 +171,6 @@ if [ $SECRETS_EXIST -eq 0 ]; then
     2>/dev/null
 fi
 
-# Start open-webui
-if [ $SECRETS_EXIST -eq 0 ]; then
-  tmux new-session \
-    -d \
-    -s open-webui \
-    ollama-webui \
-    2>/dev/null
-fi
-
 # Start op session daemon
 tmux new-session \
   -d \
