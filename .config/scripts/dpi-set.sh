@@ -3,7 +3,7 @@ DPI=$1
 # Set resolution and i3blocks spacing based on DPI
 if [ $DPI = "96" ]; then
   RESOLUTION=1920x1080
-  I3_BLOCKS_SEPARATOR_WIDTH=18
+  I3_BLOCKS_SEPARATOR_WIDTH=13
 elif [ $DPI = "144" ]; then
   RESOLUTION=3840x2160
   I3_BLOCKS_SEPARATOR_WIDTH=22
