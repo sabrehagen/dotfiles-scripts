@@ -1,0 +1,1 @@
+exec /usr/bin/t3code --no-sandbox "$@"
