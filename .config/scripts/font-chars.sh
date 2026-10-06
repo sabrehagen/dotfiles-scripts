@@ -1,7 +1,7 @@
 #!/bin/bash -
 
 width=80
-fontfile="${1-"/usr/share/fonts/truetype/font-awesome/fontawesome-webfont.ttf"}"
+fontfile="${1-"/usr/share/fonts/opentype/font-awesome-5/solid-thin-25.otf"}"
 list="$(fc-query --format='%{charset}\n' $fontfile)"
 
 for range in $list; do IFS=- read start end <<<"$range"
