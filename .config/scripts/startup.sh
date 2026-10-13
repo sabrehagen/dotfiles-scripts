@@ -113,6 +113,13 @@ if [ $SECRETS_EXIST -eq 0 ] && [ $HOSTNAME = erika ]; then
     2>/dev/null
 fi
 
+# Start handy
+tmux new-session \
+  -d \
+  -s handy \
+  handy \
+  2>/dev/null
+
 # Start hintsd
 tmux new-session \
   -d \
