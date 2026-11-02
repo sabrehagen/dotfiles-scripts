@@ -117,7 +117,7 @@ fi
 tmux new-session \
   -d \
   -s handy \
-  handy \
+  handy --start-hidden \
   2>/dev/null
 
 # Start hintsd
