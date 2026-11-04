@@ -272,6 +272,13 @@ tmux new-session \
   sudo /usr/sbin/sshd -D -e \
   2>/dev/null
 
+# Start t3 code server
+tmux new-session \
+  -d \
+  -s t3code \
+  npx --yes t3@nightly serve \
+  2>/dev/null
+
 # Start tailscale
 if [ $SECRETS_EXIST -eq 0 ]; then
   # Start tailscaled
