@@ -1,31 +1,40 @@
 # Generate pywal colors from wallpaper
 wal -n -i ${1-$HOME/.local/share/wallpapers} --saturate 0.3
 
-# Generate gtk theme from pywal colors
-warnai --wal --gtk fantome --norender
+# Update gtk themes in order, as each step depends on the last
+(
+  # Generate gtk theme from pywal colors
+  warnai --wal --gtk fantome --norender
 
-# Reload gtk2 theme
-gtk-theme-switch2 $HOME/.themes/warna
+  # Reload gtk2 theme
+  gtk-theme-switch2 $HOME/.themes/warna
 
-# Reload gtk3 theme by simulating theme name change
-THEME_NAME=warna-$(date +%N)
-ln -s warna $HOME/.themes/$THEME_NAME
-sed -i "s;Net/ThemeName .*;Net/ThemeName \"$THEME_NAME\";" $HOME/.xsettingsd
-pkill -HUP xsettingsd
+  # Reload gtk3 theme by simulating theme name change
+  THEME_NAME=warna-$(date +%N)
+  ln -s warna $HOME/.themes/$THEME_NAME
+  sed -i "s;Net/ThemeName .*;Net/ThemeName \"$THEME_NAME\";" $HOME/.xsettingsd
+  pkill -HUP xsettingsd
+) &
 
 # Update mpv wallpaper on each monitor
 for ipc in $HOME/.cache/wal/mpv-ipc-*; do
-  echo '{"command":["loadfile","'"$(cat $HOME/.cache/wal/wal)"'","replace"]}' | socat - $ipc
+  echo '{"command":["loadfile","'"$(cat $HOME/.cache/wal/wal)"'","replace"]}' | socat - $ipc &
 done
 
 # Update telegram theme
-walogram
+walogram &
+
+# Update t3 code theme
+t3code-wal &
 
 # Reload dunst theme
-$HOME/.config/dunst/wal.sh
+$HOME/.config/dunst/wal.sh &
 
 # Reload chromium
 # $HOME/.config/i3/chromium-replace.sh
 
 # Reload xava
-pkill -USR1 xava 2>/dev/null
+pkill -USR1 xava 2>/dev/null &
+
+# Wait for all updates to finish
+wait
