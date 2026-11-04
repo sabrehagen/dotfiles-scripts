@@ -1,0 +1,7 @@
+#!/bin/sh
+# Without a recognised desktop environment, apt's xdg-utils 1.1.3 treats schemes containing digits as files, breaking t3code:// links.
+# T3 Code's registered handler also omits the --no-sandbox this container needs, so launch it directly.
+case "$1" in
+  t3code:*) exec env -u ELECTRON_RUN_AS_NODE /usr/bin/t3code --no-sandbox "$1" ;;
+esac
+exec /usr/bin/xdg-open "$@"
