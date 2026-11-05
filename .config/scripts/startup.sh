@@ -276,7 +276,7 @@ tmux new-session \
 tmux new-session \
   -d \
   -s t3code \
-  npx --yes t3@nightly serve \
+  npx --yes t3@nightly serve --base-dir $HOME/.t3-server \
   2>/dev/null
 
 # Start tailscale
