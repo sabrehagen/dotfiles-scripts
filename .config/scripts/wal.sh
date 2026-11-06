@@ -25,7 +25,7 @@ done
 walogram &
 
 # Update t3 code theme
-t3code-wal &
+t3code-wal --base-dir $HOME/.t3/server &
 
 # Reload dunst theme
 $HOME/.config/dunst/wal.sh &
