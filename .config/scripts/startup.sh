@@ -277,7 +277,7 @@ tmux new-session \
   -d \
   -e T3CODE_SERVER_BROWSER_SANDBOX=0 \
   -s t3code \
-  npx --yes t3@nightly serve --base-dir $HOME/.t3-server \
+  npx --yes t3@nightly serve --base-dir $HOME/.t3/server \
   2>/dev/null
 
 # Start tailscale

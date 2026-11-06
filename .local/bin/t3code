@@ -1,2 +1,2 @@
-export T3CODE_HOME=$HOME/.t3-desktop
+export T3CODE_HOME=$HOME/.t3/desktop
 exec /usr/bin/t3code --no-sandbox "$@"
